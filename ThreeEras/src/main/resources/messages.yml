@@ -24,6 +24,7 @@ comando:
     era: "&f/threeeras era <listar|info|ir> &7- eras do servidor"
     lore: "&f/threeeras lore <listar|ver|conceder> &7- registros e descobertas"
     npc: "&f/threeeras npc <listar|criar|remover|ir> &7- NPCs de dialogo"
+    item: "&f/threeeras item <listar|info|dar|identificar> &7- itens do servidor"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -112,3 +113,23 @@ comando:
     ir:
       inexistente: "&cNPC {id} nao esta no mundo nem tem local salvo."
       ok: "&aTeleportado para &f{nome}&a."
+  item:
+    uso: "&cUse: /threeeras item <listar|info|dar|identificar>"
+    inexistente: "&cItem nao encontrado em itens.yml: {id}"
+    listar:
+      titulo: "&8--- Itens ({total}) ---"
+      vazio: "&7Nenhum item definido em itens.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}/{material}]"
+    info:
+      titulo: "&8--- {nome} ---"
+      linha: "&7Material: &f{material} &7| Quantidade: &f{quantidade} &7| Era: &f{era}"
+      lore: "&8- &7{linha}"
+    dar:
+      uso: "&cUse: /threeeras item dar <id> [quantidade]"
+      console: "&cApenas jogadores podem receber itens."
+      quantidade-invalida: "&cQuantidade invalida (1 a 64): {valor}"
+      ok: "&aRecebido: &f{nome} &ax{quantidade}."
+    identificar:
+      mao-vazia: "&7Segure um item na mao principal."
+      desconhecido: "&7Este item nao pertence ao ThreeEras."
+      linha: "&aItem identificado: &f{nome} &8({id})"

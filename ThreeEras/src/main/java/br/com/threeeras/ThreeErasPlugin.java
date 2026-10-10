@@ -3,6 +3,7 @@ package br.com.threeeras;
 import br.com.threeeras.command.ThreeErasCommand;
 import br.com.threeeras.config.Messages;
 import br.com.threeeras.era.EraManager;
+import br.com.threeeras.item.ItemManager;
 import br.com.threeeras.lore.LoreManager;
 import br.com.threeeras.npc.NpcInteractListener;
 import br.com.threeeras.npc.NpcManager;
@@ -19,6 +20,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private EraManager eraManager;
     private LoreManager loreManager;
     private NpcManager npcManager;
+    private ItemManager itemManager;
 
     @Override
     public void onEnable() {
@@ -37,6 +39,9 @@ public final class ThreeErasPlugin extends JavaPlugin {
         npcManager = new NpcManager(this, eraManager);
         npcManager.load();
         new NpcInteractListener(this, npcManager).register();
+
+        itemManager = new ItemManager(this);
+        itemManager.load();
 
         storage = new StorageManager(this);
         storage.load();
@@ -83,6 +88,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
     public NpcManager getNpcManager() {
         return npcManager;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 
     private void validarEraInicial() {

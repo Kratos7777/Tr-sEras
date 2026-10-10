@@ -1,0 +1,59 @@
+# ThreeEras - itens personalizados
+#
+# id:        identificador unico (marcado no item via PersistentDataContainer)
+# era:       era de origem do item (validada contra eras.yml na carga)
+# material:  Material do Bukkit (ex.: PAPER, WRITTEN_BOOK, IRON_NUGGET)
+# nome:      nome de exibicao (aceita codigos & de cor)
+# quantidade: quantidade no stack
+# lore:      linhas de descricao do item
+# paginas:   (somente para livros) conteudo das paginas
+
+itens:
+
+  fragmento-quarto-marco:
+    era: medieval
+    material: STONE
+    nome: "&7Fragmento do Quarto Marco"
+    quantidade: 1
+    lore:
+      - "&8Um pedaco de pedra dos marcos de contagem."
+      - "&7A gravacao foi riscada. Alguem escreveu outro numero por cima."
+
+  estandarte-faixa-vermelha:
+    era: apocaliptica
+    material: RED_BANNER
+    nome: "&cEstandarte com faixa vermelha"
+    quantidade: 1
+    lore:
+      - "&7Nenhum brasao do reino justifica esta faixa."
+      - "&8Ela se movia quando o vento nao movia."
+
+  insignia-rachada:
+    era: apocaliptica
+    material: IRON_NUGGET
+    nome: "&7Insignia Rachada"
+    quantidade: 1
+    lore:
+      - "&7Brasao do Reino das Raizes, partido ao meio."
+      - "&8Ninguem sabe mais o que as raizes significam."
+
+  amostra-7-4:
+    era: futurista
+    material: GLASS_BOTTLE
+    nome: "&bAmostra 7-4"
+    quantidade: 1
+    lore:
+      - "&7Frasco lacrado. Rotulo: 'comportamento persiste'."
+      - "&8Recomendacao: nao prosseguir com testes de separacao."
+
+  registro-sem-origem:
+    era: futurista
+    material: WRITTEN_BOOK
+    nome: "&5Registro sem origem"
+    quantidade: 1
+    lore:
+      - "&7Um documento que nenhum periodo reconhece."
+    paginas:
+      - "Sem autor. Sem data. Sem numero de catalogo."
+      - "A palavra aparece repetida sete vezes: ANORMAL."
+      - "A comissao nao aprovou conclusao alguma. O documento continua no arquivo."
