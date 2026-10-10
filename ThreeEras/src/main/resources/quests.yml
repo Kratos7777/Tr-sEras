@@ -1,0 +1,47 @@
+# ThreeEras - missoes encadeadas
+#
+# id:          identificador unico
+# nome:        titulo exibido ao jogador
+# era:         era da missao (informativa)
+# descricao:   resumo
+# requisito:   id de outra missao que deve estar concluida (vazio = nenhum)
+# objetivos:   lista ordenada; formatos:
+#                descoberta:<lore-id>
+#                item:<item-id>
+#                entregar:<item-id>[:quantidade]   (consome o item)
+# recompensas: itens dados na conclusao; formatos:
+#                <item-id>  ou  <item-id>:<quantidade>
+
+quests:
+
+  conta-que-nao-fecha:
+    nome: "A conta que nao fecha"
+    era: medieval
+    descricao: "Os marcos da estrada dizem coisas diferentes da cronica."
+    requisito: ""
+    objetivos:
+      - "descoberta:marcos-contagem"
+      - "entregar:fragmento-quarto-marco"
+    recompensas: []
+
+  faixa-no-estandarte:
+    nome: "A faixa no estandarte"
+    era: apocaliptica
+    descricao: "A faixa que o vento nao movia."
+    requisito: conta-que-nao-fecha
+    objetivos:
+      - "descoberta:faccoes-sobreviventes"
+      - "entregar:estandarte-faixa-vermelha"
+    recompensas:
+      - "amostra-7-4"
+
+  palavra-no-arquivo:
+    nome: "A palavra no arquivo"
+    era: futurista
+    descricao: "Sete vezes a mesma palavra, em um documento sem origem."
+    requisito: faixa-no-estandarte
+    objetivos:
+      - "descoberta:catalogo-erebus-amostra-7-4"
+      - "entregar:amostra-7-4"
+    recompensas:
+      - "registro-sem-origem"

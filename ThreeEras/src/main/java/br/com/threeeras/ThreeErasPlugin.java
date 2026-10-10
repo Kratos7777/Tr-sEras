@@ -8,6 +8,8 @@ import br.com.threeeras.lore.LoreManager;
 import br.com.threeeras.npc.NpcInteractListener;
 import br.com.threeeras.npc.NpcManager;
 import br.com.threeeras.player.PlayerManager;
+import br.com.threeeras.quest.QuestManager;
+import br.com.threeeras.quest.QuestProgressListener;
 import br.com.threeeras.storage.StorageManager;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +23,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private LoreManager loreManager;
     private NpcManager npcManager;
     private ItemManager itemManager;
+    private QuestManager questManager;
 
     @Override
     public void onEnable() {
@@ -42,6 +45,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
         itemManager = new ItemManager(this);
         itemManager.load();
+
+        questManager = new QuestManager(this);
+        questManager.load();
+        new QuestProgressListener(this, questManager).register();
 
         storage = new StorageManager(this);
         storage.load();
@@ -92,6 +99,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
     public ItemManager getItemManager() {
         return itemManager;
+    }
+
+    public QuestManager getQuestManager() {
+        return questManager;
     }
 
     private void validarEraInicial() {

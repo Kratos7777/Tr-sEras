@@ -25,6 +25,7 @@ comando:
     lore: "&f/threeeras lore <listar|ver|conceder> &7- registros e descobertas"
     npc: "&f/threeeras npc <listar|criar|remover|ir> &7- NPCs de dialogo"
     item: "&f/threeeras item <listar|info|dar|identificar> &7- itens do servidor"
+    quest: "&f/threeeras quest <listar|info|iniciar|abandonar> &7- missoes"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -133,3 +134,29 @@ comando:
       mao-vazia: "&7Segure um item na mao principal."
       desconhecido: "&7Este item nao pertence ao ThreeEras."
       linha: "&aItem identificado: &f{nome} &8({id})"
+  quest:
+    uso: "&cUse: /threeeras quest <listar|info|iniciar|abandonar>"
+    nao-encontrada: "&cMissao nao encontrada: {id}"
+    listar:
+      titulo: "&8--- Missoes ({total}) ---"
+      vazio: "&7Nenhuma missao definida em quests.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7({estado})"
+    info:
+      titulo: "&8--- {nome} ---"
+      descricao: "&7{descricao}"
+      objetivo: "{marca} &7{objetivo}"
+      requisito: "&cRequisito: &f{quest}"
+      recompensa: "&aRecompensa: &f{item} &ax{quantidade}"
+    iniciar:
+      uso: "&cUse: /threeeras quest iniciar <id>"
+      console: "&cApenas jogadores podem iniciar missoes."
+      ok: "&aMissao iniciada: &f{nome}"
+      ja-ativa: "&7Esta missao ja esta em andamento."
+      ja-concluida: "&7Esta missao ja foi concluida."
+      requisito: "&cRequisito nao cumprido: &f{quest}"
+    abandonar:
+      ok: "&aMissao abandonada: &f{id}"
+      nao-iniciada: "&7Voce nao esta nesta missao: {id}"
+    progresso: "&aObjetivo concluido: &f{descricao}&a. Proximo: &f{proximo}"
+    conclusao: "&a&lMissao concluida: &f{nome}"
+    recompensa: "&aRecompensa recebida: &f{item} &ax{quantidade}"

@@ -2,8 +2,10 @@ package br.com.threeeras.player;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,6 +19,8 @@ public final class PlayerData {
 
     private final UUID uuid;
     private final Set<String> descobertas;
+    private final Map<String, Integer> passosQuests;
+    private final Set<String> questsConcluidas;
     private String nome;
     private long primeiroJoin;
     private long ultimoVisto;
@@ -24,7 +28,8 @@ public final class PlayerData {
     private long tempoJogadoSegundos;
 
     public PlayerData(UUID uuid, String nome, long primeiroJoin, long ultimoVisto,
-                      String eraAtual, long tempoJogadoSegundos, Collection<String> descobertas) {
+                      String eraAtual, long tempoJogadoSegundos, Collection<String> descobertas,
+                      Map<String, Integer> passosQuests, Collection<String> questsConcluidas) {
         this.uuid = uuid;
         this.nome = nome;
         this.primeiroJoin = primeiroJoin;
@@ -32,11 +37,14 @@ public final class PlayerData {
         this.eraAtual = eraAtual;
         this.tempoJogadoSegundos = tempoJogadoSegundos;
         this.descobertas = new LinkedHashSet<>(descobertas);
+        this.passosQuests = new LinkedHashMap<>(passosQuests);
+        this.questsConcluidas = new LinkedHashSet<>(questsConcluidas);
     }
 
     /** Cria registro de primeiro acesso. */
     public static PlayerData novo(UUID uuid, String nome, long agora, String eraInicial) {
-        return new PlayerData(uuid, nome, agora, agora, eraInicial, 0L, List.of());
+        return new PlayerData(uuid, nome, agora, agora, eraInicial, 0L,
+                List.of(), Map.of(), List.of());
     }
 
     public UUID getUuid() {
@@ -101,5 +109,52 @@ public final class PlayerData {
     /** Registra descoberta; true se era nova. */
     public boolean addDescoberta(String id) {
         return descobertas.add(id);
+    }
+
+    // ---------- progresso de missoes ----------
+
+    /** Ids das missoes em andamento. */
+    public Set<String> getQuestsAtivas() {
+        return Collections.unmodifiableSet(passosQuests.keySet());
+    }
+
+    /** Passo atual de cada missao em andamento (0 = primeiro objetivo). */
+    public Map<String, Integer> getPassosQuests() {
+        return Collections.unmodifiableMap(passosQuests);
+    }
+
+    /** Ids das missoes concluidas. */
+    public Set<String> getQuestsConcluidas() {
+        return Collections.unmodifiableSet(questsConcluidas);
+    }
+
+    public boolean questAtiva(String id) {
+        return passosQuests.containsKey(id);
+    }
+
+    public boolean questConcluida(String id) {
+        return questsConcluidas.contains(id);
+    }
+
+    /** Passo atual da missao; -1 se nao estiver em andamento. */
+    public int getPasso(String id) {
+        return passosQuests.getOrDefault(id, -1);
+    }
+
+    public void iniciarQuest(String id) {
+        passosQuests.put(id, 0);
+    }
+
+    public void setPasso(String id, int passo) {
+        passosQuests.put(id, passo);
+    }
+
+    public void marcarQuestConcluida(String id) {
+        passosQuests.remove(id);
+        questsConcluidas.add(id);
+    }
+
+    public void abandonarQuest(String id) {
+        passosQuests.remove(id);
     }
 }

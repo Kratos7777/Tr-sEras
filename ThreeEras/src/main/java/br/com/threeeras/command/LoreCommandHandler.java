@@ -98,6 +98,8 @@ public final class LoreCommandHandler {
         if (data.addDescoberta(entry.getId())) {
             playerManager.save(data);
             sender.sendMessage(messages.message("comando.lore.ver.nova", "{titulo}", entry.getTitulo()));
+            // Nova descoberta pode completar objetivo de missao.
+            plugin.getQuestManager().verificar(player);
         } else {
             sender.sendMessage(messages.prefixed("comando.lore.ver.repetida"));
         }

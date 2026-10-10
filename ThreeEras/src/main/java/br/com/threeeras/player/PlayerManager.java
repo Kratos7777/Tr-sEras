@@ -27,6 +27,10 @@ import java.util.UUID;
  *     era: medieval
  *     tempo-jogado: 0
  *     descobertas: [id-de-lore, ...]
+ *     quests:
+ *       <quest-id>:
+ *         passo: 0
+ *     quests-concluidas: [id-de-missao, ...]
  * </pre>
  *
  * <p>So e chamado na thread principal (eventos e comandos). Toda gravacao
@@ -64,6 +68,10 @@ public final class PlayerManager implements Listener {
         String base = BASE + "." + uuid;
         if (storage.contains(base)) {
             long agora = System.currentTimeMillis();
+            Map<String, Integer> passos = new HashMap<>();
+            for (String questId : storage.getKeys(base + ".quests", false)) {
+                passos.put(questId, storage.getInt(base + ".quests." + questId + ".passo", 0));
+            }
             return new PlayerData(
                     uuid,
                     storage.getString(base + ".nome", nome),
@@ -71,7 +79,9 @@ public final class PlayerManager implements Listener {
                     storage.getLong(base + ".ultimo-visto", agora),
                     storage.getString(base + ".era", getEraInicial()),
                     storage.getLong(base + ".tempo-jogado", 0L),
-                    storage.getStringList(base + ".descobertas"));
+                    storage.getStringList(base + ".descobertas"),
+                    passos,
+                    storage.getStringList(base + ".quests-concluidas"));
         }
         PlayerData novo = PlayerData.novo(uuid, nome, System.currentTimeMillis(), getEraInicial());
         save(novo);
@@ -132,6 +142,10 @@ public final class PlayerManager implements Listener {
         storage.set(base + ".era", data.getEraAtual());
         storage.set(base + ".tempo-jogado", data.getTempoJogadoSegundos());
         storage.set(base + ".descobertas", new ArrayList<>(data.getDescobertas()));
+        for (Map.Entry<String, Integer> passo : data.getPassosQuests().entrySet()) {
+            storage.set(base + ".quests." + passo.getKey() + ".passo", passo.getValue());
+        }
+        storage.set(base + ".quests-concluidas", new ArrayList<>(data.getQuestsConcluidas()));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
