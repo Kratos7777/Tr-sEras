@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -25,6 +26,7 @@ import java.util.UUID;
  *     ultimo-visto: 0
  *     era: medieval
  *     tempo-jogado: 0
+ *     descobertas: [id-de-lore, ...]
  * </pre>
  *
  * <p>So e chamado na thread principal (eventos e comandos). Toda gravacao
@@ -68,7 +70,8 @@ public final class PlayerManager implements Listener {
                     storage.getLong(base + ".primeiro-join", agora),
                     storage.getLong(base + ".ultimo-visto", agora),
                     storage.getString(base + ".era", getEraInicial()),
-                    storage.getLong(base + ".tempo-jogado", 0L));
+                    storage.getLong(base + ".tempo-jogado", 0L),
+                    storage.getStringList(base + ".descobertas"));
         }
         PlayerData novo = PlayerData.novo(uuid, nome, System.currentTimeMillis(), getEraInicial());
         save(novo);
@@ -128,6 +131,7 @@ public final class PlayerManager implements Listener {
         storage.set(base + ".ultimo-visto", data.getUltimoVisto());
         storage.set(base + ".era", data.getEraAtual());
         storage.set(base + ".tempo-jogado", data.getTempoJogadoSegundos());
+        storage.set(base + ".descobertas", new ArrayList<>(data.getDescobertas()));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

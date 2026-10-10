@@ -92,6 +92,10 @@ public final class StorageManager {
         return dados.getLong(path, def);
     }
 
+    public List<String> getStringList(String path) {
+        return dados.getStringList(path);
+    }
+
     public void set(String path, Object value) {
         dados.set(path, value);
         dirty.set(true);

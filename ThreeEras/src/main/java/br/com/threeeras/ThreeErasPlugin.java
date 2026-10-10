@@ -3,6 +3,7 @@ package br.com.threeeras;
 import br.com.threeeras.command.ThreeErasCommand;
 import br.com.threeeras.config.Messages;
 import br.com.threeeras.era.EraManager;
+import br.com.threeeras.lore.LoreManager;
 import br.com.threeeras.player.PlayerManager;
 import br.com.threeeras.storage.StorageManager;
 import org.bukkit.command.PluginCommand;
@@ -14,6 +15,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private StorageManager storage;
     private PlayerManager playerManager;
     private EraManager eraManager;
+    private LoreManager loreManager;
 
     @Override
     public void onEnable() {
@@ -25,6 +27,9 @@ public final class ThreeErasPlugin extends JavaPlugin {
         eraManager = new EraManager(this);
         eraManager.load();
         validarEraInicial();
+
+        loreManager = new LoreManager(this, eraManager);
+        loreManager.load();
 
         storage = new StorageManager(this);
         storage.load();
@@ -39,7 +44,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        ThreeErasCommand executor = new ThreeErasCommand(this, messages, storage, playerManager, eraManager);
+        ThreeErasCommand executor = new ThreeErasCommand(this, messages);
         command.setExecutor(executor);
         command.setTabCompleter(executor);
 
@@ -63,6 +68,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
     public EraManager getEraManager() {
         return eraManager;
+    }
+
+    public LoreManager getLoreManager() {
+        return loreManager;
     }
 
     private void validarEraInicial() {

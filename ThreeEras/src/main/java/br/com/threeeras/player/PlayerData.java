@@ -1,5 +1,10 @@
 package br.com.threeeras.player;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -11,6 +16,7 @@ import java.util.UUID;
 public final class PlayerData {
 
     private final UUID uuid;
+    private final Set<String> descobertas;
     private String nome;
     private long primeiroJoin;
     private long ultimoVisto;
@@ -18,18 +24,19 @@ public final class PlayerData {
     private long tempoJogadoSegundos;
 
     public PlayerData(UUID uuid, String nome, long primeiroJoin, long ultimoVisto,
-                      String eraAtual, long tempoJogadoSegundos) {
+                      String eraAtual, long tempoJogadoSegundos, Collection<String> descobertas) {
         this.uuid = uuid;
         this.nome = nome;
         this.primeiroJoin = primeiroJoin;
         this.ultimoVisto = ultimoVisto;
         this.eraAtual = eraAtual;
         this.tempoJogadoSegundos = tempoJogadoSegundos;
+        this.descobertas = new LinkedHashSet<>(descobertas);
     }
 
     /** Cria registro de primeiro acesso. */
     public static PlayerData novo(UUID uuid, String nome, long agora, String eraInicial) {
-        return new PlayerData(uuid, nome, agora, agora, eraInicial, 0L);
+        return new PlayerData(uuid, nome, agora, agora, eraInicial, 0L, List.of());
     }
 
     public UUID getUuid() {
@@ -80,5 +87,19 @@ public final class PlayerData {
         if (segundos > 0) {
             this.tempoJogadoSegundos += segundos;
         }
+    }
+
+    /** Ids de lore descobertos (ordem de descoberta preservada). */
+    public Set<String> getDescobertas() {
+        return Collections.unmodifiableSet(descobertas);
+    }
+
+    public boolean temDescoberta(String id) {
+        return descobertas.contains(id);
+    }
+
+    /** Registra descoberta; true se era nova. */
+    public boolean addDescoberta(String id) {
+        return descobertas.add(id);
     }
 }

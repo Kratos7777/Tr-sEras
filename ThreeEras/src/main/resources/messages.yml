@@ -21,7 +21,8 @@ comando:
     reload: "&f/threeeras reload &7- recarrega as configuracoes &8(admin)"
     armazenamento: "&f/threeeras armazenamento &7- diagnostico do armazenamento &8(admin para alterar)"
     jogador: "&f/threeeras jogador [nick] &7- dados do jogador"
-    era: "&f/threeeras era <listar|info> &7- eras do servidor"
+    era: "&f/threeeras era <listar|info|ir> &7- eras do servidor"
+    lore: "&f/threeeras lore <listar|ver|conceder> &7- registros e descobertas"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -77,3 +78,19 @@ comando:
       mundo-offline: "&cO mundo '{mundo}' da era {nome} nao esta carregado no servidor."
       falhou: "&cFalha ao teleportar. Veja o console do servidor."
       ok: "&aViagem concluida: &f{nome} &a(mundo &f{mundo}&a)."
+  lore:
+    uso: "&cUse: /threeeras lore <listar|ver|conceder>"
+    nao-encontrada: "&cEntrada de lore nao encontrada: {id}"
+    listar:
+      titulo: "&8--- Entradas de lore ({total}) ---"
+      vazio: "&7Nenhuma entrada encontrada com esse filtro."
+      linha: "&f{id} &8- &b{titulo} &8[{era}/camada {camada}/{status}] {marca}"
+    ver:
+      titulo: "&8--- {titulo} ---"
+      texto: "&7{texto}"
+      meta: "&8Era: &f{era} &8| Camada: &f{camada} &8| Tipo: &f{tipo} &8| Status: &f{status}"
+      nova: "&aNova descoberta registrada: &f{titulo}"
+      repetida: "&7Voce ja havia descoberto esta entrada."
+    conceder:
+      uso: "&cUse: /threeeras lore conceder <nick> <id>"
+      ok: "&aEntrada &f{id} &aconcedida a &f{nick}&a."
