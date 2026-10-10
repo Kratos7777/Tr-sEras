@@ -20,6 +20,8 @@ mvn package
 
 Saída esperada: `BUILD SUCCESS` e o arquivo `ThreeEras/target/ThreeEras.jar`.
 
+> Build **verificado**: compila com Java 25 contra a paper-api `26.2.build.124-stable` (42 arquivos, 48 classes) e roda no Paper 26.2 build 124 com todos os subsistemas carregados.
+
 ## 3. Instalar
 
 1. Copie `target/ThreeEras.jar` para a pasta `plugins/` do servidor.
@@ -37,7 +39,7 @@ Saída esperada: `BUILD SUCCESS` e o arquivo `ThreeEras/target/ThreeEras.jar`.
 
 ## 4. Configurar as eras (mundos)
 
-Em `eras.yml`, aponte cada era para um mundo do servidor:
+A era Medieval já vem apontando para o mundo padrão (`world`). Para as outras duas, edite `eras.yml`:
 
 ```yaml
 eras:
