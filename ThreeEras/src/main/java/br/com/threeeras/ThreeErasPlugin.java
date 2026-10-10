@@ -2,6 +2,7 @@ package br.com.threeeras;
 
 import br.com.threeeras.command.ThreeErasCommand;
 import br.com.threeeras.config.Messages;
+import br.com.threeeras.era.EraManager;
 import br.com.threeeras.player.PlayerManager;
 import br.com.threeeras.storage.StorageManager;
 import org.bukkit.command.PluginCommand;
@@ -12,6 +13,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private Messages messages;
     private StorageManager storage;
     private PlayerManager playerManager;
+    private EraManager eraManager;
 
     @Override
     public void onEnable() {
@@ -19,6 +21,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
         messages = new Messages(this);
         messages.load();
+
+        eraManager = new EraManager(this);
+        eraManager.load();
+        validarEraInicial();
 
         storage = new StorageManager(this);
         storage.load();
@@ -33,7 +39,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        ThreeErasCommand executor = new ThreeErasCommand(this, messages, storage, playerManager);
+        ThreeErasCommand executor = new ThreeErasCommand(this, messages, storage, playerManager, eraManager);
         command.setExecutor(executor);
         command.setTabCompleter(executor);
 
@@ -53,6 +59,18 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
     public PlayerManager getPlayerManager() {
         return playerManager;
+    }
+
+    public EraManager getEraManager() {
+        return eraManager;
+    }
+
+    private void validarEraInicial() {
+        String inicial = getConfig().getString("jogadores.era-inicial", "medieval");
+        if (!eraManager.existe(inicial)) {
+            getLogger().warning("jogadores.era-inicial ('" + inicial
+                    + "') nao corresponde a nenhuma era de eras.yml. Jogadores novos usarao esse valor mesmo assim.");
+        }
     }
 
     @Override

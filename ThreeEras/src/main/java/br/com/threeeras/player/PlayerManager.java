@@ -36,13 +36,16 @@ public final class PlayerManager implements Listener {
 
     private final ThreeErasPlugin plugin;
     private final StorageManager storage;
-    private final String eraInicial;
     private final Map<UUID, PlayerData> cache = new HashMap<>();
 
     public PlayerManager(ThreeErasPlugin plugin, StorageManager storage) {
         this.plugin = plugin;
         this.storage = storage;
-        this.eraInicial = plugin.getConfig().getString("jogadores.era-inicial", "medieval");
+    }
+
+    /** Era inicial configurada; lida sob demanda para refletir /threeeras reload. */
+    private String getEraInicial() {
+        return plugin.getConfig().getString("jogadores.era-inicial", "medieval");
     }
 
     /** Registra os ouvintes de eventos deste manager. */
@@ -64,10 +67,10 @@ public final class PlayerManager implements Listener {
                     storage.getString(base + ".nome", nome),
                     storage.getLong(base + ".primeiro-join", agora),
                     storage.getLong(base + ".ultimo-visto", agora),
-                    storage.getString(base + ".era", eraInicial),
+                    storage.getString(base + ".era", getEraInicial()),
                     storage.getLong(base + ".tempo-jogado", 0L));
         }
-        PlayerData novo = PlayerData.novo(uuid, nome, System.currentTimeMillis(), eraInicial);
+        PlayerData novo = PlayerData.novo(uuid, nome, System.currentTimeMillis(), getEraInicial());
         save(novo);
         return novo;
     }

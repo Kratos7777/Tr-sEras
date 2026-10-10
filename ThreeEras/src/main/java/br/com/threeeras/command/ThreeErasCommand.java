@@ -2,6 +2,8 @@ package br.com.threeeras.command;
 
 import br.com.threeeras.ThreeErasPlugin;
 import br.com.threeeras.config.Messages;
+import br.com.threeeras.era.Era;
+import br.com.threeeras.era.EraManager;
 import br.com.threeeras.player.PlayerData;
 import br.com.threeeras.player.PlayerManager;
 import br.com.threeeras.storage.StorageManager;
@@ -21,7 +23,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Comando /threeeras com subcomandos info, ajuda, reload, armazenamento e jogador.
+ * Comando /threeeras com subcomandos info, ajuda, reload, armazenamento,
+ * jogador e era.
  */
 public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
 
@@ -29,19 +32,22 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private static final DateTimeFormatter DATA_HORA =
             DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withZone(ZoneId.systemDefault());
     private static final List<String> SUBCOMMANDS =
-            List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador");
+            List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador", "era");
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
     private final StorageManager storage;
     private final PlayerManager playerManager;
+    private final EraManager eraManager;
 
     public ThreeErasCommand(ThreeErasPlugin plugin, Messages messages,
-                            StorageManager storage, PlayerManager playerManager) {
+                            StorageManager storage, PlayerManager playerManager,
+                            EraManager eraManager) {
         this.plugin = plugin;
         this.messages = messages;
         this.storage = storage;
         this.playerManager = playerManager;
+        this.eraManager = eraManager;
     }
 
     @Override
@@ -57,6 +63,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             case "reload" -> reload(sender);
             case "armazenamento", "storage" -> handleStorage(sender, args);
             case "jogador" -> handleJogador(sender, args);
+            case "era" -> handleEra(sender, args);
             default -> sender.sendMessage(messages.prefixed("comando.desconhecido"));
         }
         return true;
@@ -77,6 +84,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(messages.plain("comando.ajuda.ajuda"));
         sender.sendMessage(messages.plain("comando.ajuda.armazenamento"));
         sender.sendMessage(messages.plain("comando.ajuda.jogador"));
+        sender.sendMessage(messages.plain("comando.ajuda.era"));
         if (sender.hasPermission(PERMISSION)) {
             sender.sendMessage(messages.plain("comando.ajuda.reload"));
         }
@@ -89,6 +97,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         try {
             plugin.reloadConfig();
             messages.load();
+            eraManager.load();
             sender.sendMessage(messages.prefixed("comando.reload.sucesso"));
         } catch (RuntimeException e) {
             plugin.getLogger().severe("Falha ao recarregar configuracoes: " + e.getMessage());
@@ -224,6 +233,55 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             return String.format(Locale.ROOT, "%dmin %02ds", minutos, segs);
         }
         return String.format(Locale.ROOT, "%ds", segs);
+    }
+
+    private void handleEra(CommandSender sender, String[] args) {
+        if (args.length == 1 || args[1].equalsIgnoreCase("listar")) {
+            sendEraLista(sender);
+            return;
+        }
+        if (args[1].equalsIgnoreCase("info")) {
+            if (args.length < 3) {
+                sender.sendMessage(messages.prefixed("comando.era.uso"));
+                return;
+            }
+            sendEraInfo(sender, args[2]);
+            return;
+        }
+        sender.sendMessage(messages.prefixed("comando.era.uso"));
+    }
+
+    private void sendEraLista(CommandSender sender) {
+        if (eraManager.total() == 0) {
+            sender.sendMessage(messages.message("comando.era.listar.vazio"));
+            return;
+        }
+        sender.sendMessage(messages.message("comando.era.listar.titulo",
+                "{total}", String.valueOf(eraManager.total())));
+        for (Era era : eraManager.listar()) {
+            sender.sendMessage(messages.message("comando.era.listar.linha",
+                    "{ordem}", String.valueOf(era.getOrdem()),
+                    "{nome}", era.getNome(),
+                    "{mundo}", eraManager.getMundoExibicao(era),
+                    "{estado}", eraManager.getEstadoMundo(era)));
+        }
+    }
+
+    private void sendEraInfo(CommandSender sender, String id) {
+        Era era = eraManager.getPorId(id);
+        if (era == null) {
+            sender.sendMessage(messages.message("comando.era.nao-encontrada", "{id}", id));
+            return;
+        }
+        sender.sendMessage(messages.message("comando.era.info.titulo", "{nome}", era.getNome()));
+        sender.sendMessage(messages.message("comando.era.info.ordem",
+                "{ordem}", String.valueOf(era.getOrdem())));
+        sender.sendMessage(messages.message("comando.era.info.mundo",
+                "{mundo}", eraManager.getMundoExibicao(era)));
+        sender.sendMessage(messages.message("comando.era.info.estado",
+                "{estado}", eraManager.getEstadoMundo(era)));
+        sender.sendMessage(messages.message("comando.era.info.descricao",
+                "{descricao}", era.getDescricao()));
     }
 
     @Override

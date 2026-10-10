@@ -21,6 +21,7 @@ comando:
     reload: "&f/threeeras reload &7- recarrega as configuracoes &8(admin)"
     armazenamento: "&f/threeeras armazenamento &7- diagnostico do armazenamento &8(admin para alterar)"
     jogador: "&f/threeeras jogador [nick] &7- dados do jogador"
+    era: "&f/threeeras era <listar|info> &7- eras do servidor"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -56,3 +57,16 @@ comando:
       primeiro: "&7Primeiro acesso: &f{data}"
       visto: "&7Ultimo acesso: &f{data}"
       tempo: "&7Tempo de jogo: &f{tempo}"
+  era:
+    uso: "&cUse: /threeeras era <listar|info> [id]"
+    nao-encontrada: "&cEra nao encontrada: {id}"
+    listar:
+      titulo: "&8--- Eras ({total}) ---"
+      vazio: "&7Nenhuma era definida em eras.yml."
+      linha: "&f{ordem}. &b{nome} &8- &7mundo: &f{mundo} &8({estado})"
+    info:
+      titulo: "&8--- Era {nome} ---"
+      ordem: "&7Ordem de progressao: &f{ordem}"
+      mundo: "&7Mundo destino: &f{mundo}"
+      estado: "&7Estado do mundo: &f{estado}"
+      descricao: "&7{descricao}"
