@@ -27,6 +27,7 @@ comando:
     item: "&f/threeeras item <listar|info|dar|identificar> &7- itens do servidor"
     quest: "&f/threeeras quest <listar|info|iniciar|abandonar> &7- missoes"
     boss: "&f/threeeras boss <listar|info|criar|remover|ir> &7- chefes"
+    evento: "&f/threeeras evento <listar|forcars> &7- eventos agendados"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -194,3 +195,14 @@ comando:
     consumo: "&2O solo desaparece sob voce. Mova-se!"
     percepcao: "&dVocê a ve {direcao}, a cerca de {distancia} metros."
     percepcao-atrai: "&dUma fascinacao te puxa na direcao dela."
+  evento:
+    uso: "&cUse: /threeeras evento <listar|forcars>"
+    inexistente: "&cEvento nao encontrado: {id}"
+    listar:
+      titulo: "&8--- Eventos ({total}) ---"
+      vazio: "&7Nenhum evento definido em eventos.yml."
+      linha: "&f{id} &8- &b{nome} &8[{tipo}] &7({estado})"
+    forcars:
+      uso: "&cUse: /threeeras evento forcars <id>"
+      sem-jogadores: "&7Nenhum jogador online: evento nao disparado."
+      ok: "&aEvento &f{id} &adisparado."

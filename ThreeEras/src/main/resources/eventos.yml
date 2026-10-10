@@ -1,0 +1,44 @@
+# ThreeEras - eventos agendados
+#
+# tipo: AVISO (mensagem + efeito) | INVASAO (criaturas) | ITEM (item no chao)
+# intervalo-min/max-minutos: janela aleatoria entre disparos (min 1)
+# habilitado: false desativa o evento sem apagar a definicao
+# efeito (AVISO): cegueira | nausea | lentidao | fraqueza
+# entidade (INVASAO): EntityType do Bukkit (ex.: ZOMBIE, ZOMBIE_VILLAGER)
+# item (ITEM): id de um item de itens.yml
+# mensagens aceitam codigos & de cor
+
+eventos:
+
+  sussurro-nas-ruinas:
+    nome: "Sussurro nas Ruinas"
+    descricao: "Os equipamentos registram silencio enquanto algo observa."
+    habilitado: true
+    tipo: AVISO
+    intervalo-min-minutos: 25
+    intervalo-max-minutos: 50
+    duracao-segundos: 12
+    efeito: cegueira
+    efeito-amplificador: 0
+    mensagem-inicio: "&8[ThreeEras] &7Os equipamentos registram silencio. Algo proximo presta atencao."
+
+  homunculos-residuais:
+    nome: "Homunculos Residuais"
+    descricao: "Restos de violencia aparecem perto dos sobreviventes."
+    habilitado: true
+    tipo: INVASAO
+    intervalo-min-minutos: 40
+    intervalo-max-minutos: 90
+    quantidade: 3
+    entidade: ZOMBIE_VILLAGER
+    mensagem-inicio: "&8[ThreeEras] &7Homunculos residuais foram avistados nas proximidades. Cuidado."
+
+  amostra-perdida:
+    nome: "Amostra Perdida"
+    descricao: "Um frasco do Projeto Erebus escorrega da carga de alguem."
+    habilitado: true
+    tipo: ITEM
+    intervalo-min-minutos: 60
+    intervalo-max-minutos: 120
+    item: amostra-7-4
+    mensagem-inicio: "&8[ThreeEras] &bUm fragmento de pesquisa foi deixado para tras. Procure no chao."

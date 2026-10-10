@@ -5,6 +5,7 @@ import br.com.threeeras.boss.BossManager;
 import br.com.threeeras.command.ThreeErasCommand;
 import br.com.threeeras.config.Messages;
 import br.com.threeeras.era.EraManager;
+import br.com.threeeras.evento.EventoManager;
 import br.com.threeeras.item.ItemManager;
 import br.com.threeeras.lore.LoreManager;
 import br.com.threeeras.npc.NpcInteractListener;
@@ -27,6 +28,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private ItemManager itemManager;
     private QuestManager questManager;
     private BossManager bossManager;
+    private EventoManager eventoManager;
 
     @Override
     public void onEnable() {
@@ -56,6 +58,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
         bossManager = new BossManager(this);
         bossManager.load();
         new BossListener(this, bossManager).register();
+
+        eventoManager = new EventoManager(this);
+        eventoManager.load();
+        eventoManager.start();
 
         storage = new StorageManager(this);
         storage.load();
@@ -116,6 +122,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
         return bossManager;
     }
 
+    public EventoManager getEventoManager() {
+        return eventoManager;
+    }
+
     private void validarEraInicial() {
         String inicial = getConfig().getString("jogadores.era-inicial", "medieval");
         if (!eraManager.existe(inicial)) {
@@ -129,6 +139,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
         // Joga o cache para a memoria do storage e grava sincronamente.
         playerManager.flushCacheToStorage();
         bossManager.shutdown();
+        eventoManager.shutdown();
         storage.shutdown();
         getLogger().info("ThreeEras foi desligado.");
     }
