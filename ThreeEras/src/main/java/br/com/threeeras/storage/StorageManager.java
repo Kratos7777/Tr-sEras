@@ -7,6 +7,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -117,7 +118,7 @@ public final class StorageManager {
         final String snapshot;
         try {
             snapshot = dados.saveToString();
-        } catch (IOException e) {
+        } catch (RuntimeException e) {
             plugin.getLogger().severe("Falha ao serializar dados.yml: " + e.getMessage());
             dirty.set(true);
             salvando.set(false);

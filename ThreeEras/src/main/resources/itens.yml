@@ -21,7 +21,7 @@ itens:
 
   estandarte-faixa-vermelha:
     era: apocaliptica
-    material: RED_BANNER
+    material: SHIELD
     nome: "&cEstandarte com faixa vermelha"
     quantidade: 1
     lore:

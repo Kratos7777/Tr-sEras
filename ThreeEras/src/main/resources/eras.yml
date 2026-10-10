@@ -9,7 +9,7 @@
 eras:
   medieval:
     nome: "Era Medieval"
-    mundo: ""
+    mundo: "world"
     ordem: 1
     descricao: "Reinos, exploracao e o inicio da historia."
   apocaliptica:

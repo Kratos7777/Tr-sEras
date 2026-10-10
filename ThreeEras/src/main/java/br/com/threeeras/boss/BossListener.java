@@ -3,6 +3,7 @@ package br.com.threeeras.boss;
 import br.com.threeeras.ThreeErasPlugin;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -87,7 +88,8 @@ public final class BossListener implements Listener {
         List<Player> jogadores = new ArrayList<>();
         if (event.getDamager() instanceof Player player) {
             jogadores.add(player);
-        } else if (event.getDamager().getShooter() instanceof Player player) {
+        } else if (event.getDamager() instanceof Projectile projetil
+                && projetil.getShooter() instanceof Player player) {
             jogadores.add(player);
         }
         return jogadores;

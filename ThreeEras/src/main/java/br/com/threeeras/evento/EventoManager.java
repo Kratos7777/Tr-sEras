@@ -29,7 +29,7 @@ import java.util.Random;
  * tarefa verifica a cada 60 segundos quem deve disparar. Eventos sem
  * jogadores online nao disparam (o intervalo e reagendado).</p>
  */
-public final class EventManager {
+public final class EventoManager {
 
     private static final String FILE_NAME = "eventos.yml";
     private static final long VERIFICACAO_TICKS = 1200L;
@@ -44,7 +44,7 @@ public final class EventManager {
     private final Map<String, Long> proximoDisparo = new LinkedHashMap<>();
     private BukkitRunnable tarefa;
 
-    public EventManager(ThreeErasPlugin plugin) {
+    public EventoManager(ThreeErasPlugin plugin) {
         this.plugin = plugin;
         this.messages = plugin.getMessages();
         this.itemManager = plugin.getItemManager();
