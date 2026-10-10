@@ -1,0 +1,47 @@
+# ThreeEras - NPCs de dialogo
+#
+# id:            identificador unico (usado em comandos)
+# nome:          nome exibido sobre a entidade
+# era:           era do NPC (validada contra eras.yml na carga)
+# tipo:          EntityType do Bukkit (ex.: VILLAGER)
+# dialogo:       linhas exibidas a cada clique (com cooldown de 2s)
+# por-descoberta: falas extras que so aparecem se o jogador descobriu
+#                 a entrada de lore indicada
+#
+# A posicao do NPC e salva em plugins/ThreeEras/npcs.yml pelo comando
+# /threeeras npc criar <id> (executado em jogo, na posicao desejada).
+
+npcs:
+
+  cronista-anselmo:
+    nome: "Cronista Anselmo"
+    era: medieval
+    tipo: VILLAGER
+    dialogo:
+      - "&7O reino escreveu o que quis. Eu escrevi o que vi."
+      - "&7Sete pragas, dizem os decretos. Conte os marcos da estrada e depois volte falar comigo."
+    por-descoberta:
+      marcos-contagem: "&bVoce viu o quarto marco. Entao ja sabe: mentiram sobre a conta."
+      pergunta-sem-resposta: "&bEssa lista de perguntas... eu a escrevi. Ninguem deveria te-la recuperado."
+
+  sobrevivente-dora:
+    nome: "Dora, a que sobrou"
+    era: apocaliptica
+    tipo: VILLAGER
+    dialogo:
+      - "&7O reino caiu. Nao houve heroi no fim, so gente com pressa."
+      - "&7Cada faccao jura que a versao dela e a mais antiga. Nenhuma esta completa."
+    por-descoberta:
+      faccoes-sobreviventes: "&bVoce leu os registros. Sim, descendemos dos sobreviventes. Sim, ninguem sabe o que os brasoes significam."
+      zonas-de-quietude: "&bAs zonas de quietude... la o vento nao passa. E as vezes, quando tudo para, eu ouco passos."
+
+  pesquisadora-vega:
+    nome: "Pesquisadora Vega"
+    era: futurista
+    tipo: VILLAGER
+    dialogo:
+      - "&7Nos catalogamos. Nao explicamos. Sao coisas diferentes."
+      - "&7A amostra 7-4 repete o comportamento ha quarenta dias. A causa continua sem explicacao."
+    por-descoberta:
+      catalogo-erebus-amostra-7-4: "&bVoce leu o catalogo. Entao sabe: recomendamos nao prosseguir. E vamos prosseguir."
+      registro-sem-origem: "&bA palavra aparece sete vezes. Sete. Isso nao deveria me incomodar. Incomoda."

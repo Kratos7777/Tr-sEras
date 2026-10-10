@@ -23,6 +23,7 @@ comando:
     jogador: "&f/threeeras jogador [nick] &7- dados do jogador"
     era: "&f/threeeras era <listar|info|ir> &7- eras do servidor"
     lore: "&f/threeeras lore <listar|ver|conceder> &7- registros e descobertas"
+    npc: "&f/threeeras npc <listar|criar|remover|ir> &7- NPCs de dialogo"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -94,3 +95,20 @@ comando:
     conceder:
       uso: "&cUse: /threeeras lore conceder <nick> <id>"
       ok: "&aEntrada &f{id} &aconcedida a &f{nick}&a."
+  npc:
+    uso: "&cUse: /threeeras npc <listar|criar|remover|ir>"
+    listar:
+      titulo: "&8--- NPCs ({total}) ---"
+      vazio: "&7Nenhum NPC definido em npcs.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7({estado})"
+    criar:
+      uso: "&cUse: /threeeras npc criar <id>"
+      console: "&cUse o comando no jogo para definir a posicao do NPC."
+      inexistente: "&cNPC nao encontrado em npcs.yml: {id}"
+      ok: "&aNPC &f{nome} &acriado na sua posicao."
+    remover:
+      ok: "&aNPC &f{id} &aremovido do mundo."
+      ausente: "&7Nenhuma entidade encontrada para &f{id}&7."
+    ir:
+      inexistente: "&cNPC {id} nao esta no mundo nem tem local salvo."
+      ok: "&aTeleportado para &f{nome}&a."

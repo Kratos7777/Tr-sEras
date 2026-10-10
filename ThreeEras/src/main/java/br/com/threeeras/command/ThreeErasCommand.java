@@ -5,6 +5,7 @@ import br.com.threeeras.config.Messages;
 import br.com.threeeras.era.Era;
 import br.com.threeeras.era.EraManager;
 import br.com.threeeras.lore.LoreManager;
+import br.com.threeeras.npc.NpcManager;
 import br.com.threeeras.player.PlayerData;
 import br.com.threeeras.player.PlayerManager;
 import br.com.threeeras.storage.StorageManager;
@@ -26,7 +27,7 @@ import java.util.Locale;
 
 /**
  * Comando /threeeras com subcomandos info, ajuda, reload, armazenamento,
- * jogador, era e lore.
+ * jogador, era, lore e npc.
  *
  * <p>Os managers sao resolvidos a partir dos getters do plugin: adicionar
  * um subsistema novo nao exige mudar a assinatura do construtor.</p>
@@ -37,7 +38,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private static final DateTimeFormatter DATA_HORA =
             DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withZone(ZoneId.systemDefault());
     private static final List<String> SUBCOMMANDS =
-            List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador", "era", "lore");
+            List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador", "era", "lore", "npc", "npcs");
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
@@ -45,7 +46,9 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private final PlayerManager playerManager;
     private final EraManager eraManager;
     private final LoreManager loreManager;
+    private final NpcManager npcManager;
     private final LoreCommandHandler loreHandler;
+    private final NpcCommandHandler npcHandler;
 
     public ThreeErasCommand(ThreeErasPlugin plugin, Messages messages) {
         this.plugin = plugin;
@@ -54,7 +57,9 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         this.playerManager = plugin.getPlayerManager();
         this.eraManager = plugin.getEraManager();
         this.loreManager = plugin.getLoreManager();
+        this.npcManager = plugin.getNpcManager();
         this.loreHandler = new LoreCommandHandler(plugin);
+        this.npcHandler = new NpcCommandHandler(plugin);
     }
 
     @Override
@@ -72,6 +77,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             case "jogador" -> handleJogador(sender, args);
             case "era" -> handleEra(sender, args);
             case "lore" -> loreHandler.handle(sender, args);
+            case "npc", "npcs" -> npcHandler.handle(sender, args);
             default -> sender.sendMessage(messages.prefixed("comando.desconhecido"));
         }
         return true;
@@ -94,6 +100,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(messages.plain("comando.ajuda.jogador"));
         sender.sendMessage(messages.plain("comando.ajuda.era"));
         sender.sendMessage(messages.plain("comando.ajuda.lore"));
+        sender.sendMessage(messages.plain("comando.ajuda.npc"));
         if (sender.hasPermission(PERMISSION)) {
             sender.sendMessage(messages.plain("comando.ajuda.reload"));
         }
@@ -108,6 +115,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             messages.load();
             eraManager.load();
             loreManager.load();
+            npcManager.load();
             sender.sendMessage(messages.prefixed("comando.reload.sucesso"));
         } catch (RuntimeException e) {
             plugin.getLogger().severe("Falha ao recarregar configuracoes: " + e.getMessage());
@@ -368,6 +376,9 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             }
             if (args[0].equalsIgnoreCase("lore")) {
                 return completarDe(args[1], "listar", "ver", "conceder");
+            }
+            if (args[0].equalsIgnoreCase("npc") || args[0].equalsIgnoreCase("npcs")) {
+                return completarDe(args[1], "listar", "criar", "remover", "ir");
             }
         }
         return List.of();
