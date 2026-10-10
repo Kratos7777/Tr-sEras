@@ -3,3 +3,7 @@
 geral:
   # true = registros de diagnostico extras no console
   debug: false
+
+armazenamento:
+  # intervalo do salvamento automatico em segundos (0 = desligado)
+  autosave-segundos: 300

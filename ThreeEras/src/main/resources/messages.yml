@@ -3,7 +3,7 @@
 # Valores com & ficam entre aspas para o YAML não tratar & como âncora.
 
 # Prefixo adicionado automaticamente nas mensagens de aviso.
-prefix: "&8[&bThreeEras&8]&r "
+prefix: "&8[&bThreeEras&8]&r"
 
 # Informações exibidas em /threeeras info.
 informacoes:
@@ -19,6 +19,7 @@ comando:
     info: "&f/threeeras info &7- informacoes do plugin"
     ajuda: "&f/threeeras ajuda &7- esta lista de comandos"
     reload: "&f/threeeras reload &7- recarrega as configuracoes &8(admin)"
+    armazenamento: "&f/threeeras armazenamento &7- diagnostico do armazenamento &8(admin para alterar)"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -26,3 +27,21 @@ comando:
   reload:
     sucesso: "&aConfiguracoes recarregadas com sucesso."
     falha: "&cFalha ao recarregar configuracoes. Veja o console do servidor."
+  armazenamento:
+    uso: "&cUse: /threeeras armazenamento <info|salvar|recarregar|definir>"
+    info:
+      titulo: "&8--- Diagnostico do armazenamento ---"
+      arquivo: "&7Arquivo: &f{caminho}"
+      existe: "&7Existe em disco: &f{existe} &8({tamanho} bytes)"
+      sujo: "&7Alteracoes nao salvas: &f{sujo}"
+      autosave: "&7Autosave: &f{autosave}"
+      chaves: "&7Chaves na raiz: &f{chaves}"
+    salvar:
+      ok: "&aGravacao de dados.yml iniciada (assincrona)."
+      vazio: "&7Nada a salvar: nenhuma alteracao pendente."
+    recarregar:
+      ok: "&aDados recarregados do disco."
+      aviso: "&eAtencao: alteracoes na memoria nao salvas foram descartadas."
+    definir:
+      uso: "&cUse: /threeeras armazenamento definir <chave> <valor>"
+      ok: "&aDefinido debug.{chave} = {valor}. Use /threeeras armazenamento salvar."

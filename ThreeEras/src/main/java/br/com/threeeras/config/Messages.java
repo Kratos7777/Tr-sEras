@@ -15,7 +15,7 @@ import java.io.File;
 public final class Messages {
 
     private static final String FILE_NAME = "messages.yml";
-    private static final String DEFAULT_PREFIX = "&8[&bThreeEras&8]&r ";
+    private static final String DEFAULT_PREFIX = "&8[&bThreeEras&8]&r";
 
     private final ThreeErasPlugin plugin;
     private YamlConfiguration config;
@@ -49,7 +49,19 @@ public final class Messages {
 
     /** Mensagem com o prefixo do plugin. */
     public Component prefixed(String path) {
-        return component(prefix() + " " + raw(path));
+        return message(path);
+    }
+
+    /**
+     * Mensagem com prefixo e substituicao de placeholders.
+     * Os replacements vao em pares: {"{de}", "para", "{outro}", "valor"}.
+     */
+    public Component message(String path, String... replacements) {
+        String text = raw(path);
+        for (int i = 0; i + 1 < replacements.length; i += 2) {
+            text = text.replace(replacements[i], replacements[i + 1]);
+        }
+        return component(prefix() + " " + text);
     }
 
     /** Mensagem sem prefixo (para listas e informativos). */
