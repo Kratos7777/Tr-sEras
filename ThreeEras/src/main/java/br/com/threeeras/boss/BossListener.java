@@ -47,23 +47,40 @@ public final class BossListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onDamage(EntityDamageByEntityEvent event) {
         Entity vitima = event.getEntity();
-        String bossId = bossManager.getIdDoBoss(vitima);
-        if (bossId == null || !bossManager.dominioAtivo(bossId)) {
+
+        // Manifestacao falsa (copia): desfaz ao ser atingida.
+        String donoCopia = bossManager.getDonoCopia(vitima);
+        if (donoCopia != null) {
+            event.setCancelled(true);
+            vitima.remove();
+            bossManager.copiaRemovida(donoCopia, vitima.getUniqueId());
+            for (Player player : atacantes(event)) {
+                player.sendMessage(plugin.getMessages().prefixed("comando.boss.reflexo-falsa"));
+            }
             return;
         }
-        event.setCancelled(true);
-        int restantes = bossManager.pilaresRestantes(bossId);
-        String nome = bossManager.nomeLimpo(bossId);
-        for (Player player : atacantes(event)) {
-            Long ultimo = ultimoAviso.get(player.getUniqueId());
-            long agora = System.currentTimeMillis();
-            if (ultimo != null && agora - ultimo < AVISO_MS) {
-                continue;
-            }
-            ultimoAviso.put(player.getUniqueId(), agora);
-            player.sendMessage(plugin.getMessages().message("comando.boss.protegido",
-                    "{nome}", nome, "{restantes}", String.valueOf(restantes)));
+
+        String bossId = bossManager.getIdDoBoss(vitima);
+        if (bossId == null) {
+            return;
         }
+        if (bossManager.dominioAtivo(bossId)) {
+            event.setCancelled(true);
+            int restantes = bossManager.pilaresRestantes(bossId);
+            String nome = bossManager.nomeLimpo(bossId);
+            for (Player player : atacantes(event)) {
+                Long ultimo = ultimoAviso.get(player.getUniqueId());
+                long agora = System.currentTimeMillis();
+                if (ultimo != null && agora - ultimo < AVISO_MS) {
+                    continue;
+                }
+                ultimoAviso.put(player.getUniqueId(), agora);
+                player.sendMessage(plugin.getMessages().message("comando.boss.protegido",
+                        "{nome}", nome, "{restantes}", String.valueOf(restantes)));
+            }
+            return;
+        }
+        bossManager.aoReceberDano(bossId, event);
     }
 
     private List<Player> atacantes(EntityDamageByEntityEvent event) {
@@ -79,6 +96,12 @@ public final class BossListener implements Listener {
     @EventHandler
     public void onDeath(EntityDeathEvent event) {
         Entity morto = event.getEntity();
+
+        String donoCopia = bossManager.getDonoCopia(morto);
+        if (donoCopia != null) {
+            bossManager.copiaRemovida(donoCopia, morto.getUniqueId());
+            return;
+        }
 
         String donoPilar = bossManager.getDonoPilar(morto);
         if (donoPilar != null) {

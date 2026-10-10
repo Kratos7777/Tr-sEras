@@ -1,6 +1,13 @@
 package br.com.threeeras.boss;
 
 import br.com.threeeras.ThreeErasPlugin;
+import br.com.threeeras.boss.comportamento.Absorcao;
+import br.com.threeeras.boss.comportamento.Consumo;
+import br.com.threeeras.boss.comportamento.DominioPilares;
+import br.com.threeeras.boss.comportamento.Escalada;
+import br.com.threeeras.boss.comportamento.Estase;
+import br.com.threeeras.boss.comportamento.Percepcao;
+import br.com.threeeras.boss.comportamento.Reflexo;
 import br.com.threeeras.config.Messages;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -12,10 +19,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
@@ -26,37 +31,37 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
 /**
- * Chefe piloto: Soberba ("O que nao se curva").
+ * Gerencia os chefes: definicoes (bosses.yml), spawn, comportamentos
+ * (regras anomalas), pilares, copias e limpeza.
  *
- * <p>Mecanica do piloto:</p>
- * <ul>
- *   <li>Nasce com N pilares ao redor. Enquanto existir pilar de pe, o
- *       dominio sustenta a criatura: ela nao pode ser ferida e jogadores
- *       próximos sofrem lentidao e fraqueza.</li>
- *   <li>Cada pilar destruido enfraquece o dominio; com todos destruidos,
- *       a criatura fica vulneravel.</li>
- * </ul>
- *
- * <p>Registro em memoria: entidade do chefe, UUIDs dos pilares vivos e a
- * tarefa de dominio. Tudo na thread principal.</p>
+ * <p>Registro em memoria: entidade do chefe, pilares vivos, copias vivas,
+ * comportamento e tarefa de tick. Tudo na thread principal.</p>
  */
 public final class BossManager {
 
     private static final String FILE_NAME = "bosses.yml";
+    private static final long INTERVALO_TICKS = 40L;
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
     private final File file;
     private final NamespacedKey chaveBoss;
     private final NamespacedKey chavePilar;
+    private final NamespacedKey chaveCopia;
+    private final Random random = new Random();
+
     private final Map<String, BossDefinition> definicoes = new LinkedHashMap<>();
+    private final Map<String, ComportamentoBoss> comportamentos = new HashMap<>();
     private final Map<String, LivingEntity> entidades = new HashMap<>();
     private final Map<String, Set<UUID>> pilaresVivos = new HashMap<>();
+    private final Map<String, Set<UUID>> copiasVivas = new HashMap<>();
     private final Map<String, BukkitRunnable> tarefas = new HashMap<>();
+    private final Map<String, Long> ticks = new HashMap<>();
 
     public BossManager(ThreeErasPlugin plugin) {
         this.plugin = plugin;
@@ -64,9 +69,10 @@ public final class BossManager {
         this.file = new File(plugin.getDataFolder(), FILE_NAME);
         this.chaveBoss = new NamespacedKey(plugin, "boss_id");
         this.chavePilar = new NamespacedKey(plugin, "pilar_boss");
+        this.chaveCopia = new NamespacedKey(plugin, "copia_boss");
     }
 
-    /** (Re)carrega bosses.yml do disco (copia do resource na primeira execucao). */
+    /** (Re)carrega bosses.yml e remonta os comportamentos. */
     public void load() {
         if (!file.exists()) {
             plugin.saveResource(FILE_NAME, false);
@@ -95,7 +101,29 @@ public final class BossManager {
 
         definicoes.clear();
         definicoes.putAll(carregadas);
-        plugin.getLogger().info("Chefes carregados (" + definicoes.size() + ").");
+        comportamentos.clear();
+        for (String id : definicoes.keySet()) {
+            ComportamentoBoss comportamento = comportamentoPara(id);
+            if (comportamento != null) {
+                comportamentos.put(id, comportamento);
+            }
+        }
+        plugin.getLogger().info("Chefes carregados (" + definicoes.size()
+                + "); comportamentos: " + comportamentos.size() + ".");
+    }
+
+    /** Mapeia cada chefe a sua regra anomala. */
+    private ComportamentoBoss comportamentoPara(String id) {
+        return switch (id.toLowerCase(Locale.ROOT)) {
+            case "soberba" -> new DominioPilares();
+            case "avareza" -> new Absorcao();
+            case "ira" -> new Escalada();
+            case "preguica" -> new Estase();
+            case "inveja" -> new Reflexo();
+            case "gula" -> new Consumo();
+            case "luxuria" -> new Percepcao();
+            default -> null;
+        };
     }
 
     public BossDefinition porId(String id) {
@@ -113,12 +141,12 @@ public final class BossManager {
         return definicoes.size();
     }
 
-    public NamespacedKey getChaveBoss() {
-        return chaveBoss;
+    public ComportamentoBoss getComportamento(String id) {
+        return comportamentos.get(id.toLowerCase(Locale.ROOT));
     }
 
-    public NamespacedKey getChavePilar() {
-        return chavePilar;
+    public NamespacedKey getChaveBoss() {
+        return chaveBoss;
     }
 
     /** Id do chefe gravado na entidade, ou null. */
@@ -131,11 +159,17 @@ public final class BossManager {
         return entity.getPersistentDataContainer().get(chavePilar, PersistentDataType.STRING);
     }
 
+    /** Id do chefe dono da copia, ou null. */
+    public String getDonoCopia(Entity entity) {
+        return entity.getPersistentDataContainer().get(chaveCopia, PersistentDataType.STRING);
+    }
+
     /** Entidade ativa do chefe, ou null. */
     public LivingEntity getEntidade(String id) {
-        LivingEntity entity = entidades.get(id.toLowerCase(Locale.ROOT));
+        String chave = id.toLowerCase(Locale.ROOT);
+        LivingEntity entity = entidades.get(chave);
         if (entity != null && entity.isDead()) {
-            limpar(id.toLowerCase(Locale.ROOT));
+            limpar(chave);
             return null;
         }
         return entity;
@@ -146,7 +180,12 @@ public final class BossManager {
         return pilaresVivos.getOrDefault(id.toLowerCase(Locale.ROOT), Set.of()).size();
     }
 
-    /** Cria o chefe e os pilares ao redor da posicao informada. */
+    /** Quantidade de copias vivas. */
+    public int contarCopias(String id) {
+        return copiasVivas.getOrDefault(id.toLowerCase(Locale.ROOT), Set.of()).size();
+    }
+
+    /** Cria o chefe (e pilares, quando houver) ao redor da posicao. */
     public boolean criar(String id, Location local) {
         BossDefinition def = porId(id);
         if (def == null) {
@@ -156,16 +195,16 @@ public final class BossManager {
         if (getEntidade(chave) != null) {
             return false;
         }
+        World mundo = local.getWorld();
+        if (mundo == null) {
+            return false;
+        }
         EntityType tipo;
         try {
             tipo = EntityType.valueOf(def.getEntidade().toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getLogger().warning("Chefe '" + def.getId() + "': entidade '"
                     + def.getEntidade() + "' invalida; abortado.");
-            return false;
-        }
-        World mundo = local.getWorld();
-        if (mundo == null) {
             return false;
         }
         Entity entidade = mundo.spawnEntity(local, tipo);
@@ -194,37 +233,71 @@ public final class BossManager {
                 pilarVivo.setCustomName("Pilar do Dominio");
                 pilarVivo.setCustomNameVisible(true);
                 pilarVivo.setGlowing(true);
-                pilarVivo.getPersistentDataContainer().set(
-                        chavePilar, PersistentDataType.STRING, chave);
+                pilarVivo.getPersistentDataContainer().set(chavePilar, PersistentDataType.STRING, chave);
                 pilares.add(pilarVivo.getUniqueId());
             } else {
                 pilar.remove();
             }
         }
         pilaresVivos.put(chave, pilares);
+        copiasVivas.put(chave, new HashSet<>());
         entidades.put(chave, vivo);
-        iniciarTarefaDominio(def);
+        ticks.put(chave, 0L);
+
+        ComportamentoBoss comportamento = comportamentos.get(chave);
+        if (comportamento != null) {
+            comportamento.aoNascer(contexto(chave, vivo, 0L));
+        }
+        iniciarTarefa(chave, def);
         return true;
     }
 
-    /** Remove chefe, pilares e tarefa de dominio. */
-    public void remover(String id) {
+    /** Cria uma copia (manifestacao falsa) proxima ao chefe. */
+    public boolean criarCopia(String id) {
         String chave = id.toLowerCase(Locale.ROOT);
-        LivingEntity entity = entidades.remove(chave);
-        if (entity != null && !entity.isDead()) {
-            entity.remove();
+        LivingEntity boss = getEntidade(chave);
+        BossDefinition def = porId(chave);
+        if (boss == null || def == null) {
+            return false;
         }
-        BukkitRunnable tarefa = tarefas.remove(chave);
-        if (tarefa != null) {
-            tarefa.cancel();
+        EntityType tipo;
+        try {
+            tipo = EntityType.valueOf(def.getEntidade().toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException e) {
+            return false;
         }
-        for (UUID uuid : pilaresVivos.getOrDefault(chave, Set.of())) {
-            Entity pilar = plugin.getServer().getEntity(uuid);
-            if (pilar != null && !pilar.isDead()) {
-                pilar.remove();
-            }
+        Location pos = boss.getLocation().clone().add(
+                (random.nextDouble() - 0.5) * 6.0, 0, (random.nextDouble() - 0.5) * 6.0);
+        Entity entidade = pos.getWorld().spawnEntity(pos, tipo);
+        if (!(entidade instanceof LivingEntity copia)) {
+            entidade.remove();
+            return false;
         }
-        pilaresVivos.remove(chave);
+        AttributeInstance attr = copia.getAttribute(Attribute.MAX_HEALTH);
+        double vida = Math.max(10.0, def.getVida() * 0.2);
+        if (attr != null) {
+            attr.setBaseValue(vida);
+        }
+        copia.setHealth(vida);
+        copia.setCustomName(formatarNome(def.getNome()));
+        copia.setCustomNameVisible(true);
+        copia.setGlowing(true);
+        copia.getPersistentDataContainer().set(chaveCopia, PersistentDataType.STRING, chave);
+        copiasVivas.computeIfAbsent(chave, k -> new HashSet<>()).add(copia.getUniqueId());
+        return true;
+    }
+
+    /** Remove a copia do registro (chamado quando ela morre/desfeita). */
+    public void copiaRemovida(String bossId, UUID copiaUuid) {
+        Set<UUID> copias = copiasVivas.get(bossId.toLowerCase(Locale.ROOT));
+        if (copias != null) {
+            copias.remove(copiaUuid);
+        }
+    }
+
+    /** Remove chefe, pilares, copias e tarefa. */
+    public void remover(String id) {
+        limpar(id.toLowerCase(Locale.ROOT));
     }
 
     /** Chamado pelo listener quando um pilar morre. */
@@ -234,8 +307,8 @@ public final class BossManager {
         if (pilares != null) {
             pilares.remove(pilarUuid);
         }
-        for (Player player : plugin.getServer().getOnlinePlayers()) {
-            int restantes = pilaresRestantes(chave);
+        int restantes = pilaresRestantes(chave);
+        for (var player : plugin.getServer().getOnlinePlayers()) {
             if (restantes > 0) {
                 player.sendMessage(messages.message("comando.boss.pilar-destruido",
                         "{restantes}", String.valueOf(restantes)));
@@ -247,9 +320,11 @@ public final class BossManager {
 
     /** Chamado pelo listener quando o chefe morre. */
     public void bossDerrotado(String bossId) {
-        limpar(bossId.toLowerCase(Locale.ROOT));
-        for (Player player : plugin.getServer().getOnlinePlayers()) {
-            player.sendMessage(messages.prefixed("comando.boss.derrotado"));
+        String chave = bossId.toLowerCase(Locale.ROOT);
+        String nome = nomeLimpo(chave);
+        limpar(chave);
+        for (var player : plugin.getServer().getOnlinePlayers()) {
+            player.sendMessage(messages.message("comando.boss.derrotado", "{nome}", nome));
         }
     }
 
@@ -258,23 +333,46 @@ public final class BossManager {
         return pilaresRestantes(bossId) > 0;
     }
 
+    /** Delega o evento de dano ao comportamento do chefe. */
+    public void aoReceberDano(String bossId, EntityDamageByEntityEvent event) {
+        String chave = bossId.toLowerCase(Locale.ROOT);
+        LivingEntity boss = entidades.get(chave);
+        ComportamentoBoss comportamento = comportamentos.get(chave);
+        if (boss == null || comportamento == null) {
+            return;
+        }
+        comportamento.aoReceberDano(contexto(chave, boss, 0L), event);
+    }
+
     private void limpar(String chave) {
         LivingEntity entity = entidades.remove(chave);
         BukkitRunnable tarefa = tarefas.remove(chave);
         if (tarefa != null) {
             tarefa.cancel();
         }
+        ticks.remove(chave);
         for (UUID uuid : pilaresVivos.getOrDefault(chave, Set.of())) {
             Entity pilar = plugin.getServer().getEntity(uuid);
             if (pilar != null && !pilar.isDead()) {
                 pilar.remove();
             }
         }
+        for (UUID uuid : copiasVivas.getOrDefault(chave, Set.of())) {
+            Entity copia = plugin.getServer().getEntity(uuid);
+            if (copia != null && !copia.isDead()) {
+                copia.remove();
+            }
+        }
         pilaresVivos.remove(chave);
+        copiasVivas.remove(chave);
     }
 
-    private void iniciarTarefaDominio(BossDefinition def) {
-        String chave = def.getId().toLowerCase(Locale.ROOT);
+    private BossContexto contexto(String chave, LivingEntity boss, long tick) {
+        BossDefinition def = porId(chave);
+        return new BossContexto(plugin, messages, def, boss, this, tick);
+    }
+
+    private void iniciarTarefa(String chave, BossDefinition def) {
         BukkitRunnable tarefa = new BukkitRunnable() {
             @Override
             public void run() {
@@ -283,22 +381,19 @@ public final class BossManager {
                     cancel();
                     return;
                 }
-                if (!dominioAtivo(chave)) {
-                    return;
-                }
-                for (Player player : boss.getWorld().getPlayers()) {
-                    if (player.getLocation().distanceSquared(boss.getLocation())
-                            > def.getDominioRaio() * def.getDominioRaio()) {
-                        continue;
+                long tick = ticks.merge(chave, 1L, Long::sum) - 1;
+                ComportamentoBoss comportamento = comportamentos.get(chave);
+                if (comportamento != null) {
+                    try {
+                        comportamento.executar(contexto(chave, boss, tick));
+                    } catch (RuntimeException e) {
+                        plugin.getLogger().severe("Erro no comportamento do chefe '" + chave
+                                + "': " + e.getMessage());
                     }
-                    player.addPotionEffect(new PotionEffect(
-                            PotionEffectType.SLOWNESS, 60, def.getLentidaoAmplificador()));
-                    player.addPotionEffect(new PotionEffect(
-                            PotionEffectType.WEAKNESS, 60, def.getFraquezaAmplificador()));
                 }
             }
         };
-        tarefa.runTaskTimer(plugin, 40L, 40L);
+        tarefa.runTaskTimer(plugin, INTERVALO_TICKS, INTERVALO_TICKS);
         tarefas.put(chave, tarefa);
     }
 
@@ -306,9 +401,10 @@ public final class BossManager {
         return nome.replace('&', '\u00A7');
     }
 
-    /** Para todas as tarefas ativas (usado no onDisable). */
+    /** Para todas as tarefas e remove entidades (onDisable). */
     public void shutdown() {
-        List<String> chaves = new ArrayList<>(tarefas.keySet());
+        List<String> chaves = new ArrayList<>(entidades.keySet());
+        chaves.addAll(new ArrayList<>(tarefas.keySet()));
         for (String chave : chaves) {
             LivingEntity entity = entidades.get(chave);
             if (entity != null && !entity.isDead()) {
@@ -321,6 +417,8 @@ public final class BossManager {
         }
         entidades.clear();
         pilaresVivos.clear();
+        copiasVivas.clear();
+        ticks.clear();
     }
 
     /** Posicao do chefe para teleporte, ou null. */
@@ -329,7 +427,7 @@ public final class BossManager {
         return entity != null ? entity.getLocation() : null;
     }
 
-    /** Nomes de exibicao sem codigos de cor, para mensagens. */
+    /** Nome de exibicao sem codigos de cor, para mensagens. */
     public String nomeLimpo(String id) {
         BossDefinition def = porId(id);
         if (def == null) {
