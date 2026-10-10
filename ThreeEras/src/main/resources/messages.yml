@@ -20,6 +20,7 @@ comando:
     ajuda: "&f/threeeras ajuda &7- esta lista de comandos"
     reload: "&f/threeeras reload &7- recarrega as configuracoes &8(admin)"
     armazenamento: "&f/threeeras armazenamento &7- diagnostico do armazenamento &8(admin para alterar)"
+    jogador: "&f/threeeras jogador [nick] &7- dados do jogador"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -45,3 +46,13 @@ comando:
     definir:
       uso: "&cUse: /threeeras armazenamento definir <chave> <valor>"
       ok: "&aDefinido debug.{chave} = {valor}. Use /threeeras armazenamento salvar."
+  jogador:
+    uso: "&cUse: /threeeras jogador [nick]"
+    outro-sem-permissao: "&cVoce so pode consultar seus proprios dados."
+    nao-encontrado: "&cNenhum dado encontrado para o jogador {nick}."
+    info:
+      titulo: "&8--- Jogador {nick} ---"
+      era: "&7Era atual: &f{era}"
+      primeiro: "&7Primeiro acesso: &f{data}"
+      visto: "&7Ultimo acesso: &f{data}"
+      tempo: "&7Tempo de jogo: &f{tempo}"

@@ -2,35 +2,46 @@ package br.com.threeeras.command;
 
 import br.com.threeeras.ThreeErasPlugin;
 import br.com.threeeras.config.Messages;
+import br.com.threeeras.player.PlayerData;
+import br.com.threeeras.player.PlayerManager;
 import br.com.threeeras.storage.StorageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * Comando /threeeras com subcomandos info, ajuda, reload e armazenamento.
+ * Comando /threeeras com subcomandos info, ajuda, reload, armazenamento e jogador.
  */
 public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
 
     private static final String PERMISSION = "threeeras.admin";
+    private static final DateTimeFormatter DATA_HORA =
+            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withZone(ZoneId.systemDefault());
     private static final List<String> SUBCOMMANDS =
-            List.of("info", "ajuda", "reload", "armazenamento", "storage");
+            List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador");
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
     private final StorageManager storage;
+    private final PlayerManager playerManager;
 
-    public ThreeErasCommand(ThreeErasPlugin plugin, Messages messages, StorageManager storage) {
+    public ThreeErasCommand(ThreeErasPlugin plugin, Messages messages,
+                            StorageManager storage, PlayerManager playerManager) {
         this.plugin = plugin;
         this.messages = messages;
         this.storage = storage;
+        this.playerManager = playerManager;
     }
 
     @Override
@@ -45,6 +56,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             case "ajuda", "help" -> sendHelp(sender);
             case "reload" -> reload(sender);
             case "armazenamento", "storage" -> handleStorage(sender, args);
+            case "jogador" -> handleJogador(sender, args);
             default -> sender.sendMessage(messages.prefixed("comando.desconhecido"));
         }
         return true;
@@ -64,6 +76,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(messages.plain("comando.ajuda.info"));
         sender.sendMessage(messages.plain("comando.ajuda.ajuda"));
         sender.sendMessage(messages.plain("comando.ajuda.armazenamento"));
+        sender.sendMessage(messages.plain("comando.ajuda.jogador"));
         if (sender.hasPermission(PERMISSION)) {
             sender.sendMessage(messages.plain("comando.ajuda.reload"));
         }
@@ -164,6 +177,53 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             return false;
         }
         return true;
+    }
+
+    private void handleJogador(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(messages.prefixed("comando.jogador.uso"));
+                return;
+            }
+            sendPlayerInfo(sender, playerManager.get(player));
+            return;
+        }
+        String nick = args[1];
+        if (!sender.hasPermission(PERMISSION) && sender instanceof Player self
+                && !self.getName().equalsIgnoreCase(nick)) {
+            sender.sendMessage(messages.prefixed("comando.jogador.outro-sem-permissao"));
+            return;
+        }
+        PlayerData data = playerManager.findByName(nick);
+        if (data == null) {
+            sender.sendMessage(messages.message("comando.jogador.nao-encontrado", "{nick}", nick));
+            return;
+        }
+        sendPlayerInfo(sender, data);
+    }
+
+    private void sendPlayerInfo(CommandSender sender, PlayerData data) {
+        sender.sendMessage(messages.message("comando.jogador.info.titulo", "{nick}", data.getNome()));
+        sender.sendMessage(messages.message("comando.jogador.info.era", "{era}", data.getEraAtual()));
+        sender.sendMessage(messages.message("comando.jogador.info.primeiro",
+                "{data}", DATA_HORA.format(Instant.ofEpochMilli(data.getPrimeiroJoin()))));
+        sender.sendMessage(messages.message("comando.jogador.info.visto",
+                "{data}", DATA_HORA.format(Instant.ofEpochMilli(data.getUltimoVisto()))));
+        sender.sendMessage(messages.message("comando.jogador.info.tempo",
+                "{tempo}", formatarTempo(data.getTempoJogadoSegundos())));
+    }
+
+    private static String formatarTempo(long segundos) {
+        long horas = segundos / 3600L;
+        long minutos = (segundos % 3600L) / 60L;
+        long segs = segundos % 60L;
+        if (horas > 0) {
+            return String.format(Locale.ROOT, "%dh %02dmin %02ds", horas, minutos, segs);
+        }
+        if (minutos > 0) {
+            return String.format(Locale.ROOT, "%dmin %02ds", minutos, segs);
+        }
+        return String.format(Locale.ROOT, "%ds", segs);
     }
 
     @Override

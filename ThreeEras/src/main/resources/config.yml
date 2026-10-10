@@ -7,3 +7,7 @@ geral:
 armazenamento:
   # intervalo do salvamento automatico em segundos (0 = desligado)
   autosave-segundos: 300
+
+jogadores:
+  # era inicial de quem entra pela primeira vez no servidor
+  era-inicial: "medieval"

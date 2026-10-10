@@ -27,6 +27,7 @@ public final class StorageManager {
     private final ThreeErasPlugin plugin;
     private final File file;
     private final AtomicBoolean dirty = new AtomicBoolean(false);
+    private final AtomicBoolean salvando = new AtomicBoolean(false);
 
     private YamlConfiguration dados;
     private BukkitTask autosaveTask;
@@ -67,6 +68,14 @@ public final class StorageManager {
         return dados.getKeys(false);
     }
 
+    /** Chaves filhas de uma secao (ex.: os UUIDs em "jogadores"). */
+    public Set<String> getKeys(String path, boolean deep) {
+        if (!dados.isConfigurationSection(path)) {
+            return Set.of();
+        }
+        return dados.getConfigurationSection(path).getKeys(deep);
+    }
+
     public boolean contains(String path) {
         return dados.contains(path);
     }
@@ -79,14 +88,26 @@ public final class StorageManager {
         return dados.getInt(path, def);
     }
 
+    public long getLong(String path, long def) {
+        return dados.getLong(path, def);
+    }
+
     public void set(String path, Object value) {
         dados.set(path, value);
         dirty.set(true);
     }
 
-    /** Gravacao assincrona; chamar sempre da thread principal. */
+    /**
+     * Gravacao assincrona; chamar sempre da thread principal.
+     * Se outra gravacao ja estiver em andamento, esta e reagendada para o
+     * proximo ciclo (autosave ou desligamento) para evitar escrita fora de ordem.
+     */
     public void saveAsync() {
-        if (!dirty.compareAndSet(true, false)) {
+        if (!dirty.get() || !dirty.compareAndSet(true, false)) {
+            return;
+        }
+        if (!salvando.compareAndSet(false, true)) {
+            dirty.set(true);
             return;
         }
         final String snapshot;
@@ -95,6 +116,7 @@ public final class StorageManager {
         } catch (IOException e) {
             plugin.getLogger().severe("Falha ao serializar dados.yml: " + e.getMessage());
             dirty.set(true);
+            salvando.set(false);
             return;
         }
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> write(snapshot));
@@ -109,6 +131,8 @@ public final class StorageManager {
         } catch (IOException | InvalidConfigurationException e) {
             plugin.getLogger().severe("Falha ao salvar dados.yml: " + e.getMessage());
             dirty.set(true);
+        } finally {
+            salvando.set(false);
         }
     }
 
