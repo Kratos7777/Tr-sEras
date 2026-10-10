@@ -82,6 +82,10 @@ public final class QuestManager {
                     }
                     recompensas.add(recompensa);
                 }
+                if (objetivos.isEmpty()) {
+                    plugin.getLogger().warning("Missao '" + id
+                            + "' sem objetivos validos; nunca podera ser concluida.");
+                }
                 carregadas.put(id.toLowerCase(Locale.ROOT), new QuestDefinition(
                         id,
                         config.getString(base + ".nome", id),

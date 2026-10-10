@@ -1,0 +1,18 @@
+# ThreeEras - chefes (bosses)
+#
+# Piloto: Soberba - "O que nao se curva".
+# Enquanto houver pilares de pe, o dominio sustenta a criatura: ela nao
+# pode ser ferida e jogadores proximos sofrem lentidao e fraqueza.
+
+bosses:
+
+  soberba:
+    nome: "&6O que nao se curva"
+    era: medieval
+    entidade: RAVAGER
+    vida: 200.0
+    dominio:
+      raio: 20.0
+      lentidao: 2
+      fraqueza: 1
+    pilares: 3

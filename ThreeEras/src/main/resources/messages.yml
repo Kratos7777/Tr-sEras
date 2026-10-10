@@ -26,6 +26,7 @@ comando:
     npc: "&f/threeeras npc <listar|criar|remover|ir> &7- NPCs de dialogo"
     item: "&f/threeeras item <listar|info|dar|identificar> &7- itens do servidor"
     quest: "&f/threeeras quest <listar|info|iniciar|abandonar> &7- missoes"
+    boss: "&f/threeeras boss <listar|info|criar|remover|ir> &7- chefes"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -160,3 +161,28 @@ comando:
     progresso: "&aObjetivo concluido: &f{descricao}&a. Proximo: &f{proximo}"
     conclusao: "&a&lMissao concluida: &f{nome}"
     recompensa: "&aRecompensa recebida: &f{item} &ax{quantidade}"
+  boss:
+    uso: "&cUse: /threeeras boss <listar|info|criar|remover|ir>"
+    inexistente: "&cChefe nao encontrado: {id}"
+    listar:
+      titulo: "&8--- Chefes ({total}) ---"
+      vazio: "&7Nenhum chefe definido em bosses.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7({estado})"
+    info:
+      titulo: "&8--- {nome} ---"
+      linha: "&7Era: &f{era} &7| Vida: &f{vida} &7| Pilares: &f{pilares} &7| Restantes: &f{restantes}"
+    criar:
+      uso: "&cUse: /threeeras boss criar <id>"
+      console: "&cUse o comando no jogo para definir a posicao do chefe."
+      ja-ativo: "&7Este chefe ja esta no mundo."
+      falhou: "&cFalha ao criar o chefe. Veja o console."
+      ok: "&aChefe &f{nome} &acriado com &f{pilares} &apilares."
+    remover:
+      ok: "&aChefe &f{id} &aremovido do mundo."
+    ir:
+      dormente: "&cO chefe {id} nao esta no mundo."
+      ok: "&aTeleportado para o chefe &f{id}&a."
+    protegido: "&c{nome} esta protegido pelo dominio. Destrua os pilares restantes ({restantes})."
+    pilar-destruido: "&eUm pilar ruiu. Restam {restantes}."
+    dominio-cedeu: "&aO dominio cedeu! A criatura esta vulneravel."
+    derrotado: "&6O que nao se curva foi derrotado."

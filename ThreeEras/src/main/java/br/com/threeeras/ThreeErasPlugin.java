@@ -1,5 +1,7 @@
 package br.com.threeeras;
 
+import br.com.threeeras.boss.BossListener;
+import br.com.threeeras.boss.BossManager;
 import br.com.threeeras.command.ThreeErasCommand;
 import br.com.threeeras.config.Messages;
 import br.com.threeeras.era.EraManager;
@@ -24,6 +26,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private NpcManager npcManager;
     private ItemManager itemManager;
     private QuestManager questManager;
+    private BossManager bossManager;
 
     @Override
     public void onEnable() {
@@ -49,6 +52,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
         questManager = new QuestManager(this);
         questManager.load();
         new QuestProgressListener(this, questManager).register();
+
+        bossManager = new BossManager(this);
+        bossManager.load();
+        new BossListener(this, bossManager).register();
 
         storage = new StorageManager(this);
         storage.load();
@@ -105,6 +112,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
         return questManager;
     }
 
+    public BossManager getBossManager() {
+        return bossManager;
+    }
+
     private void validarEraInicial() {
         String inicial = getConfig().getString("jogadores.era-inicial", "medieval");
         if (!eraManager.existe(inicial)) {
@@ -117,6 +128,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
     public void onDisable() {
         // Joga o cache para a memoria do storage e grava sincronamente.
         playerManager.flushCacheToStorage();
+        bossManager.shutdown();
         storage.shutdown();
         getLogger().info("ThreeEras foi desligado.");
     }

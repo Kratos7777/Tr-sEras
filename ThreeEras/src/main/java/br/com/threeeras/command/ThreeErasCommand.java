@@ -1,6 +1,7 @@
 package br.com.threeeras.command;
 
 import br.com.threeeras.ThreeErasPlugin;
+import br.com.threeeras.boss.BossManager;
 import br.com.threeeras.config.Messages;
 import br.com.threeeras.era.Era;
 import br.com.threeeras.era.EraManager;
@@ -29,7 +30,7 @@ import java.util.Locale;
 
 /**
  * Comando /threeeras com subcomandos info, ajuda, reload, armazenamento,
- * jogador, era, lore, npc, item e quest.
+ * jogador, era, lore, npc, item, quest e boss.
  *
  * <p>Os managers sao resolvidos a partir dos getters do plugin: adicionar
  * um subsistema novo nao exige mudar a assinatura do construtor.</p>
@@ -41,7 +42,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withZone(ZoneId.systemDefault());
     private static final List<String> SUBCOMMANDS =
             List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador", "era",
-                    "lore", "npc", "npcs", "item", "itens", "quest", "quests");
+                    "lore", "npc", "npcs", "item", "itens", "quest", "quests", "boss", "bosses");
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
@@ -52,10 +53,12 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private final NpcManager npcManager;
     private final ItemManager itemManager;
     private final QuestManager questManager;
+    private final BossManager bossManager;
     private final LoreCommandHandler loreHandler;
     private final NpcCommandHandler npcHandler;
     private final ItemCommandHandler itemHandler;
     private final QuestCommandHandler questHandler;
+    private final BossCommandHandler bossHandler;
 
     public ThreeErasCommand(ThreeErasPlugin plugin, Messages messages) {
         this.plugin = plugin;
@@ -67,10 +70,12 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         this.npcManager = plugin.getNpcManager();
         this.itemManager = plugin.getItemManager();
         this.questManager = plugin.getQuestManager();
+        this.bossManager = plugin.getBossManager();
         this.loreHandler = new LoreCommandHandler(plugin);
         this.npcHandler = new NpcCommandHandler(plugin);
         this.itemHandler = new ItemCommandHandler(plugin);
         this.questHandler = new QuestCommandHandler(plugin);
+        this.bossHandler = new BossCommandHandler(plugin);
     }
 
     @Override
@@ -91,6 +96,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             case "npc", "npcs" -> npcHandler.handle(sender, args);
             case "item", "itens" -> itemHandler.handle(sender, args);
             case "quest", "quests" -> questHandler.handle(sender, args);
+            case "boss", "bosses" -> bossHandler.handle(sender, args);
             default -> sender.sendMessage(messages.prefixed("comando.desconhecido"));
         }
         return true;
@@ -116,6 +122,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(messages.plain("comando.ajuda.npc"));
         sender.sendMessage(messages.plain("comando.ajuda.item"));
         sender.sendMessage(messages.plain("comando.ajuda.quest"));
+        sender.sendMessage(messages.plain("comando.ajuda.boss"));
         if (sender.hasPermission(PERMISSION)) {
             sender.sendMessage(messages.plain("comando.ajuda.reload"));
         }
@@ -133,6 +140,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             npcManager.load();
             itemManager.load();
             questManager.load();
+            bossManager.load();
             sender.sendMessage(messages.prefixed("comando.reload.sucesso"));
         } catch (RuntimeException e) {
             plugin.getLogger().severe("Falha ao recarregar configuracoes: " + e.getMessage());
@@ -402,6 +410,9 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             }
             if (args[0].equalsIgnoreCase("quest") || args[0].equalsIgnoreCase("quests")) {
                 return completarDe(args[1], "listar", "info", "iniciar", "abandonar");
+            }
+            if (args[0].equalsIgnoreCase("boss") || args[0].equalsIgnoreCase("bosses")) {
+                return completarDe(args[1], "listar", "info", "criar", "remover", "ir");
             }
         }
         return List.of();
