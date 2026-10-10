@@ -1,0 +1,5 @@
+# ThreeEras - configuracao principal
+
+geral:
+  # true = registros de diagnostico extras no console
+  debug: false

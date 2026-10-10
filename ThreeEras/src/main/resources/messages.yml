@@ -1,0 +1,28 @@
+# ThreeEras - mensagens do plugin
+# Use & seguido de código de cor (ex.: &a verde, &c vermelho, &7 cinza).
+# Valores com & ficam entre aspas para o YAML não tratar & como âncora.
+
+# Prefixo adicionado automaticamente nas mensagens de aviso.
+prefix: "&8[&bThreeEras&8]&r "
+
+# Informações exibidas em /threeeras info.
+informacoes:
+  versao: "1.0.0"
+  autor: "ThreeEras"
+  descricao: "Plugin principal do servidor Tres Eras"
+
+comando:
+  sem-permissao: "&cVoce nao tem permissao para usar este subcomando."
+  desconhecido: "&cSubcomando inexistente. Use &f/threeeras ajuda&c."
+  ajuda:
+    cabecalho: "&bComandos disponiveis:"
+    info: "&f/threeeras info &7- informacoes do plugin"
+    ajuda: "&f/threeeras ajuda &7- esta lista de comandos"
+    reload: "&f/threeeras reload &7- recarrega as configuracoes &8(admin)"
+  info:
+    nome: "&bThreeEras &7- servidor Tres Eras"
+    autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
+    descricao: "&7{descricao}"
+  reload:
+    sucesso: "&aConfiguracoes recarregadas com sucesso."
+    falha: "&cFalha ao recarregar configuracoes. Veja o console do servidor."
