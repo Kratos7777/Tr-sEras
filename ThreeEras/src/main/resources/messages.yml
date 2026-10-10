@@ -58,7 +58,7 @@ comando:
       visto: "&7Ultimo acesso: &f{data}"
       tempo: "&7Tempo de jogo: &f{tempo}"
   era:
-    uso: "&cUse: /threeeras era <listar|info> [id]"
+    uso: "&cUse: /threeeras era <listar|info|ir> [id]"
     nao-encontrada: "&cEra nao encontrada: {id}"
     listar:
       titulo: "&8--- Eras ({total}) ---"
@@ -70,3 +70,10 @@ comando:
       mundo: "&7Mundo destino: &f{mundo}"
       estado: "&7Estado do mundo: &f{estado}"
       descricao: "&7{descricao}"
+    ir:
+      uso: "&cUse: /threeeras era ir <id>"
+      console: "&cApenas jogadores podem viajar entre eras."
+      sem-mundo: "&cA era {nome} ainda nao tem mundo configurado em eras.yml."
+      mundo-offline: "&cO mundo '{mundo}' da era {nome} nao esta carregado no servidor."
+      falhou: "&cFalha ao teleportar. Veja o console do servidor."
+      ok: "&aViagem concluida: &f{nome} &a(mundo &f{mundo}&a)."

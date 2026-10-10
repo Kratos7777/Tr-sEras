@@ -12,6 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.World;
 
 import java.io.File;
 import java.time.Instant;
@@ -248,6 +249,14 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             sendEraInfo(sender, args[2]);
             return;
         }
+        if (args[1].equalsIgnoreCase("ir")) {
+            if (args.length < 3) {
+                sender.sendMessage(messages.prefixed("comando.era.ir.uso"));
+                return;
+            }
+            irParaEra(sender, args[2]);
+            return;
+        }
         sender.sendMessage(messages.prefixed("comando.era.uso"));
     }
 
@@ -284,6 +293,48 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
                 "{descricao}", era.getDescricao()));
     }
 
+    /**
+     * Teleporta o jogador para o mundo da era e atualiza a era do jogador.
+     * Restrito a admin enquanto nao existir regra de progressao.
+     */
+    private void irParaEra(CommandSender sender, String id) {
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(messages.prefixed("comando.era.ir.console"));
+            return;
+        }
+        if (!player.hasPermission(PERMISSION)) {
+            sender.sendMessage(messages.prefixed("comando.sem-permissao"));
+            return;
+        }
+        Era era = eraManager.getPorId(id);
+        if (era == null) {
+            sender.sendMessage(messages.message("comando.era.nao-encontrada", "{id}", id));
+            return;
+        }
+        if (!era.temMundo()) {
+            sender.sendMessage(messages.message("comando.era.ir.sem-mundo", "{nome}", era.getNome()));
+            return;
+        }
+        World mundo = plugin.getServer().getWorld(era.getMundo());
+        if (mundo == null) {
+            sender.sendMessage(messages.message("comando.era.ir.mundo-offline",
+                    "{mundo}", era.getMundo(), "{nome}", era.getNome()));
+            return;
+        }
+        boolean teleportou = player.teleport(mundo.getSpawnLocation());
+        if (!teleportou) {
+            plugin.getLogger().severe("Falha ao teleportar " + player.getName()
+                    + " para o mundo " + mundo.getName() + ".");
+            sender.sendMessage(messages.prefixed("comando.era.ir.falhou"));
+            return;
+        }
+        PlayerData data = playerManager.get(player);
+        data.setEraAtual(era.getId());
+        playerManager.save(data);
+        sender.sendMessage(messages.message("comando.era.ir.ok",
+                "{nome}", era.getNome(), "{mundo}", mundo.getName()));
+    }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
@@ -299,17 +350,25 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             }
             return suggestions;
         }
-        if (args.length == 2 && (args[0].equalsIgnoreCase("armazenamento")
-                || args[0].equalsIgnoreCase("storage"))) {
-            String input = args[1].toLowerCase(Locale.ROOT);
-            List<String> suggestions = new ArrayList<>();
-            for (String sub : List.of("info", "salvar", "recarregar", "definir")) {
-                if (sub.startsWith(input)) {
-                    suggestions.add(sub);
-                }
+        if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("armazenamento") || args[0].equalsIgnoreCase("storage")) {
+                return completarDe(args[1], "info", "salvar", "recarregar", "definir");
             }
-            return suggestions;
+            if (args[0].equalsIgnoreCase("era")) {
+                return completarDe(args[1], "listar", "info", "ir");
+            }
         }
         return List.of();
+    }
+
+    private List<String> completarDe(String entrada, String... opcoes) {
+        String input = entrada.toLowerCase(Locale.ROOT);
+        List<String> suggestions = new ArrayList<>();
+        for (String opcao : opcoes) {
+            if (opcao.startsWith(input)) {
+                suggestions.add(opcao);
+            }
+        }
+        return suggestions;
     }
 }
