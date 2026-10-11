@@ -50,3 +50,10 @@
 | — | Conexão ANORMAL: A1+A2 como estado de trabalho; A3 congelada |
 | — | Natureza dos Sete: indefinida (estado de trabalho mais seguro) |
 | — | Ordem de progressão dos chefes: a definir |
+
+## Decisões de planejamento aprovadas em 2026-10-11
+
+- Prosseguir com a arquitetura da campanha nova sem substituir os IDs/dados das rotas legadas; manter um estado de campanha distinto.
+- Iniciar o protótipo conceitual da Vila Inicial e da Capital, com desenvolvimento progressivo e sem coordenadas definitivas.
+- O diagrama de regiões, tempos de caminhada e conexões em `docs/PROTOTIPO_GEOGRAFICO_MEDIEVAL.md` é proposta de planejamento, não novo cânone narrativo.
+- Seed, mundo, mapa final, posição precisa das estruturas e biografias adicionais continuam em aberto.

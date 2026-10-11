@@ -22,3 +22,7 @@ Thumbs.db
 
 # artefato de release (unico binario versionado de proposito)
 !dist/*.jar
+
+# ambientes de build locais
+.tools/
+.m2/
