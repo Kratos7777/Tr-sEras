@@ -17,9 +17,11 @@ public final class LoreEntry {
     private final String texto;
     private final String status;
     private final String contradiz;
+    /** Rota de acesso exclusivo; "" = disponivel a todos. */
+    private final String rota;
 
     public LoreEntry(String id, String era, int camada, String tipo, String titulo,
-                     String texto, String status, String contradiz) {
+                     String texto, String status, String contradiz, String rota) {
         this.id = id;
         this.era = era;
         this.camada = camada;
@@ -28,6 +30,7 @@ public final class LoreEntry {
         this.texto = texto;
         this.status = status;
         this.contradiz = contradiz == null ? "" : contradiz;
+        this.rota = rota == null ? "" : rota;
     }
 
     public String getId() {
@@ -68,5 +71,17 @@ public final class LoreEntry {
 
     public boolean temContradiz() {
         return !contradiz.isBlank();
+    }
+
+    /**
+     * Rota de acesso exclusivo; "" significa disponivel a todos.
+     * Entradas com rota so aparecem/sao legiveis por quem esta naquela rota.
+     */
+    public String getRota() {
+        return rota;
+    }
+
+    public boolean temRota() {
+        return !rota.isBlank();
     }
 }

@@ -42,3 +42,36 @@ eventos:
     intervalo-max-minutos: 120
     item: amostra-7-4
     mensagem-inicio: "&8[ThreeEras] &bUm fragmento de pesquisa foi deixado para tras. Procure no chao."
+
+  expedicao-perdida:
+    nome: "Expedicao perdida"
+    descricao: "Uma equipe enviada a uma zona de quietude voltou sem explicar o que viu."
+    habilitado: true
+    tipo: AVISO
+    intervalo-min-minutos: 35
+    intervalo-max-minutos: 70
+    duracao-segundos: 10
+    efeito: nausea
+    efeito-amplificador: 0
+    mensagem-inicio: "&8[ThreeEras] &7Uma expedicao voltou de uma zona de quietude. Nenhum relato. Apenas o olhar."
+
+  contencao-rompida:
+    nome: "Contencao rompida"
+    descricao: "Uma estrutura antiga cede e algo do periodo das pragas sai."
+    habilitado: true
+    tipo: INVASAO
+    intervalo-min-minutos: 50
+    intervalo-max-minutos: 100
+    quantidade: 2
+    entidade: PILLAGER
+    mensagem-inicio: "&8[ThreeEras] &7Uma contencao antiga cedeu. Movimento armado foi detectado nas proximidades."
+
+  documento-ventado:
+    nome: "Documento ao vento"
+    descricao: "Uma copia antiga escapa de um esconderijo."
+    habilitado: true
+    tipo: ITEM
+    intervalo-min-minutos: 70
+    intervalo-max-minutos: 140
+    item: diario-do-estrategista
+    mensagem-inicio: "&8[ThreeEras] &7Um caderno antigo foi deixado para tras. Alguem vem procurando por ele."

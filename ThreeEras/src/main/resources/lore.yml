@@ -147,3 +147,199 @@ entradas:
     status: proposta
     titulo: "O registro sem origem"
     texto: "Documento recuperado sem numero de catalogo, sem autor e sem data. Uma palavra aparece repetida sete vezes: ANORMAL. A analise de dados nao consegue rastrear o documento a nenhum periodo das tres eras. A comissao nao aprovou conclusao alguma. O documento continua no arquivo."
+
+  # ---------- EXPANSAO: ERA MEDIEVAL (camada 1/2) ----------
+  guerra-cronologia:
+    era: medieval
+    camada: 1
+    tipo: registro
+    status: proposta
+    titulo: "Cronologia da guerra"
+    texto: "Versao da corte: primeiro relato no terceiro inverno do reinado; primeira criatura nomeada na primavera seguinte; percepcao das sete no quarto verao; mobilizacao total no quinto. Os marcos de estrada, porem, datam os mesmos eventos com diferenca de meses. A corte nunca explicou a diferenca."
+
+  primeira-criatura:
+    era: medieval
+    camada: 1
+    tipo: testemunho
+    status: proposta
+    titulo: "A que nao respondeu"
+    texto: "O primeiro avistamento sobrevivido: uma criatura imovel no limite de uma aldeia. O soldado que a viu gritou, atirou, fugiu. Ela nao se moveu. So depois souberam que a imobilidade era dela, e que o tempo de reacao dela era medida em estacoes."
+
+  capita-fronteira:
+    era: medieval
+    camada: 1
+    tipo: registro
+    status: proposta
+    titulo: "A Capita da fronteira"
+    texto: "Registro militar: unica sobrevivente do primeiro contato. Promovida por teimosia, nao por linhagem. Escreveu que os cadaveres das criaturas menores nao tinham posto nem insignia. A Corte classificou o relato como 'excesso de imaginacao de campanha'."
+
+  estrategista-miriel:
+    era: medieval
+    camada: 2
+    tipo: registro
+    status: proposta
+    titulo: "A estrategista da contencao"
+    texto: "Propos conter em vez de enfrentar: vigilias, estruturas de sustentacao, negociacoes de terreno. Venceu duas campanhas sem perdoar uma. Seu caderno, recuperado seculos depois, tem uma ultima linha: 'nao sei se estamos vencendo ou adiando'."
+
+  herege-tomas:
+    era: medieval
+    camada: 2
+    tipo: registro
+    status: proposta
+    titulo: "O herege que catalogava"
+    texto: "Dizia que as criaturas eram fenomenos, nao juizos. Foi silenciado, mas seus papeis sobreviveram em paredes e forros. Futuramente, toda a metodologia de estudo do Projeto Erebus descende dele — sem que o projeto saiba."
+
+  campo-cinzas:
+    era: medieval
+    camada: 1
+    tipo: ruina
+    status: proposta
+    titulo: "O campo de cinzas"
+    texto: "Onde a Ira foi enfrentada pela ultima vez. O terreno ainda guarda sinais: nada cresce em circulos, e quem la permanece por tempo suficiente descreve um pulso ritmado, como um coracao sob o solo."
+
+  vigilias-eternas:
+    era: medieval
+    camada: 2
+    tipo: ruina
+    status: proposta
+    contradiz: cronica-sete-pragas
+    titulo: "As vigilias eternas"
+    texto: "Ordens inteiras dedicadas a manter mecanismos ativos para adiar o despertar da Coisa que Permanece. A cronica oficial nao menciona as vigilias. Os edificios, porem, ainda estao de pe — e ainda funcionando, em partes."
+
+  # ---------- EXPANSAO: ERA APOCALIPTICA (camada 1/2) ----------
+  culto-dos-cinzas:
+    era: apocaliptica
+    camada: 1
+    tipo: testemunho
+    status: proposta
+    titulo: "O culto das cinzas"
+    texto: "Acreditam que o mundo foi reduzido a cinzas por um juizo e que reconstruir e pecado. Usam mascaras e reverenciam as zonas de quietude como santuarios. Nao sao homicidas por natureza, MAS sao perigosos por devocao."
+
+  coletores-de-ruinas:
+    era: apocaliptica
+    camada: 1
+    tipo: registro
+    status: proposta
+    titulo: "Os coletores de ruinas"
+    texto: "Saqueiam o passado por materia-prima. Para eles, um brasao do Reino das Raizes vale o metal e nada mais. A posse de conhecimento incomoda: mantem registros que nao sabem ler, apenas pesar."
+
+  escribas-do-resto:
+    era: apocaliptica
+    camada: 2
+    tipo: registro
+    status: proposta
+    titulo: "Os escribas do resto"
+    texto: "Copiam o que sobreviveu, inclusive o que nao entendem. Suas copias de terceira geracao tem erros que ja nao sao erros de caligrafia: sao frases que ninguem escreveu, preservadas por reverencia."
+
+  mapa-encolhido:
+    era: apocaliptica
+    camada: 2
+    tipo: inconsistencia
+    status: proposta
+    contradiz: faccoes-sobreviventes
+    titulo: "O mapa que encolhe"
+    texto: "Geracao apos geracao, os mapas das facoes mostram menos territorio seguro. Nao ha registro de derrota militar correspondente. O mundo nao foi conquistado — foi sendo abandonado por algo que nao aparece nos registros."
+
+  contencao-rachada:
+    era: apocaliptica
+    camada: 2
+    tipo: ruina
+    status: proposta
+    titulo: "Contencao rachada"
+    texto: "Uma estrutura de contencao medieval, aberta por dentro. Os mecanismos ao redor pararam ha muito, mas a area proxima permanece anormalmente quieta. Ninguem pode afirmar se a contencao falhou ou se cumpriu sua funcao por tempo demais."
+
+  # ---------- EXPANSAO: ERA FUTURISTA (camada 1/4) ----------
+  projeto-erebus-origem:
+    era: futurista
+    camada: 4
+    tipo: registro
+    status: proposta
+    titulo: "A origem do Projeto Erebus"
+    texto: "Documento interno: o projeto nasceu de um financiamento privado para 'estudo de anomalias persistentes'. Seu primeiro relato concluiu que as anomalias persistiam apesar de todos os protocolos. O projeto seguiu porque a conclusao era boa para o financiamento."
+
+  autoridade-de-contencao:
+    era: futurista
+    camada: 1
+    tipo: registro
+    status: proposta
+    titulo: "A Autoridade de contencao"
+    texto: "Organizacao que trata o passado como risco operacional. Sua doutrina: selar, isolar, restringir acesso. Documenta menos que o Erebus e age mais. As duas organizacoes se odeiam por metodo, nao por conclusao."
+
+  sindicato-de-recursos:
+    era: futurista
+    camada: 1
+    tipo: registro
+    status: proposta
+    titulo: "O sindicato de recursos anomalos"
+    texto: "Extrai, aproveita e comercializa vestigios anomalos. Um frasco de amostra 7-4 vale mais que um predio. O sindicato financia pesquisas que a Autoridade proibiria — e a Autoridade financia operacoes que o Erebus nao assinaria."
+
+  herdeiros-do-herege:
+    era: futurista
+    camada: 4
+    tipo: registro
+    status: proposta
+    titulo: "Os herdeiros do herege"
+    texto: "Grupo minoritario que defende que a historia oficial foi apagada por omissao, nao por acidente. Nao tem provas. Tem, porem, copias de documentos que o Erebus classifica como 'ruido de remontagem' — as mesmas frases que ninguem escreveu."
+
+  amostra-1-1:
+    era: futurista
+    camada: 4
+    tipo: registro
+    status: proposta
+    titulo: "Amostra 1-1"
+    texto: "Primeiro espécime catalogado: um homunculo em contencao ha setenta e nove anos sem criatura ativa. Nove geracoes de pesquisadores o observaram. O comportamento de lealdade segue identico. Nove laudos repetem a mesma frase: 'a causa permanece sem explicacao'."
+
+  # ---------- ROTAS EXCLUSIVAS (camadas 3-5) ----------
+  raizes-verdade:
+    era: medieval
+    camada: 3
+    tipo: registro
+    rota: raizes
+    status: proposta
+    titulo: "O que os marcos dizem"
+    texto: "Juntando marcos, cronica e corpos sem insignia, uma verdade incômoda emerge: o reino não enfrentou sete criaturas iguais. Enfrentou sete naturezas diferentes — e chamou todas de 'pragas' porque sete era um numero que a fé do povo comportava. A sétima zona de perturbação, a que não tinha descrição possible, foi omitida da crônica. Não por maldade. Por incapacidade de catalogar."
+
+  raizes-final:
+    era: medieval
+    camada: 5
+    tipo: registro
+    rota: raizes
+    status: proposta
+    titulo: "O final da Rota das Raízes"
+    texto: "Quem segue os marcos descobre o destino do reino antes das outras eras: ele não foi derrotado por um inimigo. Foi derrotado pelo hábito de chamar o incompreensível de 'ameaça conhecida' — e de escrever a guerra como se tudo nela fizesse sentido. As zonas sem descrição, essas seguiram vivas. E esperando."
+
+  cinzas-verdade:
+    era: apocaliptica
+    camada: 3
+    tipo: inconsistencia
+    rota: cinzas
+    status: proposta
+    titulo: "O que as zonas dizem"
+    texto: "As zonas de quietude não são efeito da guerra. São o oposto: são regiões onde algo deixou de conseguir continuar, e a guerra foi o que houve enquanto ninguém percebia. As facções interpretam como sagrado. Os coletores, como inútil. Os dois estão errados: as zonas são o relógio do mundo esquecendo."
+
+  cinzas-final:
+    era: apocaliptica
+    camada: 5
+    tipo: registro
+    rota: cinzas
+    status: proposta
+    titulo: "O final da Rota das Cinzas"
+    texto: "Quem segue as cinzas descobre que o apocalipse não teve uma causa: teve uma velocidade. O mundo não ruiu, desacelerou até parar de fazer sentido — e os homúnculos órfãos são os únicos habitantes que ainda esperam por algo. Talvez pelos criadores. Talvez por qualquer coisa que se mova. A pergunta continua sua."
+
+  sinal-verdade:
+    era: futurista
+    camada: 3
+    tipo: registro
+    rota: sinal
+    status: proposta
+    titulo: "O que o branco diz"
+    texto: "O campo 'origem' em branco do fenômeno da Zona de Exclusão 13 não é ignorância dos pesquisadores. É a primeira vez que a ciência do servidor registra honestamente o que não consegue classificar. Todos os outros campos do arquivo estão preenchidos. O branco é a conclusão mais trabalhada do projeto."
+
+  sinal-final:
+    era: futurista
+    camada: 5
+    tipo: registro
+    rota: sinal
+    status: proposta
+    titulo: "O final da Rota do Sinal"
+    texto: "Quem segue o sinal descobre que a palavra ANORMAL não é uma assinatura. É um pedido de socorro — ou um sintoma. O registro sem origem data de depois do fim das três eras, e descreve, em sete repetições, algo que ainda não aconteceu neste servidor. A comissão arquivou. Você decide se o arquivo é o bastante."

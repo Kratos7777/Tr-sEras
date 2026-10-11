@@ -45,3 +45,36 @@ quests:
       - "entregar:amostra-7-4"
     recompensas:
       - "registro-sem-origem"
+
+  trilha-da-fronteira:
+    nome: "A trilha da fronteira"
+    era: medieval
+    descricao: "A capita da fronteira so confia em quem carrega a lamina dela."
+    requisito: ""
+    objetivos:
+      - "descoberta:guerra-cronologia"
+      - "entregar:espada-da-fronteira"
+    recompensas:
+      - "diario-do-estrategista"
+
+  mascara-e-verdade:
+    nome: "A mascara e a verdade"
+    era: apocaliptica
+    descricao: "O sacerdote das cinzas so fala com quem devolve o que o culto perdeu."
+    requisito: trilha-da-fronteira
+    objetivos:
+      - "descoberta:culto-dos-cinzas"
+      - "entregar:mascara-do-culto"
+    recompensas:
+      - "chave-de-contencao"
+
+  arquivo-em-branco:
+    nome: "O arquivo em branco"
+    era: futurista
+    descricao: "A diretora Nyx so mostra o arquivo da Zona 13 a quem devolveu a marca do hereje."
+    requisito: palavra-no-arquivo
+    objetivos:
+      - "descoberta:fenomeno-orfao"
+      - "descoberta:sinal-verdade"
+    recompensas:
+      - "marca-do-herege"

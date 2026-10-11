@@ -52,12 +52,17 @@ public final class LoreCommandHandler {
 
     private void listar(CommandSender sender, String[] args) {
         String filtro = args.length > 2 ? args[2].toLowerCase(Locale.ROOT) : null;
+        // Jogador ve universais + exclusivas da sua rota; console ve tudo.
+        List<LoreEntry> candidatas = sender instanceof Player player
+                ? loreManager.listarPara(playerManager.get(player).getRotaAtual())
+                : loreManager.listar();
         List<LoreEntry> selecionadas = new ArrayList<>();
-        for (LoreEntry entry : loreManager.listar()) {
+        for (LoreEntry entry : candidatas) {
             if (filtro == null
                     || entry.getEra().equalsIgnoreCase(filtro)
                     || String.valueOf(entry.getCamada()).equals(filtro)
-                    || entry.getStatus().equalsIgnoreCase(filtro)) {
+                    || entry.getStatus().equalsIgnoreCase(filtro)
+                    || entry.getRota().equalsIgnoreCase(filtro)) {
                 selecionadas.add(entry);
             }
         }
@@ -83,6 +88,15 @@ public final class LoreCommandHandler {
         if (entry == null) {
             sender.sendMessage(messages.message("comando.lore.nao-encontrada", "{id}", id));
             return;
+        }
+        // Entrada exclusiva de rota: so quem esta na rota pode ler.
+        if (entry.temRota() && sender instanceof Player player) {
+            PlayerData dados = playerManager.get(player);
+            if (!loreManager.acessoPermitido(entry, dados.getRotaAtual())) {
+                sender.sendMessage(messages.message("comando.lore.rota-bloqueada",
+                        "{id}", entry.getId()));
+                return;
+            }
         }
         sender.sendMessage(messages.message("comando.lore.ver.titulo", "{titulo}", entry.getTitulo()));
         sender.sendMessage(messages.message("comando.lore.ver.texto", "{texto}", entry.getTexto()));

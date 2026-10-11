@@ -87,6 +87,7 @@ comando:
   lore:
     uso: "&cUse: /threeeras lore <listar|ver|conceder>"
     nao-encontrada: "&cEntrada de lore nao encontrada: {id}"
+    rota-bloqueada: "&cEste registro ({id}) nao pertence a sua rota. O que voce descobriu nao trouxe esse conhecimento."
     listar:
       titulo: "&8--- Entradas de lore ({total}) ---"
       vazio: "&7Nenhuma entrada encontrada com esse filtro."

@@ -47,3 +47,50 @@ npcs:
       catalogo-erebus-amostra-7-4: "&bVoce leu o catalogo. Entao sabe: recomendamos nao prosseguir. E vamos prosseguir."
       fenomeno-orfao: "&bVoce leu o arquivo com o campo em branco. Ninguem preenche aquele campo. Ninguem quer."
       registro-sem-origem: "&bA palavra aparece sete vezes. Sete. Isso nao deveria me incomodar. Incomoda."
+      amostra-1-1: "&bSetenta e nove anos de contencao. Nove laudos. A mesma frase. Ja nao sei se isso e ciencia ou teimosia."
+
+  capita-fronteira:
+    nome: "A Capita da Fronteira"
+    era: medieval
+    tipo: VILLAGER
+    dialogo:
+      - "&7Eu vi a primeira. Gritei, atirei, fugi. Ela nem se moveu."
+      - "&7A corte quis uma historia limpa. Eu entreguei a que tinha."
+    por-descoberta:
+      primeira-criatura: "&bEntao voce leu meu relato. A corte chamou de imaginacao. Os marcos chamaram de verdade."
+      corpos-sem-insignia: "&bOs cadaveres nao tinham posto. Soldado nenhum aceitaria isso. Criatura nenhuma precisaria."
+
+  hereje-tomas:
+    nome: "O Herege Tomas"
+    era: medieval
+    tipo: VILLAGER
+    dialogo:
+      - "&7Nao sao juizos. Sao fenomenos. Anote isso antes que matem o mensageiro."
+      - "&7Escondi meus papeis em forros e paredes. Alguem vai encontra-los. Espero que esteja preparado."
+    por-descoberta:
+      herege-tomas: "&bMeus papeis. Entao sobreviveram. O Erebus usa meus metodos e nem sabe de quem sao."
+      vigilias-eternas: "&bAs vigilias! Eu disse que conter era possivel. Nao disse que era para sempre."
+
+  sacerdote-cinzas:
+    nome: "O Sacerdote das Cinzas"
+    era: apocaliptica
+    tipo: VILLAGER
+    dialogo:
+      - "&7Reconstruir e pecado. O mundo foi reduzido porque ousamos ter historia."
+      - "&7As zonas de quietude sao santuarias. Quem as profana para extrair metal nao volta o mesmo."
+    por-descoberta:
+      culto-dos-cinzas: "&bNosso livro. Voce leu. Entao sabe que nao somos cruéis: somos devotos."
+      zonas-de-quietude: "&bVoce sentiu o silencio. La dentro, o tempo nao passa. Apenas espera por nos."
+      mapa-encolhido: "&bO mapa encolhe? Claro. O mundo se retira de nos, nao nos dele."
+
+  diretora-nyx:
+    nome: "Diretora Nyx"
+    era: futurista
+    tipo: VILLAGER
+    dialogo:
+      - "&7O Erebus nao busca verdades. Busca financiamento para continuar buscando."
+      - "&7A Autoridade sela. O Sindicato vende. Nos estudamos. Nenhum de nos entende."
+    por-descoberta:
+      projeto-erebus-origem: "&bO primeiro relato. Disse que as anomalias persistem. Foi o melhor relatorio que ja escrevemos — e o menos lido."
+      herdeiros-do-herege: "&bEles copiam nossos ruidos de remontagem. Se estao certos, somos todos hereges. Se errados, somos todos copistas."
+      sinal-verdade: "&bO branco no campo origem... Voce viu? Ninguem preenche. E ninguem dorme depois de ver."

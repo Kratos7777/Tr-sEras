@@ -2,6 +2,7 @@ package br.com.threeeras.lore;
 
 import br.com.threeeras.ThreeErasPlugin;
 import br.com.threeeras.era.EraManager;
+import br.com.threeeras.rota.RotaManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -35,7 +36,6 @@ public final class LoreManager {
         this.plugin = plugin;
         this.eraManager = eraManager;
     }
-
     /** (Re)carrega lore.yml do disco. */
     public void load() {
         File file = new File(plugin.getDataFolder(), FILE_NAME);
@@ -59,6 +59,7 @@ public final class LoreManager {
                 String texto = config.getString(base + ".texto", "");
                 String status = config.getString(base + ".status", "proposta").toLowerCase(Locale.ROOT);
                 String contradiz = config.getString(base + ".contradiz", "");
+                String rota = config.getString(base + ".rota", "");
 
                 if (!eraManager.existe(era)) {
                     plugin.getLogger().warning("Lore '" + id + "': era '" + era
@@ -75,15 +76,21 @@ public final class LoreManager {
                     status = "proposta";
                 }
                 carregadas.put(id.toLowerCase(Locale.ROOT),
-                        new LoreEntry(id, era, camada, tipo, titulo, texto, status, contradiz));
+                        new LoreEntry(id, era, camada, tipo, titulo, texto, status, contradiz, rota));
             }
         }
 
-        // Segunda passada: valida as referencias de contradicao.
+        // Segunda passada: valida as referencias de contradicao e de rota.
+        RotaManager rotaManager = plugin.getRotaManager();
         for (LoreEntry entry : carregadas.values()) {
             if (entry.temContradiz() && !carregadas.containsKey(entry.getContradiz().toLowerCase(Locale.ROOT))) {
                 plugin.getLogger().warning("Lore '" + entry.getId() + "': contradiz '"
                         + entry.getContradiz() + "' que nao existe.");
+            }
+            if (entry.temRota() && rotaManager != null && rotaManager.isCarregado()
+                    && !rotaManager.existe(entry.getRota())) {
+                plugin.getLogger().warning("Lore '" + entry.getId() + "': rota '"
+                        + entry.getRota() + "' nao existe em rotas.yml.");
             }
         }
 
@@ -116,6 +123,24 @@ public final class LoreManager {
         return entradas.values().stream()
                 .filter(e -> e.getStatus().equalsIgnoreCase(status))
                 .toList();
+    }
+
+    /**
+     * Entradas visiveis para um jogador: universais + exclusivas da rota
+     * dele. Rota null (console/jogador sem rota) ve apenas as universais.
+     */
+    public List<LoreEntry> listarPara(String rotaAtual) {
+        return entradas.values().stream()
+                .filter(e -> acessoPermitido(e, rotaAtual))
+                .toList();
+    }
+
+    /** true se a entrada pode ser lida por quem esta na rota informada. */
+    public boolean acessoPermitido(LoreEntry entry, String rotaAtual) {
+        if (!entry.temRota()) {
+            return true;
+        }
+        return rotaAtual != null && rotaAtual.equalsIgnoreCase(entry.getRota());
     }
 
     public LoreEntry porId(String id) {

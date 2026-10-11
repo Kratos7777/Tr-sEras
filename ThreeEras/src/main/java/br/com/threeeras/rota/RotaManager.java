@@ -42,19 +42,23 @@ public final class RotaManager implements Listener {
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
-    private final LoreManager loreManager;
-    private final EraManager eraManager;
+    private LoreManager loreManager;
+    private EraManager eraManager;
     private final PlayerManager playerManager;
     private final File file;
     private final Map<String, RotaDefinition> rotas = new LinkedHashMap<>();
+    private boolean carregado;
 
     public RotaManager(ThreeErasPlugin plugin) {
         this.plugin = plugin;
         this.messages = plugin.getMessages();
-        this.loreManager = plugin.getLoreManager();
-        this.eraManager = plugin.getEraManager();
         this.playerManager = plugin.getPlayerManager();
         this.file = new File(plugin.getDataFolder(), FILE_NAME);
+    }
+
+    /** true depois que load() rodou (usado por outras validacoes). */
+    public boolean isCarregado() {
+        return carregado;
     }
 
     /** Registra os ouvintes deste manager. */
@@ -64,6 +68,11 @@ public final class RotaManager implements Listener {
 
     /** (Re)carrega rotas.yml do disco. */
     public void load() {
+        // Dependencias resolvidas aqui (e nao no construtor): o LoreManager
+        // pode ser carregado depois deste manager sem quebrar nada.
+        this.loreManager = plugin.getLoreManager();
+        this.eraManager = plugin.getEraManager();
+        this.carregado = false;
         if (!file.exists()) {
             plugin.saveResource(FILE_NAME, false);
         }
@@ -113,7 +122,12 @@ public final class RotaManager implements Listener {
 
         rotas.clear();
         rotas.putAll(carregadas);
+        carregado = true;
         plugin.getLogger().info("Rotas carregadas (" + rotas.size() + ").");
+    }
+
+    public boolean existe(String id) {
+        return porId(id) != null;
     }
 
     public RotaDefinition porId(String id) {

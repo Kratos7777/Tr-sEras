@@ -57,3 +57,60 @@ itens:
       - "Sem autor. Sem data. Sem numero de catalogo."
       - "A palavra aparece repetida sete vezes: ANORMAL."
       - "A comissao nao aprovou conclusao alguma. O documento continua no arquivo."
+
+  espada-da-fronteira:
+    era: medieval
+    material: IRON_SWORD
+    nome: "&7Espada da fronteira"
+    quantidade: 1
+    lore:
+      - "&7Lamina de campanha do Reino das Raizes."
+      - "&8O punho tem uma marca de contagem: tres talhes."
+
+  diario-do-estrategista:
+    era: medieval
+    material: WRITTEN_BOOK
+    nome: "&7Diario da estrategista da contencao"
+    quantidade: 1
+    lore:
+      - "&7Recuperado seculos depois. A ultima linha foi escrita com pressa."
+    paginas:
+      - "Conter e mais barato que enfrentar. Contudo, ninguem contem para sempre."
+      - "Vigilias nao sao vitoria. Sao tempo comprado com vigilia de outros."
+      - "Nao sei se estamos vencendo ou adiando."
+
+  marca-do-herege:
+    era: medieval
+    material: PAPER
+    nome: "&8Marca do herege"
+    quantidade: 1
+    lore:
+      - "&7Um simbolo riscado em papel: um circulo com sete marcas."
+      - "&8A setima marca esta apagada de proposito."
+
+  mascara-do-culto:
+    era: apocaliptica
+    material: CARVED_PUMPKIN
+    nome: "&6Mascara do culto das cinzas"
+    quantidade: 1
+    lore:
+      - "&7Feita de metal recuperado e cinza endurecida."
+      - "&8Quem veste jura ouvir o pulso das zonas de quietude."
+
+  chave-de-contencao:
+    era: futurista
+    material: TRIPWIRE_HOOK
+    nome: "&bChave de contencao"
+    quantidade: 1
+    lore:
+      - "&7Projetada para estruturas do Reino das Raizes."
+      - "&8Ninguem sabia como usar. Ate alguem precisar."
+
+  cristal-de-leitura:
+    era: futurista
+    material: AMETHYST_SHARD
+    nome: "&dCristal de leitura"
+    quantidade: 1
+    lore:
+      - "&7Amplifica sinais anômalos. Ou os inventa."
+      - "&8O manual nao menciona qual das duas coisas ele faz."

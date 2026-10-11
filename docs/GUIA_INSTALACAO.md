@@ -29,7 +29,8 @@ Saída esperada: `BUILD SUCCESS` e o arquivo `ThreeEras/target/ThreeEras.jar`.
 3. Inicie o servidor uma vez — os arquivos de configuração são criados em `plugins/ThreeEras/`:
    - `config.yml` — `geral.debug`, `jogadores.era-inicial`, `armazenamento.autosave-segundos`
    - `eras.yml` — as três eras e seus mundos
-   - `lore.yml` — 16 entradas de lore
+   - `lore.yml` — 39 entradas de lore
+   - `rotas.yml` — 3 rotas com entradas exclusivas
    - `npcs.yml` — NPCs e posições
    - `itens.yml` — artefatos
    - `quests.yml` — missões encadeadas

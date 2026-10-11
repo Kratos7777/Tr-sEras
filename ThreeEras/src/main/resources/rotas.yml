@@ -21,7 +21,7 @@ rotas:
       - corpos-sem-insignia
     fechamento:
       - homunculos-orfaos
-      - pergunta-sem-resposta
+      - raizes-final
 
   cinzas:
     nome: "A Rota das Cinzas"
@@ -32,8 +32,8 @@ rotas:
       - brasoes-reinterpretados
       - zonas-de-quietude
     fechamento:
-      - homunculos-orfaos
       - faixa-vermelha-estandarte
+      - cinzas-final
 
   sinal:
     nome: "A Rota do Sinal"
@@ -45,4 +45,4 @@ rotas:
       - fenomeno-orfao
     fechamento:
       - registro-sem-origem
-      - biblioteca-remontada
+      - sinal-final
