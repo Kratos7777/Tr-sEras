@@ -19,3 +19,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# artefato de release (unico binario versionado de proposito)
+!dist/*.jar
