@@ -3,6 +3,7 @@ package br.com.threeeras.command;
 import br.com.threeeras.ThreeErasPlugin;
 import br.com.threeeras.boss.BossManager;
 import br.com.threeeras.config.Messages;
+import br.com.threeeras.decisao.DecisaoManager;
 import br.com.threeeras.era.Era;
 import br.com.threeeras.era.EraManager;
 import br.com.threeeras.evento.EventoManager;
@@ -47,7 +48,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador", "era",
                     "lore", "npc", "npcs", "item", "itens", "quest", "quests", "boss", "bosses",
                     "evento", "eventos", "rota", "estrutura", "setup", "dungeon", "dungeons",
-                    "compat", "backup", "kit", "diario", "tutorial");
+                    "compat", "backup", "kit", "diario", "tutorial", "decisao", "decisoes");
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
@@ -69,6 +70,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private final EventoCommandHandler eventoHandler;
     private final RotaCommandHandler rotaHandler;
     private final EstruturaCommandHandler estruturaHandler;
+    private final DecisaoCommandHandler decisaoHandler;
     private final ModuloCommandHandler moduloHandler;
 
     public ThreeErasCommand(ThreeErasPlugin plugin, Messages messages) {
@@ -92,6 +94,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         this.eventoHandler = new EventoCommandHandler(plugin);
         this.rotaHandler = new RotaCommandHandler(plugin);
         this.estruturaHandler = new EstruturaCommandHandler(plugin);
+        this.decisaoHandler = new DecisaoCommandHandler(plugin);
         this.moduloHandler = new ModuloCommandHandler(plugin);
     }
 
@@ -122,6 +125,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             case "compat" -> moduloHandler.handleCompat(sender);
             case "backup" -> moduloHandler.handleBackup(sender);
             case "kit" -> moduloHandler.handleKit(sender);
+            case "decisao", "decisoes" -> decisaoHandler.handle(sender, args);
             case "diario", "diário" -> handleDiario(sender);
             case "tutorial" -> handleTutorial(sender, args);
             default -> sender.sendMessage(messages.prefixed("comando.desconhecido"));
@@ -157,6 +161,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(messages.plain("comando.ajuda.dungeon"));
         sender.sendMessage(messages.plain("comando.ajuda.modulos"));
         sender.sendMessage(messages.plain("comando.ajuda.diario"));
+        sender.sendMessage(messages.plain("comando.ajuda.decisao"));
         if (sender.hasPermission(PERMISSION)) {
             sender.sendMessage(messages.plain("comando.ajuda.tutorial"));
         }
@@ -339,6 +344,10 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
                 "{rota}", data.getRotaAtual() == null ? "nenhuma" : data.getRotaAtual()));
         sender.sendMessage(messages.message("comando.diario.descobertas",
                 "{total}", String.valueOf(data.getDescobertas().size())));
+        for (var decisao : data.getDecisoes().entrySet()) {
+            sender.sendMessage(messages.message("comando.diario.decisao",
+                    "{id}", decisao.getKey(), "{opcao}", decisao.getValue()));
+        }
         sender.sendMessage(messages.message("comando.diario.missoes",
                 "{ativas}", String.valueOf(data.getQuestsAtivas().size()),
                 "{concluidas}", String.valueOf(data.getQuestsConcluidas().size())));
@@ -593,6 +602,9 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             }
             if (args[0].equalsIgnoreCase("estrutura")) {
                 return completarDe(args[1], "listar", "construir");
+            }
+            if (args[0].equalsIgnoreCase("decisao") || args[0].equalsIgnoreCase("decisoes")) {
+                return completarDe(args[1], "listar", "ver", "escolher");
             }
             if (args[0].equalsIgnoreCase("dungeon") || args[0].equalsIgnoreCase("dungeons")) {
                 return completarDe(args[1], "listar", "info", "entrar", "concluir");

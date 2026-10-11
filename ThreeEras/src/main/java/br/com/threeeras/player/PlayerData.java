@@ -26,6 +26,7 @@ public final class PlayerData {
     private boolean kitRecebido;
     private boolean tutorialConcluido;
     private final Set<String> dungeonsConcluidas;
+    private final Map<String, String> decisoes;
     private String nome;
     private long primeiroJoin;
     private long ultimoVisto;
@@ -36,7 +37,7 @@ public final class PlayerData {
                       String eraAtual, long tempoJogadoSegundos, Collection<String> descobertas,
                       Map<String, Integer> passosQuests, Collection<String> questsConcluidas,
                       String rotaAtual, boolean rotaConcluida, boolean kitRecebido, boolean tutorialConcluido,
-                      Collection<String> dungeonsConcluidas) {
+                      Collection<String> dungeonsConcluidas, Map<String, String> decisoes) {
         this.uuid = uuid;
         this.nome = nome;
         this.primeiroJoin = primeiroJoin;
@@ -51,12 +52,13 @@ public final class PlayerData {
         this.kitRecebido = kitRecebido;
         this.tutorialConcluido = tutorialConcluido;
         this.dungeonsConcluidas = new LinkedHashSet<>(dungeonsConcluidas);
+        this.decisoes = new LinkedHashMap<>(decisoes);
     }
 
     /** Cria registro de primeiro acesso. */
     public static PlayerData novo(UUID uuid, String nome, long agora, String eraInicial) {
         return new PlayerData(uuid, nome, agora, agora, eraInicial, 0L,
-                List.of(), Map.of(), List.of(), null, false, false, false, List.of());
+                List.of(), Map.of(), List.of(), null, false, false, false, List.of(), Map.of());
     }
 
     public UUID getUuid() {
@@ -229,5 +231,20 @@ public final class PlayerData {
 
     public void marcarDungeonConcluida(String id) {
         dungeonsConcluidas.add(id);
+    }
+
+    // ---------- decisoes persistentes ----------
+
+    /** Mapa decisao -> opcao escolhida. */
+    public Map<String, String> getDecisoes() {
+        return Collections.unmodifiableMap(decisoes);
+    }
+
+    public String getDecisao(String id) {
+        return decisoes.get(id);
+    }
+
+    public void registrarDecisao(String id, String opcao) {
+        decisoes.put(id, opcao);
     }
 }

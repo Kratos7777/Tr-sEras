@@ -94,7 +94,8 @@ public final class PlayerManager implements Listener {
                     storage.getBoolean(base + ".kit-recebido", false),
                     storage.getBoolean(base + ".tutorial-concluido",
                             storage.getBoolean(base + ".kit-recebido", false)),
-                    storage.getStringList(base + ".dungeons-concluidas"));
+                    storage.getStringList(base + ".dungeons-concluidas"),
+                    lerDecisoes(base));
         }
         PlayerData novo = PlayerData.novo(uuid, nome, System.currentTimeMillis(), getEraInicial());
         save(novo);
@@ -163,6 +164,14 @@ public final class PlayerManager implements Listener {
         return true;
     }
 
+    private Map<String, String> lerDecisoes(String base) {
+        Map<String, String> mapa = new HashMap<>();
+        for (String id : storage.getKeys(base + ".decisoes", false)) {
+            mapa.put(id, storage.getString(base + ".decisoes." + id, ""));
+        }
+        return mapa;
+    }
+
     private void gravar(PlayerData data) {
         String base = BASE + "." + data.getUuid();
         storage.set(base + ".nome", data.getNome());
@@ -183,6 +192,9 @@ public final class PlayerManager implements Listener {
         storage.set(base + ".kit-recebido", data.isKitRecebido());
         storage.set(base + ".tutorial-concluido", data.isTutorialConcluido());
         storage.set(base + ".dungeons-concluidas", new ArrayList<>(data.getDungeonsConcluidas()));
+        for (Map.Entry<String, String> decisao : data.getDecisoes().entrySet()) {
+            storage.set(base + ".decisoes." + decisao.getKey(), decisao.getValue());
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

@@ -32,6 +32,7 @@ comando:
     estrutura: "&f/threeeras estrutura <listar|construir> &7- estruturas prontas"
     setup: "&f/threeeras setup &7- prepara o servidor inteiro &8(admin)"
     dungeon: "&f/threeeras dungeon <listar|info|entrar|concluir> &7- expedicoes"
+    decisao: "&f/threeeras decisao <listar|ver|escolher> &7- escolhas com consequencia"
     modulos: "&f/threeeras compat|backup|kit &7- ambiente, backup e kit"
     diario: "&f/threeeras diario &7- progresso, missoes e descobertas"
     tutorial: "&f/threeeras tutorial reiniciar <jogador> &7- reapresenta o tutorial &8(admin)"
@@ -311,6 +312,24 @@ comando:
   backup:
     ok: "&aBackup criado: &f{arquivo}"
     falhou: "&cFalha ao criar backup (dados.yml nao existe ou sem permissao)."
+  decisao:
+    uso: "&cUse: /threeeras decisao <listar|ver|escolher>"
+    inexistente: "&cDecisao nao encontrada: {id}"
+    listar:
+      titulo: "&8--- Decisoes disponiveis ({total}) ---"
+      vazio: "&7Nenhuma decisao definida em decisoes.yml."
+      linha: "&f{id} &8- &b{nome} &8({opcoes} opcoes)"
+    ver:
+      titulo: "&8--- {nome} ---"
+      descricao: "&7{descricao}"
+      opcao: "&8- &f{opcao}&8: &7{texto}"
+    escolher:
+      uso: "&cUse: /threeeras decisao escolher <id> <opcao>"
+      console: "&cApenas jogadores podem decidir."
+      ok: "&6&lDecisao registrada: &f{opcao}&6. As consequencias ja estao em voce e no mundo."
+      opcao-invalida: "&cOpcao inexistente: {opcao}"
+      ja-escolhida: "&7Voce ja tomou esta decisao. Ela e permanente."
+      faltam-itens: "&cFaltam itens exigidos por esta escolha. Veja os requisitos."
   kit:
     console: "&cApenas jogadores recebem kit."
     ok: "&aKit inicial entregue!"

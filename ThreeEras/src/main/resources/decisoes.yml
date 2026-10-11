@@ -1,0 +1,42 @@
+# ThreeEras - decisoes narrativas persistentes
+#
+# Cada decisao so pode ser feita uma vez. Os itens em 'exige' sao
+# consumidos; 'concede-lore' registra a consequencia (entradas de lore
+# que documentam o que foi escolhido) e 'concede-itens' paga recompensas.
+#
+# Conteudo: PROPOSTA (depende de validacao do criador).
+
+decisoes:
+
+  m1-arquivo-em-perigo:
+    nome: "O Arquivo em Perigo"
+    descricao: "A colecao de registros do hereje esta em uma estrutura que pode desabar. Voce so pode carregar uma coisa."
+    opcoes:
+      documentos:
+        texto: "Salvar os registros — a memoria do reino sobrevive."
+        exige:
+          - "diario-do-estrategista"
+          - "marca-de-soldado"
+        concede-lore:
+          - "m1-escolha-registros"
+        concede-itens:
+          - "marca-do-herege"
+      individuos:
+        texto: "Salvar as pessoas — quem sobreviveu pode reescrever a historia."
+        exige:
+          - "diario-do-estrategista"
+          - "marca-de-soldado"
+        concede-lore:
+          - "m1-escolha-pessoas"
+        concede-itens:
+          - "espada-da-fronteira"
+      ambos:
+        texto: "Tentar salvar os dois — arriscando tudo, inclusive o que ja conquistou."
+        exige:
+          - "diario-do-estrategista"
+          - "marca-de-soldado"
+          - "coroa-de-sete-pontas"
+        concede-lore:
+          - "m1-escolha-ambos"
+        concede-itens:
+          - "gravacao-do-silencio"

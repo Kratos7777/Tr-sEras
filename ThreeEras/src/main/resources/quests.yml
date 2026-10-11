@@ -156,3 +156,28 @@ quests:
     recompensas:
       - "coroa-de-sete-pontas"
 
+
+  # ---------- CAMPANHA M1 (proposta — IDs proprios, progresso proprio) ----------
+  m1-vestigios:
+    nome: "M1.1 — Vestigios de um Reino"
+    era: medieval
+    descricao: "A capita da fronteira quer provas do que o reino deixou antes que as ruinas sumam."
+    requisito: ""
+    objetivos:
+      - "descoberta:fundacao-raizes"
+      - "descoberta:primeira-criatura"
+      - "entregar:fragmento-quarto-marco"
+    recompensas:
+      - "insignia-rachada"
+
+  m1-arquivo-em-perigo:
+    nome: "M1.2 — O Arquivo em Perigo"
+    era: medieval
+    descricao: "Reuna as provas do herege: o diario do estrategista e a marca do soldado. Depois, decida o que carregar."
+    requisito: m1-vestigios
+    objetivos:
+      - "descoberta:herege-tomas"
+      - "descoberta:memorias-de-soldado"
+      - "entregar:diario-do-estrategista"
+      - "entregar:marca-de-soldado"
+    recompensas: []

@@ -4,6 +4,7 @@ import br.com.threeeras.boss.BossListener;
 import br.com.threeeras.boss.BossManager;
 import br.com.threeeras.command.ThreeErasCommand;
 import br.com.threeeras.config.Messages;
+import br.com.threeeras.decisao.DecisaoManager;
 import br.com.threeeras.era.Era;
 import br.com.threeeras.era.EraManager;
 import br.com.threeeras.estrutura.GerenciadorEstruturas;
@@ -44,6 +45,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private CompatibilidadeModule compatibilidade;
     private ArmazenamentoModule armazenamentoModule;
     private JogabilidadeModule jogabilidade;
+    private DecisaoManager decisaoManager;
 
     @Override
     public void onEnable() {
@@ -100,6 +102,9 @@ public final class ThreeErasPlugin extends JavaPlugin {
         playerManager.register();
 
         jogabilidade = new JogabilidadeModule(this, setupService);
+
+        decisaoManager = new DecisaoManager(this);
+        decisaoManager.load();
 
         PluginCommand command = getCommand("threeeras");
         if (command == null) {
@@ -184,6 +189,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
     public JogabilidadeModule getJogabilidade() {
         return jogabilidade;
+    }
+
+    public DecisaoManager getDecisaoManager() {
+        return decisaoManager;
     }
 
     private void validarEraInicial() {

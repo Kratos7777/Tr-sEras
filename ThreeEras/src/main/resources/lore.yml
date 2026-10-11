@@ -473,3 +473,28 @@ entradas:
     status: proposta
     titulo: "O protocolo que ninguém leu"
     texto: "Quem segue o sinal recupera a seção removida do protocolo do silêncio em um backup que a comissão esqueceu de apagar. A seção diz: 'a quietude não é contenção. É o mundo pedindo permissão para continuar. Se interrompida, ele continua — mas já não nos inclui.'"
+
+  # ---------- CAMPANHA M1: consequencias de decisao (proposta) ----------
+  m1-escolha-registros:
+    era: medieval
+    camada: 2
+    tipo: registro
+    status: proposta
+    titulo: "O que ficou: os registros"
+    texto: "A estrutura caiu depois que voce saiu. O heredeiro do herege encontrou os papeis intactos e uma marca de soldado perdida na poeira. A memoria do reino sobreviveu; o nome de quem carregou a marca, nao. Voce deixou este mundo sabendo mais do que antes — e conhecendo menos gente."
+
+  m1-escolha-pessoas:
+    era: medieval
+    camada: 2
+    tipo: registro
+    status: proposta
+    titulo: "O que ficou: as pessoas"
+    texto: "A estrutura caiu com os papeis dentro. Dos que estavam la, ninguem se feriu. Nas semanas seguintes, os sobreviventes recontaram a historia de cor — e erraram detalhes que ninguem mais poderia conferir. O reino seguiu sem alguns de seus registros; as pessoas seguiram. Isso tambem e uma forma de heranca."
+
+  m1-escolha-ambos:
+    era: medieval
+    camada: 3
+    tipo: registro
+    status: proposta
+    titulo: "O que ficou: os dois"
+    texto: "Ninguem explicou como. A estrutura caiu, e o que havia dentro ficou de pe — e as pessoas tambem. O heredeiro do herege nao comemora: diz que quando alguem tenta salvar tudo, o as vezes o mundo devolve. Outros chamam de sorte. Voce chamou de decisao. O registro sem origem, esse seguiu guardado — esperando alguem que ousasse ouvir o que ele grava."
