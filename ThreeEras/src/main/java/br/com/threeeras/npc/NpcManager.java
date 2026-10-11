@@ -149,6 +149,10 @@ public final class NpcManager {
         if (npc == null) {
             return false;
         }
+        // Remove entidades anteriores do mesmo NPC para nao duplicar.
+        for (Entity anterior : encontrarEntidades(id)) {
+            anterior.remove();
+        }
         EntityType tipo = resolverTipo(npc.getTipo());
         Entity entity = local.getWorld().spawnEntity(local, tipo);
         if (!(entity instanceof LivingEntity vivo)) {

@@ -40,7 +40,7 @@ A variação é de *comportamento*, nunca de natureza:
 ## Presença nas eras
 
 - **Medieval:** primeiras aparições durante a guerra; a corte os classifica (erroneamente) como "soldados das criaturas".
-- **Apocalíptica:** homúnculos residuais em regiões determinadas — inclusive órfãos, cujo comportamento sem criadora ativa é questão em aberto.
+- **Apocalíptica:** homúnculos residuais em regiões determinadas — incluindo **órfãos**, cujo comportamento sem criadora ativa é questão em aberto. Entrada implementada: `homunculos-orfaos`.
 - **Futurista:** espécimes de contenção no Projeto Erebus; a catalogação confirma que **o comportamento de lealdade persiste sem explicação**.
 
 ## Implementação atual no servidor

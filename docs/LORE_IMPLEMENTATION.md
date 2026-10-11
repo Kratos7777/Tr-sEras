@@ -6,7 +6,7 @@
 |---|---|---|
 | 3 eras + mundos | `EraManager` + `/threeeras era` | Pronto |
 | Dados dos jogadores | `PlayerManager` + `StorageManager` (gravação assíncrona) | Pronto |
-| Entradas de lore (camadas 1–5, status, contradições) | `LoreManager` + `lore.yml` | Pronto (14 entradas) |
+| Entradas de lore (camadas 1–5, status, contradições) | `LoreManager` + `lore.yml` | Pronto (16 entradas) |
 | NPCs com versões contraditórias | `NpcManager` + `npcs.yml` | Pronto (3 NPCs) |
 | Artefatos das três eras | `ItemManager` + `itens.yml` | Pronto (5 itens) |
 | Missões encadeadas | `QuestManager` + `quests.yml` | Pronto (3 missões) |

@@ -49,7 +49,7 @@ Copie `target/ThreeEras.jar` para `plugins/` do seu servidor Paper 26.2 (Java 25
 |---|---|---|
 | Eras e mundos | `/threeeras era` | 3 eras, viagem validada |
 | Jogadores + persistência | `/threeeras jogador` | gravação assíncrona em `dados.yml` |
-| Lore e descobertas | `/threeeras lore` | 14 entradas, camadas 1–5 |
+| Lore e descobertas | `/threeeras lore` | 16 entradas, camadas 1–5 |
 | NPCs | `/threeeras npc` | 3 NPCs com diálogo condicional |
 | Itens | `/threeeras item` | 5 artefatos |
 | Missões | `/threeeras quest` | 3 missões encadeadas entre eras |

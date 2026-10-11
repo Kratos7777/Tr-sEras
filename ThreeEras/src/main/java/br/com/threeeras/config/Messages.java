@@ -6,6 +6,8 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Carrega e fornece as mensagens do plugin (messages.yml).
@@ -19,6 +21,7 @@ public final class Messages {
 
     private final ThreeErasPlugin plugin;
     private YamlConfiguration config;
+    private final Set<String> avisadas = new HashSet<>();
 
     public Messages(ThreeErasPlugin plugin) {
         this.plugin = plugin;
@@ -35,13 +38,17 @@ public final class Messages {
             plugin.saveResource(FILE_NAME, false);
         }
         this.config = YamlConfiguration.loadConfiguration(file);
+        avisadas.clear();
     }
 
     /** Texto cru, sem prefixo e sem formatar. */
     public String raw(String path) {
         String value = config.getString(path);
         if (value == null) {
-            plugin.getLogger().warning("Mensagem ausente em messages.yml: " + path);
+            // Avisa uma vez por chave: evita spam no console em comandos repetidos.
+            if (avisadas.add(path)) {
+                plugin.getLogger().warning("Mensagem ausente em messages.yml: " + path);
+            }
             return "&c<mensagem ausente: " + path + ">";
         }
         return value;

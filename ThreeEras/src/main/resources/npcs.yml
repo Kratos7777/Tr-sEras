@@ -33,6 +33,7 @@ npcs:
       - "&7Cada faccao jura que a versao dela e a mais antiga. Nenhuma esta completa."
     por-descoberta:
       faccoes-sobreviventes: "&bVoce leu os registros. Sim, descendemos dos sobreviventes. Sim, ninguem sabe o que os brasoes significam."
+      homunculos-orfaos: "&bOs orfaos... dizem que eles esperam. Eu digo: esperam por algo que nao vem. E nao vao embora."
       zonas-de-quietude: "&bAs zonas de quietude... la o vento nao passa. E as vezes, quando tudo para, eu ouco passos."
 
   pesquisadora-vega:
@@ -44,4 +45,5 @@ npcs:
       - "&7A amostra 7-4 repete o comportamento ha quarenta dias. A causa continua sem explicacao."
     por-descoberta:
       catalogo-erebus-amostra-7-4: "&bVoce leu o catalogo. Entao sabe: recomendamos nao prosseguir. E vamos prosseguir."
+      fenomeno-orfao: "&bVoce leu o arquivo com o campo em branco. Ninguem preenche aquele campo. Ninguem quer."
       registro-sem-origem: "&bA palavra aparece sete vezes. Sete. Isso nao deveria me incomodar. Incomoda."

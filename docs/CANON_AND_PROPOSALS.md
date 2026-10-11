@@ -27,6 +27,7 @@
 - Conexão ANORMAL A1+A2 **aprovadas como estado de trabalho**; A3 (fragmento adormecido) **congelada**.
 - Organizações futuristas, incluindo os "Herdeiros do Herege".
 - Contradições deliberadas e elemento órfão.
+- Homúnculos órfãos (sem criadora ativa): implementados como conteúdo com status **proposta** — a pergunta continua sem resposta no jogo.
 
 ## QUESTÕES EM ABERTO (não inventar respostas)
 

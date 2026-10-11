@@ -98,6 +98,14 @@ entradas:
     titulo: "A pergunta que ninguém fez direito"
     texto: "Entre os fragmentos recuperados ha uma lista de perguntas sem resposta: o que causou a queda do mundo? quanto tempo separa as eras? o que as criaturas sao, de fato? por que os homunculos obedecem? A lista nao tem autor. Ninguem, em nenhuma era, conseguiu responder a primeira pergunta sem contradizer as outras."
 
+  homunculos-orfaos:
+    era: apocaliptica
+    camada: 3
+    tipo: ruina
+    status: proposta
+    titulo: "Os que ficaram sem ninguem"
+    texto: "Em certas regioes, homunculos circulam sem criatura visivel. Continuam violentos. Continuam esperando. Nenhum registro explica o que fazem quando nao ha ninguem para obedecer — apenas que nao deixam a regiao."
+
   # ---------- ERA FUTURISTA (camada 4) ----------
   catalogo-erebus-amostra-7-4:
     era: futurista
@@ -122,6 +130,14 @@ entradas:
     status: proposta
     titulo: "A Biblioteca remontada"
     texto: "O algoritmo de remontagem juntou fragmentos medievais e apocalipticos. Erros de colagem produzem frases que ninguem escreveu. A comissao classificou os erros como ruido. Tres desses ruidos descrevem eventos que ainda nao haviam acontecido."
+
+  fenomeno-orfao:
+    era: futurista
+    camada: 4
+    tipo: registro
+    status: proposta
+    titulo: "O fenomeno que nao e de ninguem"
+    texto: "Registro da Zona de Exclusao 13: fenomeno catalogado, medido e — pela primeira vez — arquivado sem classificacao de origem. Nao e atribuido a nenhuma criatura conhecida, a nenhum experimento e a nenhum periodo. A comissao deixou o campo 'origem' em branco. O branco incomoda mais que uma resposta."
 
   # ---------- ERA FUTURISTA (camada 5: ANORMAL) ----------
   registro-sem-origem:

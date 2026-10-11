@@ -37,6 +37,6 @@
 
 **A3 — O fragmento adormecido:** influência dormente que deforma o que toca. Só entra com aprovação expressa, e mesmo assim como influência, nunca como causa.
 
-## Elemento órfão (proposta)
+## Elemento órfão (proposta — implementado)
 
-Um fenômeno catalogado, não explicado e não reconectado a nada — existe para o jogador aprender que **o desconhecido não pertence a ninguém**.
+Um fenômeno catalogado, não explicado e não reconectado a nada — existe para o jogador aprender que **o desconhecido não pertence a ninguém**. Implementado como entrada `fenomeno-orfao` (camada 4, status proposta): Zona de Exclusão 13, campo "origem" em branco no arquivo.

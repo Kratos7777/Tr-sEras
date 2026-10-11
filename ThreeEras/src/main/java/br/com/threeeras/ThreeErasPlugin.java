@@ -4,6 +4,7 @@ import br.com.threeeras.boss.BossListener;
 import br.com.threeeras.boss.BossManager;
 import br.com.threeeras.command.ThreeErasCommand;
 import br.com.threeeras.config.Messages;
+import br.com.threeeras.era.Era;
 import br.com.threeeras.era.EraManager;
 import br.com.threeeras.evento.EventoManager;
 import br.com.threeeras.item.ItemManager;
@@ -129,8 +130,13 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private void validarEraInicial() {
         String inicial = getConfig().getString("jogadores.era-inicial", "medieval");
         if (!eraManager.existe(inicial)) {
+            Era primeira = eraManager.getPrimeira();
+            String sugestao = primeira != null
+                    ? " Exemplo valido: " + primeira.getId() + "."
+                    : "";
             getLogger().warning("jogadores.era-inicial ('" + inicial
-                    + "') nao corresponde a nenhuma era de eras.yml. Jogadores novos usarao esse valor mesmo assim.");
+                    + "') nao corresponde a nenhuma era de eras.yml."
+                    + " Jogadores novos usarao esse valor mesmo assim." + sugestao);
         }
     }
 

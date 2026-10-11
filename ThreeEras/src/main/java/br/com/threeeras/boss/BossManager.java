@@ -180,9 +180,18 @@ public final class BossManager {
         return pilaresVivos.getOrDefault(id.toLowerCase(Locale.ROOT), Set.of()).size();
     }
 
-    /** Quantidade de copias vivas. */
+    /** Quantidade de copias vivas (descarta mortas/descarregadas). */
     public int contarCopias(String id) {
-        return copiasVivas.getOrDefault(id.toLowerCase(Locale.ROOT), Set.of()).size();
+        String chave = id.toLowerCase(Locale.ROOT);
+        Set<UUID> copias = copiasVivas.get(chave);
+        if (copias == null) {
+            return 0;
+        }
+        copias.removeIf(uuid -> {
+            Entity copia = plugin.getServer().getEntity(uuid);
+            return copia == null || copia.isDead();
+        });
+        return copias.size();
     }
 
     /** Cria o chefe (e pilares, quando houver) ao redor da posicao. */
