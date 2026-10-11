@@ -11,5 +11,7 @@ armazenamento:
 jogadores:
   # era inicial de quem entra pela primeira vez no servidor
   era-inicial: "medieval"
+  # Missao iniciada no primeiro acesso; use um ID existente em quests.yml.
+  missao-inicial: "conta-que-nao-fecha"
   # abre o livro-guia automaticamente no primeiro acesso
   abrir-livro-primeiro-acesso: true

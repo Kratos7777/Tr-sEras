@@ -12,13 +12,16 @@ eras:
     mundo: "world"
     ordem: 1
     descricao: "Reinos, exploracao e o inicio da historia."
+    requisito-missao: ""
   apocaliptica:
     nome: "Era Apocaliptica"
     mundo: ""
     ordem: 2
     descricao: "Ruinas, recursos escassos e inimigos perigosos."
+    requisito-missao: "conta-que-nao-fecha"
   futurista:
     nome: "Era Futurista"
     mundo: ""
     ordem: 3
     descricao: "Tecnologia avancada e novas formas de progressao."
+    requisito-missao: "faixa-no-estandarte"
