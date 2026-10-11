@@ -400,19 +400,26 @@ public final class BossManager {
     }
 
     private void iniciarTarefa(String chave, BossDefinition def) {
+        // Contexto criado uma vez por chefe (nao a cada tick).
+        LivingEntity boss = entidades.get(chave);
+        BossContexto contexto = contexto(chave, boss, 0L);
         BukkitRunnable tarefa = new BukkitRunnable() {
             @Override
             public void run() {
-                LivingEntity boss = entidades.get(chave);
-                if (boss == null || boss.isDead()) {
+                LivingEntity atual = entidades.get(chave);
+                if (atual == null || atual.isDead()) {
                     cancel();
                     return;
                 }
+                if (!atual.equals(contexto.getEntidade())) {
+                    return;
+                }
                 long tick = ticks.merge(chave, 1L, Long::sum) - 1;
+                contexto.setTick(tick);
                 ComportamentoBoss comportamento = comportamentos.get(chave);
                 if (comportamento != null) {
                     try {
-                        comportamento.executar(contexto(chave, boss, tick));
+                        comportamento.executar(contexto);
                     } catch (RuntimeException e) {
                         plugin.getLogger().severe("Erro no comportamento do chefe '" + chave
                                 + "': " + e.getMessage());

@@ -49,17 +49,21 @@ public final class NpcCommandHandler {
         }
         sender.sendMessage(messages.message("comando.npc.listar.titulo",
                 "{total}", String.valueOf(npcs.size())));
+        // Uma unica varredura dos mundos para todos os NPCs.
+        var entidades = npcManager.entidadesPorId();
         for (NpcDefinition npc : npcs) {
             sender.sendMessage(messages.message("comando.npc.listar.linha",
                     "{id}", npc.getId(),
                     "{nome}", npc.getNome(),
                     "{era}", npc.getEra(),
-                    "{estado}", estado(npc)));
+                    "{estado}", estado(npc, entidades)));
         }
     }
 
-    private String estado(NpcDefinition npc) {
-        if (!npcManager.encontrarEntidades(npc.getId()).isEmpty()) {
+    private String estado(NpcDefinition npc, java.util.Map<String, List<org.bukkit.entity.Entity>> entidades) {
+        List<org.bukkit.entity.Entity> vivas =
+                entidades.getOrDefault(npc.getId().toLowerCase(java.util.Locale.ROOT), List.of());
+        if (!vivas.isEmpty()) {
             return "no mundo";
         }
         return npc.getLocal() != null ? "local salvo" : "sem local";

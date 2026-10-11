@@ -23,11 +23,12 @@ public final class Percepcao implements ComportamentoBoss {
     public void executar(BossContexto ctx) {
         var boss = ctx.getEntidade();
         var raio = ctx.getDef().getDominioRaio();
+        // Vetor da posicao do chefe computado uma vez por execucao.
+        var posBoss = boss.getLocation().toVector();
         for (Player player : ctx.jogadoresProximos(raio)) {
             if (ctx.getTick() % 3 == 0) {
                 // Fascinacao: puxa o jogador em direcao a criatura.
-                Vector direcao = boss.getLocation().toVector()
-                        .subtract(player.getLocation().toVector());
+                Vector direcao = posBoss.clone().subtract(player.getLocation().toVector());
                 if (direcao.lengthSquared() > 4.0) {
                     player.setVelocity(direcao.normalize().multiply(0.45));
                     player.sendMessage(ctx.getMessages().prefixed("comando.boss.percepcao-atrai"));

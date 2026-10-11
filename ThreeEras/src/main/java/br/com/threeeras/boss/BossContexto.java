@@ -19,7 +19,7 @@ public final class BossContexto {
     private final BossDefinition def;
     private final LivingEntity entidade;
     private final BossManager manager;
-    private final long tick;
+    private long tick;
 
     public BossContexto(ThreeErasPlugin plugin, Messages messages, BossDefinition def,
                         LivingEntity entidade, BossManager manager, long tick) {
@@ -54,6 +54,11 @@ public final class BossContexto {
     /** Contador de execucoes do comportamento (cada 2 segundos). */
     public long getTick() {
         return tick;
+    }
+
+    /** Atualiza o contador (o contexto e reutilizado a cada tick). */
+    public void setTick(long tick) {
+        this.tick = tick;
     }
 
     public int pilaresRestantes() {

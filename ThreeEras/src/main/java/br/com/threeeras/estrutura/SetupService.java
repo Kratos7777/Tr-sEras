@@ -112,7 +112,8 @@ public final class SetupService {
             int x = base.getBlockX() + (int) Math.round(Math.cos(angulo) * raio);
             int z = base.getBlockZ() + (int) Math.round(Math.sin(angulo) * raio);
             Location local = new Location(base.getWorld(), x + 0.5, base.getBlockY() + 1, z + 0.5);
-            if (npcManager.criar(npc.getId(), local)) {
+            // No setup os NPCs sao novos: pula a varredura de entidades antigas.
+            if (npcManager.criar(npc.getId(), local, false)) {
                 criados++;
             }
             angulo += Math.PI / 5;

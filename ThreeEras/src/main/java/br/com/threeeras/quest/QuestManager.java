@@ -250,6 +250,10 @@ public final class QuestManager {
      */
     public void verificar(Player player) {
         PlayerData data = playerManager.get(player);
+        if (data.getQuestsAtivas().isEmpty()) {
+            // Fast-path: nada em andamento, nada a avaliar.
+            return;
+        }
         boolean mudou = false;
         // Copia dos ids: o mapa de progresso e modificado durante o laco
         // (avanco de passo e conclusao), o que quebraria a iteracao.

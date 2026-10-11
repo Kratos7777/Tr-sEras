@@ -72,6 +72,8 @@ public final class LoreCommandHandler {
         }
         sender.sendMessage(messages.message("comando.lore.listar.titulo",
                 "{total}", String.valueOf(selecionadas.size())));
+        // Resolve os dados do jogador uma vez (nao por entrada).
+        PlayerData dados = sender instanceof Player player ? playerManager.get(player) : null;
         for (LoreEntry entry : selecionadas) {
             sender.sendMessage(messages.message("comando.lore.listar.linha",
                     "{id}", entry.getId(),
@@ -79,7 +81,7 @@ public final class LoreCommandHandler {
                     "{era}", entry.getEra(),
                     "{camada}", String.valueOf(entry.getCamada()),
                     "{status}", entry.getStatus(),
-                    "{marca}", marca(sender, entry.getId())));
+                    "{marca}", marca(dados, entry.getId())));
         }
     }
 
@@ -148,11 +150,10 @@ public final class LoreCommandHandler {
                 "{id}", entry.getId(), "{nick}", data.getNome()));
     }
 
-    private String marca(CommandSender sender, String id) {
-        if (sender instanceof Player player) {
-            PlayerData data = playerManager.get(player);
-            return data.temDescoberta(id) ? "&a[lido]" : "&7[nao lido]";
+    private String marca(PlayerData data, String id) {
+        if (data == null) {
+            return "&8-";
         }
-        return "&8-";
+        return data.temDescoberta(id) ? "&a[lido]" : "&7[nao lido]";
     }
 }

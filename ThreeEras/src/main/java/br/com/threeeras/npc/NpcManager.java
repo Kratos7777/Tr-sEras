@@ -151,15 +151,44 @@ public final class NpcManager {
         return encontradas;
     }
 
-    /** Cria a entidade na posicao informada e persiste o local. */
+    /**
+     * Agrupa todas as entidades de NPC por id em UMA varredura dos mundos.
+     * Usado por listagens: evita uma varredura completa por NPC
+     * (listar 22 NPCs varria o mundo 22 vezes).
+     */
+    public Map<String, List<Entity>> entidadesPorId() {
+        Map<String, List<Entity>> grupo = new LinkedHashMap<>();
+        for (World world : plugin.getServer().getWorlds()) {
+            for (Entity entity : world.getEntities()) {
+                String id = getIdDaEntidade(entity);
+                if (id == null) {
+                    continue;
+                }
+                grupo.computeIfAbsent(id.toLowerCase(Locale.ROOT), k -> new ArrayList<>()).add(entity);
+            }
+        }
+        return grupo;
+    }
+
+    /**
+     * Cria a entidade na posicao informada e persiste o local.
+     * {@code substituir=false} pula a varredura de entidades antigas
+     * (usado no setup, onde os NPCs sao novos).
+     */
     public boolean criar(String id, Location local) {
+        return criar(id, local, true);
+    }
+
+    public boolean criar(String id, Location local, boolean substituir) {
         NpcDefinition npc = porId(id);
         if (npc == null) {
             return false;
         }
         // Remove entidades anteriores do mesmo NPC para nao duplicar.
-        for (Entity anterior : encontrarEntidades(id)) {
-            anterior.remove();
+        if (substituir) {
+            for (Entity anterior : encontrarEntidades(id)) {
+                anterior.remove();
+            }
         }
         EntityType tipo = resolverTipo(npc.getTipo());
         Entity entity = local.getWorld().spawnEntity(local, tipo);
