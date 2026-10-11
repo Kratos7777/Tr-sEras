@@ -170,3 +170,17 @@ itens:
     lore:
       - "&7Onze minutos de nada gravado. O nada tem ritmo."
       - "&8O pulso bate a cada quarenta segundos. Como um coração."
+
+  livro-guia:
+    era: medieval
+    material: WRITTEN_BOOK
+    nome: "&6Guia das Tres Eras"
+    quantidade: 1
+    lore:
+      - "&7Entregue a todo viajante que chega ao servidor."
+    paginas:
+      - "&lBEM-VINDO AO THREEERAS&r\n\nUm mundo, tres eras: a Medieval, a Apocaliptica e a Futurista. Elas nao sao tres mundos — sao tres periodos da mesma historia.\n\nUm reino chamado Raizes sustentou a civilizacao. Depois veio a guerra. Depois, as ruinas. Depois, gente tentando entender o que sobrou."
+      - "&lO QUE FAZER PRIMEIRO&r\n\n1. Leia registros: &n/threeeras lore listar&r\n2. Leia um: &n/threeeras lore ver fundacao-raizes&r\n3. Fale com os NPCs por perto (clique direito)\n4. Cumpra a missao inicial\n\nCada registro que voce le fica marcado como [lido]."
+      - "&lSEU CAMINHO&r\n\nSuas descobertas definem sua &lrota&r — o rumo que a historia toma para voce.\n\nNinguem escolhe a rota no comeco: ela emerge do que voce descobre. Rotas diferentes levam a finais diferentes.\n\nVeja a sua com &n/threeeras rota info&r."
+      - "&lCOMANDOS UTEIS&r\n\n&n/threeeras ajuda&r — todos os comandos\n&n/threeeras dungeon listar&r — expedicoes\n&n/threeeras quest listar&r — missoes\n&n/threeeras item listar&r — itens\n&n/threeeras kit&r — kit (30 min)\n&n/spawn&r — voltar ao inicio"
+      - "&lAS TRES ERAS&r\n\n&1Medieval&r — reinos, guerra e registros oficiais que podem estar errados.\n\n&8Apocaliptica&r — ruinas, faccoes e zonas onde o mundo esqueceu de continuar.\n\n&9Futurista&r — laboratorios, catalogos e perguntas que a ciencia nao responde.\n\nVa com calma. A verdade nao foge — mas se esconde."

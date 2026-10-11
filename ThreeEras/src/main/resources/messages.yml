@@ -253,7 +253,7 @@ comando:
     falhou: "&cFalha ao preparar o servidor. Veja o console."
     resultado: "&aPronto: &f{estruturas} &aestruturas e &f{npcs} &aNPCs posicionados; kits e primeira missao entregues."
     dica: "&eProximo passo: leia registros com &f/threeeras lore ver fundacao-raizes&e, fale com os NPCs e cumpra a missao inicial."
-    primeira-vez: "&6Bem-vindo ao ThreeEras! Kit inicial entregue. Use /threeeras ajuda e /threeeras lore listar para comecar."
+    primeira-vez: "&6Bem-vindo ao ThreeEras! &7Seu &fGuia das Tres Eras &7esta na sua mao. Leia, explore e fale com os NPCs. Use &f/threeeras ajuda&7."
   dungeon:
     uso: "&cUse: /threeeras dungeon <listar|info|entrar|concluir>"
     inexistente: "&cDungeon nao encontrada: {id}"

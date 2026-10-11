@@ -140,6 +140,33 @@ public final class SetupService {
 
     /** Kit dado no primeiro acesso do jogador. */
     public boolean entregarKitPrimeiraVez(Player player) {
+        // 1. Livro-guia primeiro (vai para a mao e abre na frente do jogador).
+        ItemStack guia = itemManager.criar("livro-guia", 1);
+        if (guia != null) {
+            player.getInventory().addItem(guia);
+            if (plugin.getConfig().getBoolean("jogadores.abrir-livro-primeiro-acesso", true)) {
+                ItemStack livro = guia;
+                // Atraso de 1s: o inventario ja estara assentado no cliente.
+                plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+                    if (!player.isOnline()) {
+                        return;
+                    }
+                    player.getInventory().setItemInMainHand(livro);
+                    player.openBook(livro);
+                }, 20L);
+            }
+        }
+
+        // 2. Titulo de chegada.
+        player.showTitle(net.kyori.adventure.title.Title.title(
+                messages.component("&6&lTHREE ERAS"),
+                messages.component("&7Tres eras, uma historia, suas escolhas"),
+                net.kyori.adventure.title.Title.Times.times(
+                        java.time.Duration.ofMillis(500),
+                        java.time.Duration.ofSeconds(4),
+                        java.time.Duration.ofSeconds(1))));
+
+        // 3. Kit de itens + mensagem.
         darKit(player);
         player.sendMessage(messages.prefixed("comando.setup.primeira-vez"));
         return true;

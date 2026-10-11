@@ -11,3 +11,5 @@ armazenamento:
 jogadores:
   # era inicial de quem entra pela primeira vez no servidor
   era-inicial: "medieval"
+  # abre o livro-guia automaticamente no primeiro acesso
+  abrir-livro-primeiro-acesso: true
