@@ -239,24 +239,28 @@ public final class QuestManager {
             if (quest == null) {
                 continue;
             }
-            int passo = data.getPasso(questId);
-            if (passo < 0 || passo >= quest.getObjetivos().size()) {
-                continue;
-            }
-            Objetivo objetivo = quest.getObjetivos().get(passo);
-            if (!satisfeito(player, data, objetivo)) {
-                continue;
-            }
-            String descricao = descreverObjetivo(objetivo);
-            if (objetivo.getTipo() == TipoObjetivo.ENTREGAR) {
-                removerItens(player, objetivo);
-            }
-            data.setPasso(questId, passo + 1);
-            mudou = true;
+            // Avanca todos os passos satisfeitos de uma vez: se o jogador
+            // chegou com varios objetivos prontos, nao precisa de varios cliques.
+            while (true) {
+                int passo = data.getPasso(questId);
+                if (passo < 0 || passo >= quest.getObjetivos().size()) {
+                    break;
+                }
+                Objetivo objetivo = quest.getObjetivos().get(passo);
+                if (!satisfeito(player, data, objetivo)) {
+                    break;
+                }
+                String descricao = descreverObjetivo(objetivo);
+                if (objetivo.getTipo() == TipoObjetivo.ENTREGAR) {
+                    removerItens(player, objetivo);
+                }
+                data.setPasso(questId, passo + 1);
+                mudou = true;
 
-            if (passo + 1 >= quest.getObjetivos().size()) {
-                concluir(player, data, quest);
-            } else {
+                if (passo + 1 >= quest.getObjetivos().size()) {
+                    concluir(player, data, quest);
+                    break;
+                }
                 String proximo = descreverObjetivo(quest.getObjetivos().get(passo + 1));
                 player.sendMessage(messages.message("comando.quest.progresso",
                         "{descricao}", descricao, "{proximo}", proximo));

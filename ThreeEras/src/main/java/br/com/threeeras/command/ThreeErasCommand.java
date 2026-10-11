@@ -142,6 +142,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         }
         try {
             plugin.reloadConfig();
+            storage.startAutosave(plugin.getConfig().getInt("armazenamento.autosave-segundos", 300));
             messages.load();
             eraManager.load();
             loreManager.load();

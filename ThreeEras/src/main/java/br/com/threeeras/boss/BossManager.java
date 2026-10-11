@@ -19,6 +19,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -317,7 +318,9 @@ public final class BossManager {
             pilares.remove(pilarUuid);
         }
         int restantes = pilaresRestantes(chave);
-        for (var player : plugin.getServer().getOnlinePlayers()) {
+        LivingEntity boss = entidades.get(chave);
+        World mundo = boss != null ? boss.getWorld() : null;
+        for (var player : jogadoresNoMundo(mundo)) {
             if (restantes > 0) {
                 player.sendMessage(messages.message("comando.boss.pilar-destruido",
                         "{restantes}", String.valueOf(restantes)));
@@ -331,10 +334,22 @@ public final class BossManager {
     public void bossDerrotado(String bossId) {
         String chave = bossId.toLowerCase(Locale.ROOT);
         String nome = nomeLimpo(chave);
+        LivingEntity boss = entidades.get(chave);
+        World mundo = boss != null ? boss.getWorld() : null;
         limpar(chave);
-        for (var player : plugin.getServer().getOnlinePlayers()) {
+        for (var player : jogadoresNoMundo(mundo)) {
             player.sendMessage(messages.message("comando.boss.derrotado", "{nome}", nome));
         }
+    }
+
+    private List<Player> jogadoresNoMundo(World mundo) {
+        List<Player> jogadores = new ArrayList<>();
+        for (Player player : plugin.getServer().getOnlinePlayers()) {
+            if (mundo == null || player.getWorld().equals(mundo)) {
+                jogadores.add(player);
+            }
+        }
+        return jogadores;
     }
 
     /** True se o chefe ainda estiver protegido por pilares. */
@@ -355,6 +370,9 @@ public final class BossManager {
 
     private void limpar(String chave) {
         LivingEntity entity = entidades.remove(chave);
+        if (entity != null && !entity.isDead()) {
+            entity.remove();
+        }
         BukkitRunnable tarefa = tarefas.remove(chave);
         if (tarefa != null) {
             tarefa.cancel();
