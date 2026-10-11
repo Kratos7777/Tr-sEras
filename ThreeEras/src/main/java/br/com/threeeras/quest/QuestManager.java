@@ -311,6 +311,11 @@ public final class QuestManager {
                 total += stack.getAmount();
             }
         }
+        // A mao secundaria tambem conta ( jogadores guardam itens la).
+        ItemStack offhand = player.getInventory().getItemInOffHand();
+        if (offhand != null && itemId.equalsIgnoreCase(itemManager.porItem(offhand))) {
+            total += offhand.getAmount();
+        }
         return total;
     }
 
@@ -330,6 +335,15 @@ public final class QuestManager {
             restante -= remover;
             if (stack.getAmount() <= 0) {
                 player.getInventory().setItem(slot, null);
+            }
+        }
+        if (restante > 0) {
+            ItemStack offhand = player.getInventory().getItemInOffHand();
+            if (offhand != null && objetivo.getAlvo().equalsIgnoreCase(itemManager.porItem(offhand))) {
+                int remover = Math.min(restante, offhand.getAmount());
+                int novaQuantidade = offhand.getAmount() - remover;
+                player.getInventory().setItemInOffHand(
+                        novaQuantidade <= 0 ? null : offhand.asQuantity(novaQuantidade));
             }
         }
     }
