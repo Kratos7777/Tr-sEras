@@ -201,11 +201,21 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Joga o cache para a memoria do storage e grava sincronamente.
-        playerManager.flushCacheToStorage();
-        bossManager.shutdown();
-        eventoManager.shutdown();
-        storage.shutdown();
+        // Cada etapa protegida por null: se o onEnable falhou no meio da
+        // inicializacao, os campos podem nao ter sido atribuidos e o
+        // desligamento nao deve lancar excecao que mascare o erro original.
+        if (playerManager != null) {
+            playerManager.flushCacheToStorage();
+        }
+        if (bossManager != null) {
+            bossManager.shutdown();
+        }
+        if (eventoManager != null) {
+            eventoManager.shutdown();
+        }
+        if (storage != null) {
+            storage.shutdown();
+        }
         getLogger().info("ThreeEras foi desligado.");
     }
 }
