@@ -6,6 +6,8 @@ import br.com.threeeras.command.ThreeErasCommand;
 import br.com.threeeras.config.Messages;
 import br.com.threeeras.era.Era;
 import br.com.threeeras.era.EraManager;
+import br.com.threeeras.estrutura.GerenciadorEstruturas;
+import br.com.threeeras.estrutura.SetupService;
 import br.com.threeeras.evento.EventoManager;
 import br.com.threeeras.item.ItemManager;
 import br.com.threeeras.lore.LoreManager;
@@ -32,6 +34,8 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private BossManager bossManager;
     private EventoManager eventoManager;
     private RotaManager rotaManager;
+    private GerenciadorEstruturas gerenciadorEstruturas;
+    private SetupService setupService;
 
     @Override
     public void onEnable() {
@@ -70,11 +74,14 @@ public final class ThreeErasPlugin extends JavaPlugin {
         rotaManager.load();
         rotaManager.register();
 
+        gerenciadorEstruturas = new GerenciadorEstruturas(this);
+        setupService = new SetupService(this);
+
         storage = new StorageManager(this);
         storage.load();
         storage.startAutosave(getConfig().getInt("armazenamento.autosave-segundos", 300));
 
-        playerManager = new PlayerManager(this, storage);
+        playerManager = new PlayerManager(this, storage, setupService);
         playerManager.register();
 
         PluginCommand command = getCommand("threeeras");
@@ -88,6 +95,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
         command.setTabCompleter(executor);
 
         getLogger().info("ThreeEras foi iniciado! Use /threeeras ajuda");
+        getLogger().info("Pasta de dados: " + getDataFolder().getAbsolutePath());
         if (getConfig().getBoolean("geral.debug")) {
             getLogger().info("Modo debug ativo: diagnostico extras habilitado.");
         }
@@ -135,6 +143,14 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
     public RotaManager getRotaManager() {
         return rotaManager;
+    }
+
+    public GerenciadorEstruturas getGerenciadorEstruturas() {
+        return gerenciadorEstruturas;
+    }
+
+    public SetupService getSetupService() {
+        return setupService;
     }
 
     private void validarEraInicial() {

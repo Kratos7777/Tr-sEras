@@ -45,7 +45,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private static final List<String> SUBCOMMANDS =
             List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador", "era",
                     "lore", "npc", "npcs", "item", "itens", "quest", "quests", "boss", "bosses",
-                    "evento", "eventos", "rota");
+                    "evento", "eventos", "rota", "estrutura", "setup");
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
@@ -66,6 +66,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private final BossCommandHandler bossHandler;
     private final EventoCommandHandler eventoHandler;
     private final RotaCommandHandler rotaHandler;
+    private final EstruturaCommandHandler estruturaHandler;
 
     public ThreeErasCommand(ThreeErasPlugin plugin, Messages messages) {
         this.plugin = plugin;
@@ -87,6 +88,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         this.bossHandler = new BossCommandHandler(plugin);
         this.eventoHandler = new EventoCommandHandler(plugin);
         this.rotaHandler = new RotaCommandHandler(plugin);
+        this.estruturaHandler = new EstruturaCommandHandler(plugin);
     }
 
     @Override
@@ -110,6 +112,8 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             case "boss", "bosses" -> bossHandler.handle(sender, args);
             case "evento", "eventos" -> eventoHandler.handle(sender, args);
             case "rota" -> rotaHandler.handle(sender, args);
+            case "estrutura" -> estruturaHandler.handle(sender, args);
+            case "setup" -> estruturaHandler.handleSetup(sender);
             default -> sender.sendMessage(messages.prefixed("comando.desconhecido"));
         }
         return true;
@@ -138,6 +142,8 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(messages.plain("comando.ajuda.boss"));
         sender.sendMessage(messages.plain("comando.ajuda.evento"));
         sender.sendMessage(messages.plain("comando.ajuda.rota"));
+        sender.sendMessage(messages.plain("comando.ajuda.estrutura"));
+        sender.sendMessage(messages.plain("comando.ajuda.setup"));
         if (sender.hasPermission(PERMISSION)) {
             sender.sendMessage(messages.plain("comando.ajuda.reload"));
         }
@@ -437,6 +443,9 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             }
             if (args[0].equalsIgnoreCase("rota")) {
                 return completarDe(args[1], "info", "listar", "definir", "limpar");
+            }
+            if (args[0].equalsIgnoreCase("estrutura")) {
+                return completarDe(args[1], "listar", "construir");
             }
         }
         return List.of();

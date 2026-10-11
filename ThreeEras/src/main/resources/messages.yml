@@ -29,6 +29,8 @@ comando:
     boss: "&f/threeeras boss <listar|info|criar|remover|ir> &7- chefes"
     evento: "&f/threeeras evento <listar|forcars> &7- eventos agendados"
     rota: "&f/threeeras rota <info|listar|definir|limpar> &7- rota narrativa"
+    estrutura: "&f/threeeras estrutura <listar|construir> &7- estruturas prontas"
+    setup: "&f/threeeras setup &7- prepara o servidor inteiro &8(admin)"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -230,3 +232,21 @@ comando:
     limpar:
       ok: "&aRota limpa. A proxima avaliacao podera atribuir uma nova."
       vazio: "&7Voce nao tinha rota atribuida."
+  estrutura:
+    uso: "&cUse: /threeeras estrutura <listar|construir>"
+    inexistente: "&cEstrutura nao encontrada: {id}"
+    listar:
+      titulo: "&8--- Estruturas prontas ({total}) ---"
+      vazio: "&7Nenhuma estrutura disponivel."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7- {descricao}"
+    construir:
+      uso: "&cUse: /threeeras estrutura construir <id>"
+      construida: "&aEstrutura &f{nome} &aconstruida em ({x}, {y}, {z})."
+  setup:
+    sem-mundo: "&cNenhum mundo carregado para construir."
+    ok: "&aServidor preparado! Veja o resumo abaixo."
+    ok-console: "&aServidor preparado pelo console. Entre no jogo e explore."
+    falhou: "&cFalha ao preparar o servidor. Veja o console."
+    resultado: "&aPronto: &f{estruturas} &aestruturas e &f{npcs} &aNPCs posicionados; kits e primeira missao entregues."
+    dica: "&eProximo passo: leia registros com &f/threeeras lore ver fundacao-raizes&e, fale com os NPCs e cumpra a missao inicial."
+    primeira-vez: "&6Bem-vindo ao ThreeEras! Kit inicial entregue. Use /threeeras ajuda e /threeeras lore listar para comecar."

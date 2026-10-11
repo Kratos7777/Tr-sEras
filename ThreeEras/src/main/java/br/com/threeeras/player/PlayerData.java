@@ -23,6 +23,7 @@ public final class PlayerData {
     private final Set<String> questsConcluidas;
     private String rotaAtual;
     private boolean rotaConcluida;
+    private boolean kitRecebido;
     private String nome;
     private long primeiroJoin;
     private long ultimoVisto;
@@ -32,7 +33,7 @@ public final class PlayerData {
     public PlayerData(UUID uuid, String nome, long primeiroJoin, long ultimoVisto,
                       String eraAtual, long tempoJogadoSegundos, Collection<String> descobertas,
                       Map<String, Integer> passosQuests, Collection<String> questsConcluidas,
-                      String rotaAtual, boolean rotaConcluida) {
+                      String rotaAtual, boolean rotaConcluida, boolean kitRecebido) {
         this.uuid = uuid;
         this.nome = nome;
         this.primeiroJoin = primeiroJoin;
@@ -44,12 +45,13 @@ public final class PlayerData {
         this.questsConcluidas = new LinkedHashSet<>(questsConcluidas);
         this.rotaAtual = rotaAtual;
         this.rotaConcluida = rotaConcluida;
+        this.kitRecebido = kitRecebido;
     }
 
     /** Cria registro de primeiro acesso. */
     public static PlayerData novo(UUID uuid, String nome, long agora, String eraInicial) {
         return new PlayerData(uuid, nome, agora, agora, eraInicial, 0L,
-                List.of(), Map.of(), List.of(), null, false);
+                List.of(), Map.of(), List.of(), null, false, false);
     }
 
     public UUID getUuid() {
@@ -185,5 +187,15 @@ public final class PlayerData {
     public void limparRota() {
         this.rotaAtual = null;
         this.rotaConcluida = false;
+    }
+
+    // ---------- kit inicial ----------
+
+    public boolean isKitRecebido() {
+        return kitRecebido;
+    }
+
+    public void marcarKitRecebido() {
+        this.kitRecebido = true;
     }
 }

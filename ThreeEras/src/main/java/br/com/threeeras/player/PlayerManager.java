@@ -1,6 +1,7 @@
 package br.com.threeeras.player;
 
 import br.com.threeeras.ThreeErasPlugin;
+import br.com.threeeras.estrutura.SetupService;
 import br.com.threeeras.storage.StorageManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,11 +43,13 @@ public final class PlayerManager implements Listener {
 
     private final ThreeErasPlugin plugin;
     private final StorageManager storage;
+    private final SetupService setupService;
     private final Map<UUID, PlayerData> cache = new HashMap<>();
 
-    public PlayerManager(ThreeErasPlugin plugin, StorageManager storage) {
+    public PlayerManager(ThreeErasPlugin plugin, StorageManager storage, SetupService setupService) {
         this.plugin = plugin;
         this.storage = storage;
+        this.setupService = setupService;
     }
 
     /** Era inicial configurada; lida sob demanda para refletir /threeeras reload. */
@@ -84,7 +87,8 @@ public final class PlayerManager implements Listener {
                     passos,
                     storage.getStringList(base + ".quests-concluidas"),
                     rota.isBlank() ? null : rota,
-                    storage.getBoolean(base + ".rota-concluida", false));
+                    storage.getBoolean(base + ".rota-concluida", false),
+                    storage.getBoolean(base + ".kit-recebido", false));
         }
         PlayerData novo = PlayerData.novo(uuid, nome, System.currentTimeMillis(), getEraInicial());
         save(novo);
@@ -153,6 +157,7 @@ public final class PlayerManager implements Listener {
             storage.set(base + ".rota", data.getRotaAtual());
         }
         storage.set(base + ".rota-concluida", data.isRotaConcluida());
+        storage.set(base + ".kit-recebido", data.isKitRecebido());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -164,6 +169,11 @@ public final class PlayerManager implements Listener {
         data.setUltimoVisto(agora);
         if (data.getPrimeiroJoin() <= 0L) {
             data.setPrimeiroJoin(agora);
+        }
+        // Primeiro acesso recebe o kit inicial (uma vez so).
+        if (!data.isKitRecebido()) {
+            setupService.entregarKitPrimeiraVez(player);
+            data.marcarKitRecebido();
         }
         save(data);
         if (plugin.getConfig().getBoolean("geral.debug")) {
