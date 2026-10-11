@@ -4,6 +4,7 @@ import br.com.threeeras.ThreeErasPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -37,6 +38,23 @@ public final class QuestProgressListener implements Listener {
         if (!(event.getWhoClicked() instanceof Player player)) {
             return;
         }
-        questManager.verificar(player);
+        // InventoryClickEvent ocorre antes de o Bukkit aplicar a troca.
+        verificarNoProximoTick(player);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onItemPickup(EntityPickupItemEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            // A pilha so entra no inventario depois do evento.
+            verificarNoProximoTick(player);
+        }
+    }
+
+    private void verificarNoProximoTick(Player player) {
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+            if (player.isOnline()) {
+                questManager.verificar(player);
+            }
+        }, 1L);
     }
 }

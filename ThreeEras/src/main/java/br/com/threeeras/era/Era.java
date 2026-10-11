@@ -10,13 +10,15 @@ public final class Era {
     private final String mundo;
     private final int ordem;
     private final String descricao;
+    private final String requisitoMissao;
 
-    public Era(String id, String nome, String mundo, int ordem, String descricao) {
+    public Era(String id, String nome, String mundo, int ordem, String descricao, String requisitoMissao) {
         this.id = id;
         this.nome = nome;
         this.mundo = mundo == null ? "" : mundo;
         this.ordem = ordem;
         this.descricao = descricao;
+        this.requisitoMissao = requisitoMissao == null ? "" : requisitoMissao;
     }
 
     public String getId() {
@@ -38,6 +40,14 @@ public final class Era {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    public String getRequisitoMissao() {
+        return requisitoMissao;
+    }
+
+    public boolean temRequisitoMissao() {
+        return !requisitoMissao.isBlank();
     }
 
     public boolean temMundo() {

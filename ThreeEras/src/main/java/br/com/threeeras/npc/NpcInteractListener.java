@@ -27,14 +27,12 @@ public final class NpcInteractListener implements Listener {
 
     private final ThreeErasPlugin plugin;
     private final NpcManager npcManager;
-    private final PlayerManager playerManager;
     private final Messages messages;
     private final Map<UUID, Long> ultimaInteracao = new HashMap<>();
 
     public NpcInteractListener(ThreeErasPlugin plugin, NpcManager npcManager) {
         this.plugin = plugin;
         this.npcManager = npcManager;
-        this.playerManager = plugin.getPlayerManager();
         this.messages = plugin.getMessages();
     }
 
@@ -59,7 +57,7 @@ public final class NpcInteractListener implements Listener {
 
         // NPC de rota: so conversa com quem esta na rota certa.
         if (npc.temRota()) {
-            PlayerData dados = playerManager.get(player);
+            PlayerData dados = plugin.getPlayerManager().get(player);
             String rota = dados.getRotaAtual();
             if (rota == null || !rota.equalsIgnoreCase(npc.getRota())) {
                 player.sendMessage(plugin.getMessages().message("comando.npc.rota-bloqueada",
@@ -79,7 +77,7 @@ public final class NpcInteractListener implements Listener {
             player.sendMessage(messages.component(linha));
         }
 
-        PlayerData data = playerManager.get(player);
+        PlayerData data = plugin.getPlayerManager().get(player);
         for (Map.Entry<String, String> entry : npc.getPorDescoberta().entrySet()) {
             if (data.temDescoberta(entry.getKey())) {
                 player.sendMessage(messages.component(entry.getValue()));

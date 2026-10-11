@@ -3,6 +3,9 @@ package br.com.threeeras.era;
 import br.com.threeeras.ThreeErasPlugin;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 
 import java.io.File;
 import java.util.Comparator;
@@ -46,7 +49,9 @@ public final class EraManager {
                 String mundo = secao.getString(id + ".mundo", "");
                 int ordem = secao.getInt(id + ".ordem", 99);
                 String descricao = secao.getString(id + ".descricao", "");
-                carregadas.put(id.toLowerCase(Locale.ROOT), new Era(id, nome, mundo, ordem, descricao));
+                String requisitoMissao = secao.getString(id + ".requisito-missao", "");
+                carregadas.put(id.toLowerCase(Locale.ROOT),
+                        new Era(id, nome, mundo, ordem, descricao, requisitoMissao));
             }
         }
 
@@ -103,5 +108,44 @@ public final class EraManager {
     /** Nome do mundo para exibicao ("-" quando nao configurado). */
     public String getMundoExibicao(Era era) {
         return era.temMundo() ? era.getMundo() : "-";
+    }
+
+    /** Localiza uma posicao segura perto do spawn; nunca cria nem descarrega mundos. */
+    public Location getSpawnSeguro(World mundo) {
+        Location origem = mundo.getSpawnLocation();
+        for (int raio = 0; raio <= 8; raio++) {
+            for (int dx = -raio; dx <= raio; dx++) {
+                for (int dz = -raio; dz <= raio; dz++) {
+                    if (raio > 0 && Math.abs(dx) != raio && Math.abs(dz) != raio) {
+                        continue;
+                    }
+                    int x = origem.getBlockX() + dx;
+                    int z = origem.getBlockZ() + dz;
+                    int y = mundo.getHighestBlockYAt(x, z) + 1;
+                    if (y + 1 >= mundo.getMaxHeight() || y <= mundo.getMinHeight()) {
+                        continue;
+                    }
+                    var piso = mundo.getBlockAt(x, y - 1, z);
+                    var pes = mundo.getBlockAt(x, y, z);
+                    var cabeca = mundo.getBlockAt(x, y + 1, z);
+                    Material materialPiso = piso.getType();
+                    boolean perigoso = materialPiso == Material.MAGMA_BLOCK
+                            || materialPiso == Material.CACTUS
+                            || materialPiso == Material.CAMPFIRE
+                            || materialPiso == Material.SOUL_CAMPFIRE
+                            || materialPiso == Material.FIRE
+                            || materialPiso == Material.SOUL_FIRE
+                            || materialPiso == Material.POWDER_SNOW
+                            || materialPiso == Material.SWEET_BERRY_BUSH;
+                    if (materialPiso.isSolid() && !perigoso && !piso.isLiquid()
+                            && pes.isPassable() && cabeca.isPassable()
+                            && !pes.isLiquid() && !cabeca.isLiquid()) {
+                        return new Location(mundo, x + 0.5, y, z + 0.5,
+                                origem.getYaw(), origem.getPitch());
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
