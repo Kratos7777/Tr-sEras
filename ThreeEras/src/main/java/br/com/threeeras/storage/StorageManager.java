@@ -29,6 +29,8 @@ public final class StorageManager {
     private final File file;
     private final AtomicBoolean dirty = new AtomicBoolean(false);
     private final AtomicBoolean salvando = new AtomicBoolean(false);
+    private final Object ioLock = new Object();
+    private volatile boolean encerrando;
 
     private YamlConfiguration dados;
     private BukkitTask autosaveTask;
@@ -42,7 +44,13 @@ public final class StorageManager {
     /** Carrega o arquivo do disco. Se nao existir, comeca vazio (sera criado ao salvar). */
     public void load() {
         if (file.exists()) {
-            dados = YamlConfiguration.loadConfiguration(file);
+            YamlConfiguration carregado = new YamlConfiguration();
+            try {
+                carregado.load(file);
+            } catch (IOException | InvalidConfigurationException e) {
+                throw new IllegalStateException("dados.yml esta invalido; o arquivo foi preservado sem sobrescrita.", e);
+            }
+            dados = carregado;
         } else {
             dados = new YamlConfiguration();
             dirty.set(true);
@@ -51,6 +59,10 @@ public final class StorageManager {
 
     public boolean isDirty() {
         return dirty.get();
+    }
+
+    public boolean isSaving() {
+        return salvando.get();
     }
 
     public File getFile() {
@@ -112,7 +124,7 @@ public final class StorageManager {
      * proximo ciclo (autosave ou desligamento) para evitar escrita fora de ordem.
      */
     public void saveAsync() {
-        if (!dirty.get() || !dirty.compareAndSet(true, false)) {
+        if (encerrando || !dirty.get() || !dirty.compareAndSet(true, false)) {
             return;
         }
         if (!salvando.compareAndSet(false, true)) {
@@ -133,10 +145,17 @@ public final class StorageManager {
 
     private void write(String snapshot) {
         try {
-            YamlConfiguration copia = new YamlConfiguration();
-            copia.loadFromString(snapshot);
-            copia.save(file);
-            plugin.getLogger().info("dados.yml salvo em disco (" + file.length() + " bytes).");
+            synchronized (ioLock) {
+                // O encerramento grava o estado final sincronamente. Se esta
+                // escrita ainda estiver na fila, ela nao pode sobrescreve-lo.
+                if (encerrando) {
+                    return;
+                }
+                YamlConfiguration copia = new YamlConfiguration();
+                copia.loadFromString(snapshot);
+                copia.save(file);
+                plugin.getLogger().info("dados.yml salvo em disco (" + file.length() + " bytes).");
+            }
         } catch (IOException | InvalidConfigurationException e) {
             plugin.getLogger().severe("Falha ao salvar dados.yml: " + e.getMessage());
             dirty.set(true);
@@ -167,11 +186,17 @@ public final class StorageManager {
     /** Gravacao sincronamente no desligamento. */
     public void shutdown() {
         stopAutosave();
-        if (dirty.compareAndSet(true, false)) {
+        synchronized (ioLock) {
+            encerrando = true;
+            if (dados == null) {
+                return;
+            }
             try {
                 dados.save(file);
+                dirty.set(false);
                 plugin.getLogger().info("dados.yml salvo no desligamento.");
             } catch (IOException e) {
+                dirty.set(true);
                 plugin.getLogger().severe("Falha ao salvar dados.yml no desligamento: " + e.getMessage());
             }
         }

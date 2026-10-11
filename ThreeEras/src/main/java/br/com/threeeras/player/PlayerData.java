@@ -24,6 +24,7 @@ public final class PlayerData {
     private String rotaAtual;
     private boolean rotaConcluida;
     private boolean kitRecebido;
+    private boolean tutorialConcluido;
     private final Set<String> dungeonsConcluidas;
     private String nome;
     private long primeiroJoin;
@@ -34,7 +35,7 @@ public final class PlayerData {
     public PlayerData(UUID uuid, String nome, long primeiroJoin, long ultimoVisto,
                       String eraAtual, long tempoJogadoSegundos, Collection<String> descobertas,
                       Map<String, Integer> passosQuests, Collection<String> questsConcluidas,
-                      String rotaAtual, boolean rotaConcluida, boolean kitRecebido,
+                      String rotaAtual, boolean rotaConcluida, boolean kitRecebido, boolean tutorialConcluido,
                       Collection<String> dungeonsConcluidas) {
         this.uuid = uuid;
         this.nome = nome;
@@ -48,13 +49,14 @@ public final class PlayerData {
         this.rotaAtual = rotaAtual;
         this.rotaConcluida = rotaConcluida;
         this.kitRecebido = kitRecebido;
+        this.tutorialConcluido = tutorialConcluido;
         this.dungeonsConcluidas = new LinkedHashSet<>(dungeonsConcluidas);
     }
 
     /** Cria registro de primeiro acesso. */
     public static PlayerData novo(UUID uuid, String nome, long agora, String eraInicial) {
         return new PlayerData(uuid, nome, agora, agora, eraInicial, 0L,
-                List.of(), Map.of(), List.of(), null, false, false, List.of());
+                List.of(), Map.of(), List.of(), null, false, false, false, List.of());
     }
 
     public UUID getUuid() {
@@ -200,6 +202,18 @@ public final class PlayerData {
 
     public void marcarKitRecebido() {
         this.kitRecebido = true;
+    }
+
+    public boolean isTutorialConcluido() {
+        return tutorialConcluido;
+    }
+
+    public void marcarTutorialConcluido() {
+        tutorialConcluido = true;
+    }
+
+    public void reiniciarTutorial() {
+        tutorialConcluido = false;
     }
 
     // ---------- dungeons ----------

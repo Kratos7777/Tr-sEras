@@ -6,6 +6,10 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,6 +42,15 @@ public final class Messages {
             plugin.saveResource(FILE_NAME, false);
         }
         this.config = YamlConfiguration.loadConfiguration(file);
+        try (InputStream defaults = plugin.getResource(FILE_NAME)) {
+            if (defaults != null) {
+                YamlConfiguration padrao = YamlConfiguration.loadConfiguration(
+                        new InputStreamReader(defaults, StandardCharsets.UTF_8));
+                this.config.setDefaults(padrao);
+            }
+        } catch (IOException e) {
+            plugin.getLogger().warning("Nao foi possivel carregar as mensagens padrao: " + e.getMessage());
+        }
         avisadas.clear();
     }
 

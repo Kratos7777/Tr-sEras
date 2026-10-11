@@ -2,7 +2,10 @@ package br.com.threeeras.player;
 
 import br.com.threeeras.ThreeErasPlugin;
 import br.com.threeeras.estrutura.SetupService;
+import br.com.threeeras.quest.QuestManager;
 import br.com.threeeras.storage.StorageManager;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -89,6 +92,8 @@ public final class PlayerManager implements Listener {
                     rota.isBlank() ? null : rota,
                     storage.getBoolean(base + ".rota-concluida", false),
                     storage.getBoolean(base + ".kit-recebido", false),
+                    storage.getBoolean(base + ".tutorial-concluido",
+                            storage.getBoolean(base + ".kit-recebido", false)),
                     storage.getStringList(base + ".dungeons-concluidas"));
         }
         PlayerData novo = PlayerData.novo(uuid, nome, System.currentTimeMillis(), getEraInicial());
@@ -142,6 +147,22 @@ public final class PlayerManager implements Listener {
         }
     }
 
+    /** Descarta o cache somente quando o chamador ja garantiu que nao ha jogadores online. */
+    public void clearCache() {
+        cache.clear();
+    }
+
+    /** Marca o tutorial para reapresentacao sem tocar no kit ou progresso. */
+    public boolean resetTutorial(String nome) {
+        PlayerData data = findByName(nome);
+        if (data == null) {
+            return false;
+        }
+        data.reiniciarTutorial();
+        save(data);
+        return true;
+    }
+
     private void gravar(PlayerData data) {
         String base = BASE + "." + data.getUuid();
         storage.set(base + ".nome", data.getNome());
@@ -150,15 +171,17 @@ public final class PlayerManager implements Listener {
         storage.set(base + ".era", data.getEraAtual());
         storage.set(base + ".tempo-jogado", data.getTempoJogadoSegundos());
         storage.set(base + ".descobertas", new ArrayList<>(data.getDescobertas()));
+        // Remove progresso antigo para quests abandonadas ou concluidas nao
+        // reaparecerem como ativas quando o jogador reconectar.
+        storage.set(base + ".quests", null);
         for (Map.Entry<String, Integer> passo : data.getPassosQuests().entrySet()) {
             storage.set(base + ".quests." + passo.getKey() + ".passo", passo.getValue());
         }
         storage.set(base + ".quests-concluidas", new ArrayList<>(data.getQuestsConcluidas()));
-        if (data.getRotaAtual() != null) {
-            storage.set(base + ".rota", data.getRotaAtual());
-        }
+        storage.set(base + ".rota", data.getRotaAtual());
         storage.set(base + ".rota-concluida", data.isRotaConcluida());
         storage.set(base + ".kit-recebido", data.isKitRecebido());
+        storage.set(base + ".tutorial-concluido", data.isTutorialConcluido());
         storage.set(base + ".dungeons-concluidas", new ArrayList<>(data.getDungeonsConcluidas()));
     }
 
@@ -176,12 +199,53 @@ public final class PlayerManager implements Listener {
         if (!data.isKitRecebido()) {
             setupService.entregarKitPrimeiraVez(player);
             data.marcarKitRecebido();
+            iniciarMissaoInicial(player);
+            posicionarNoSpawnInicial(player, data.getEraAtual());
+        } else if (!data.isTutorialConcluido()) {
+            setupService.apresentarTutorial(player);
         }
+        data.marcarTutorialConcluido();
         save(data);
         if (plugin.getConfig().getBoolean("geral.debug")) {
             plugin.getLogger().info("Dados de " + player.getName()
                     + " carregados (uuid " + data.getUuid() + ", era " + data.getEraAtual() + ").");
         }
+    }
+
+    private void iniciarMissaoInicial(Player player) {
+        String questId = plugin.getConfig().getString("jogadores.missao-inicial", "conta-que-nao-fecha");
+        if (plugin.getQuestManager().porId(questId) == null) {
+            plugin.getLogger().warning("Missao inicial configurada nao existe: " + questId);
+            return;
+        }
+        QuestManager.ResultadoInicio resultado = plugin.getQuestManager().iniciar(player, questId);
+        if (resultado == QuestManager.ResultadoInicio.OK) {
+            player.sendMessage(plugin.getMessages().prefixed("comando.diario.missao-inicial"));
+        }
+    }
+
+    private void posicionarNoSpawnInicial(Player player, String eraId) {
+        var era = plugin.getEraManager().getPorId(eraId);
+        if (era == null || !era.temMundo()) {
+            plugin.getLogger().warning("Spawn inicial ignorado: mundo da era '" + eraId + "' nao configurado.");
+            return;
+        }
+        World mundo = plugin.getServer().getWorld(era.getMundo());
+        if (mundo == null) {
+            plugin.getLogger().warning("Spawn inicial ignorado: mundo '" + era.getMundo() + "' nao esta carregado.");
+            return;
+        }
+        Location spawnSeguro = plugin.getEraManager().getSpawnSeguro(mundo);
+        if (spawnSeguro == null) {
+            plugin.getLogger().warning("Nao ha ponto seguro proximo ao spawn de '" + mundo.getName() + "'.");
+            return;
+        }
+        plugin.getServer().getScheduler().runTask(plugin, () -> {
+            if (player.isOnline() && !player.teleport(spawnSeguro)) {
+                plugin.getLogger().warning("Nao foi possivel posicionar " + player.getName()
+                        + " no spawn inicial de " + mundo.getName() + ".");
+            }
+        });
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

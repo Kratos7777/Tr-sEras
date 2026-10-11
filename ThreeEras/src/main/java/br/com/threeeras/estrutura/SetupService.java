@@ -78,7 +78,12 @@ public final class SetupService {
         int npcs = posicionarNpcs(base);
 
         for (Player player : plugin.getServer().getOnlinePlayers()) {
-            darKit(player);
+            br.com.threeeras.player.PlayerData data = plugin.getPlayerManager().get(player);
+            if (!data.isKitRecebido()) {
+                darKit(player);
+                data.marcarKitRecebido();
+                plugin.getPlayerManager().save(data);
+            }
             if (questManager.porId(PRIMEIRA_MISSAO) != null) {
                 questManager.iniciar(player, PRIMEIRA_MISSAO);
             }
@@ -112,8 +117,8 @@ public final class SetupService {
             int x = base.getBlockX() + (int) Math.round(Math.cos(angulo) * raio);
             int z = base.getBlockZ() + (int) Math.round(Math.sin(angulo) * raio);
             Location local = new Location(base.getWorld(), x + 0.5, base.getBlockY() + 1, z + 0.5);
-            // No setup os NPCs sao novos: pula a varredura de entidades antigas.
-            if (npcManager.criar(npc.getId(), local, false)) {
+            // O setup pode ser executado novamente; remover duplicatas antes de recriar.
+            if (npcManager.criar(npc.getId(), local)) {
                 criados++;
             }
             angulo += Math.PI / 5;
@@ -140,18 +145,32 @@ public final class SetupService {
 
     /** Kit dado no primeiro acesso do jogador. */
     public boolean entregarKitPrimeiraVez(Player player) {
-        // 1. Livro-guia primeiro (vai para a mao e abre na frente do jogador).
+        apresentarTutorial(player, true);
+        darKit(player);
+        return true;
+    }
+
+    /** Reapresenta o tutorial sem alterar o kit ou a progressao do jogador. */
+    public void apresentarTutorial(Player player) {
+        apresentarTutorial(player, false);
+    }
+
+    private void apresentarTutorial(Player player, boolean guardarLivroNoInventario) {
+        // 1. Livro-guia: no reset e apenas aberto, sem adicionar outra copia.
         ItemStack guia = itemManager.criar("livro-guia", 1);
         if (guia != null) {
-            player.getInventory().addItem(guia);
+            ItemStack livro = guia.clone();
+            if (guardarLivroNoInventario) {
+                for (ItemStack sobra : player.getInventory().addItem(guia).values()) {
+                    player.getWorld().dropItemNaturally(player.getLocation(), sobra);
+                }
+            }
             if (plugin.getConfig().getBoolean("jogadores.abrir-livro-primeiro-acesso", true)) {
-                ItemStack livro = guia;
                 // Atraso de 1s: o inventario ja estara assentado no cliente.
                 plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
                     if (!player.isOnline()) {
                         return;
                     }
-                    player.getInventory().setItemInMainHand(livro);
                     player.openBook(livro);
                 }, 20L);
             }
@@ -166,9 +185,6 @@ public final class SetupService {
                         java.time.Duration.ofSeconds(4),
                         java.time.Duration.ofSeconds(1))));
 
-        // 3. Kit de itens + mensagem.
-        darKit(player);
         player.sendMessage(messages.prefixed("comando.setup.primeira-vez"));
-        return true;
     }
 }
