@@ -213,7 +213,7 @@ entradas:
     tipo: testemunho
     status: proposta
     titulo: "O culto das cinzas"
-    texto: "Acreditam que o mundo foi reduzido a cinzas por um juizo e que reconstruir e pecado. Usam mascaras e reverenciam as zonas de quietude como santuarios. Nao sao homicidas por natureza, MAS sao perigosos por devocao."
+    texto: "Acreditam que o mundo foi reduzido a cinzas por um juizo e que reconstruir e pecado. Usam mascaras e reverenciam as zonas de quietude como santuarios. Nao sao homicidas por natureza, mas sao perigosos por devocao."
 
   coletores-de-ruinas:
     era: apocaliptica
@@ -297,7 +297,7 @@ entradas:
     rota: raizes
     status: proposta
     titulo: "O que os marcos dizem"
-    texto: "Juntando marcos, cronica e corpos sem insignia, uma verdade incômoda emerge: o reino não enfrentou sete criaturas iguais. Enfrentou sete naturezas diferentes — e chamou todas de 'pragas' porque sete era um numero que a fé do povo comportava. A sétima zona de perturbação, a que não tinha descrição possible, foi omitida da crônica. Não por maldade. Por incapacidade de catalogar."
+    texto: "Juntando marcos, cronica e corpos sem insignia, uma verdade incômoda emerge: o reino não enfrentou sete criaturas iguais. Enfrentou sete naturezas diferentes — e chamou todas de 'pragas' porque sete era um numero que a fé do povo comportava. A sétima zona de perturbação, a que não tinha descrição possível, foi omitida da crônica. Não por maldade. Por incapacidade de catalogar."
 
   raizes-final:
     era: medieval
