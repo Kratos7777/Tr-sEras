@@ -49,10 +49,6 @@ public final class DungeonManager {
     private final Messages messages;
     private final LoreManager loreManager;
     private final ItemManager itemManager;
-    private final PlayerManager playerManager;
-    private final QuestManager questManager;
-    private final RotaManager rotaManager;
-    private final BossManager bossManager;
     private final File file;
     private final Map<String, DungeonDefinition> dungeons = new LinkedHashMap<>();
 
@@ -64,10 +60,6 @@ public final class DungeonManager {
         this.messages = plugin.getMessages();
         this.loreManager = plugin.getLoreManager();
         this.itemManager = plugin.getItemManager();
-        this.playerManager = plugin.getPlayerManager();
-        this.questManager = plugin.getQuestManager();
-        this.rotaManager = plugin.getRotaManager();
-        this.bossManager = plugin.getBossManager();
         this.file = new File(plugin.getDataFolder(), FILE_NAME);
     }
 
@@ -123,7 +115,7 @@ public final class DungeonManager {
         if (!dungeon.temRota()) {
             return true;
         }
-        PlayerData data = playerManager.get(player);
+        PlayerData data = plugin.getPlayerManager().get(player);
         String rota = data.getRotaAtual();
         return rota != null && rota.equalsIgnoreCase(dungeon.getRota());
     }
@@ -216,7 +208,7 @@ public final class DungeonManager {
 
         Location entrada = new Location(mundo, base.getBlockX() + 0.5, base.getBlockY(), base.getBlockZ() + 0.5);
         if (dungeon.temChefe()) {
-            var def = bossManager.porId(dungeon.getChefe());
+            var def = plugin.getBossManager().porId(dungeon.getChefe());
             if (def != null) {
                 plugin.getLogger().info("Dungeon '" + dungeon.getId() + "': chefe '"
                         + dungeon.getChefe() + "' deve ser criado na sala final com /threeeras boss criar "
@@ -280,13 +272,13 @@ public final class DungeonManager {
         if (dungeon == null) {
             return false;
         }
-        PlayerData data = playerManager.get(player);
-        boolean mudou = false;
-
+        PlayerData data = plugin.getPlayerManager().get(player);
+        if (data.dungeonConcluida(dungeon.getId())) {
+            return false;
+        }
         // 1. Descobertas de lore (rede causal comeca aqui).
         for (String loreId : dungeon.getRecompensasLore()) {
             if (loreManager.existe(loreId) && data.addDescoberta(loreId)) {
-                mudou = true;
                 player.sendMessage(messages.message("comando.dungeon.lore-descoberta",
                         "{lore}", loreId));
             }
@@ -308,17 +300,15 @@ public final class DungeonManager {
         }
 
         // 3. Progresso de missoes (objetivo do tipo dungeon).
-        questManager.verificar(player);
+        plugin.getQuestManager().verificar(player);
 
         // 4. Rotas (conjunto de descobertas pode fechar uma rota).
-        rotaManager.avaliar(player);
+        plugin.getRotaManager().avaliar(player);
 
         String chave = dungeon.getId().toLowerCase(Locale.ROOT);
         exploradores.remove(chave);
 
-        if (mudou) {
-            playerManager.save(data);
-        }
+        plugin.getPlayerManager().save(data);
         player.sendMessage(messages.message("comando.dungeon.concluida", "{nome}", dungeon.getNome()));
         return true;
     }

@@ -1,16 +1,20 @@
-# importado/ — material preservado para decisão
+# importado/ — MERGIDO em 11/10/2026
 
-Em 11/10/2026 um upload (commit 69baf7a) trouxe uma cópia do workspace para a
-raiz do repositório. Essa cópia **divergiu** do código versionado: contém
-funcionalidades que não existem em `ThreeEras/src` — entre elas os comandos
-`threeeras diario`, `threeeras tutorial reiniciar`, `threeeras era viajar` e o
-campo `requisito-missao` em `eras.yml`.
+O conteúdo desta pasta foi analisado e integrado a `ThreeEras/src`
+(branch `organizacao/documentos-e-importado`). Nada foi descartado às
+cegas: cada arquivo foi comparado antes do merge.
 
-Os 14 arquivos `.java`, 3 `.yml`, o `ThreeEras.jar` (199.603 bytes) e o
-`download.nota` foram mantidos aqui, intactos, para revisão. Nada foi mesclado
-automaticamente: a escolha de qual versão prevalece é do responsável pelo
-projeto.
+Pontos que a versão supervisionada trazia e agora estão no projeto:
+- `StorageManager`: dados.yml inválido preservado (não sobrescrito), lock
+  de E/S, flag `encerrando`, `isSaving()`
+- `PlayerData`: flag `tutorialConcluido` + `reiniciarTutorial()`
+- `PlayerManager`: tutorial no reset sem reentregar kit, missão inicial
+  configurável, posicionamento no spawn da era, `clearCache()`
+- `Era`/`EraManager`: `requisito-missao` por era
+- `QuestProgressListener`: verificação no tick seguinte (correção real de
+  entrega) + pickup de item
+- `QuestManager.objetivoAtual()` + comandos `threeeras diario` e
+  `threeeras tutorial reiniciar`
+- Recarregamento de dados bloqueado com jogadores online ou gravação pendente
 
-Decisão pendente:
-- [ ] adotar o conteúdo de `importado/` em `ThreeEras/src` (merge manual), ou
-- [ ] manter a versão versionada e descartar `importado/`.
+Esta pasta pode ser removida após conferência.

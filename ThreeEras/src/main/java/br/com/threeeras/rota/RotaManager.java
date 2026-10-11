@@ -44,7 +44,6 @@ public final class RotaManager implements Listener {
     private final Messages messages;
     private LoreManager loreManager;
     private EraManager eraManager;
-    private final PlayerManager playerManager;
     private final File file;
     private final Map<String, RotaDefinition> rotas = new LinkedHashMap<>();
     private boolean carregado;
@@ -52,7 +51,6 @@ public final class RotaManager implements Listener {
     public RotaManager(ThreeErasPlugin plugin) {
         this.plugin = plugin;
         this.messages = plugin.getMessages();
-        this.playerManager = plugin.getPlayerManager();
         this.file = new File(plugin.getDataFolder(), FILE_NAME);
     }
 
@@ -151,7 +149,7 @@ public final class RotaManager implements Listener {
      * quando as descobertas de fechamento estao completas.
      */
     public void avaliar(Player player) {
-        PlayerData data = playerManager.get(player);
+        PlayerData data = plugin.getPlayerManager().get(player);
         boolean mudou = false;
 
         if (data.getRotaAtual() == null) {
@@ -178,7 +176,7 @@ public final class RotaManager implements Listener {
         }
 
         if (mudou) {
-            playerManager.save(data);
+            plugin.getPlayerManager().save(data);
         }
     }
 
@@ -228,20 +226,20 @@ public final class RotaManager implements Listener {
         if (rota == null) {
             return false;
         }
-        PlayerData data = playerManager.get(player);
+        PlayerData data = plugin.getPlayerManager().get(player);
         data.definirRota(rota.getId());
-        playerManager.save(data);
+        plugin.getPlayerManager().save(data);
         return true;
     }
 
     /** Limpa a rota do jogador (admin). */
     public boolean limpar(Player player) {
-        PlayerData data = playerManager.get(player);
+        PlayerData data = plugin.getPlayerManager().get(player);
         if (data.getRotaAtual() == null && !data.isRotaConcluida()) {
             return false;
         }
         data.limparRota();
-        playerManager.save(data);
+        plugin.getPlayerManager().save(data);
         return true;
     }
 

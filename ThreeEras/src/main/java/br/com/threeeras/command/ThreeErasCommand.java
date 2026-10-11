@@ -20,6 +20,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.World;
+import org.bukkit.Location;
 
 import java.io.File;
 import java.time.Instant;
@@ -46,7 +47,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador", "era",
                     "lore", "npc", "npcs", "item", "itens", "quest", "quests", "boss", "bosses",
                     "evento", "eventos", "rota", "estrutura", "setup", "dungeon", "dungeons",
-                    "compat", "backup", "kit");
+                    "compat", "backup", "kit", "diario", "tutorial");
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
@@ -121,6 +122,8 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             case "compat" -> moduloHandler.handleCompat(sender);
             case "backup" -> moduloHandler.handleBackup(sender);
             case "kit" -> moduloHandler.handleKit(sender);
+            case "diario", "diário" -> handleDiario(sender);
+            case "tutorial" -> handleTutorial(sender, args);
             default -> sender.sendMessage(messages.prefixed("comando.desconhecido"));
         }
         return true;
@@ -153,6 +156,10 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(messages.plain("comando.ajuda.setup"));
         sender.sendMessage(messages.plain("comando.ajuda.dungeon"));
         sender.sendMessage(messages.plain("comando.ajuda.modulos"));
+        sender.sendMessage(messages.plain("comando.ajuda.diario"));
+        if (sender.hasPermission(PERMISSION)) {
+            sender.sendMessage(messages.plain("comando.ajuda.tutorial"));
+        }
         if (sender.hasPermission(PERMISSION)) {
             sender.sendMessage(messages.plain("comando.ajuda.reload"));
         }
@@ -233,11 +240,17 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         if (!checkAdmin(sender)) {
             return;
         }
-        boolean haviaAlteracoes = storage.isDirty();
-        storage.load();
-        sender.sendMessage(messages.prefixed("comando.armazenamento.recarregar.ok"));
-        if (haviaAlteracoes) {
-            sender.sendMessage(messages.prefixed("comando.armazenamento.recarregar.aviso"));
+        if (storage.isDirty() || storage.isSaving() || !plugin.getServer().getOnlinePlayers().isEmpty()) {
+            sender.sendMessage(messages.prefixed("comando.armazenamento.recarregar.bloqueado"));
+            return;
+        }
+        try {
+            storage.load();
+            playerManager.clearCache();
+            sender.sendMessage(messages.prefixed("comando.armazenamento.recarregar.ok"));
+        } catch (RuntimeException e) {
+            plugin.getLogger().severe("Falha ao recarregar dados.yml: " + e.getMessage());
+            sender.sendMessage(messages.prefixed("comando.armazenamento.recarregar.falha"));
         }
     }
 
@@ -311,6 +324,76 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         return String.format(Locale.ROOT, "%ds", segs);
     }
 
+    /** Diário resumido em mensagens para manter compatibilidade com Java e Bedrock. */
+    private void handleDiario(CommandSender sender) {
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(messages.prefixed("comando.diario.jogador"));
+            return;
+        }
+        PlayerData data = playerManager.get(player);
+        Era era = eraManager.getPorId(data.getEraAtual());
+        sender.sendMessage(messages.plain("comando.diario.titulo"));
+        sender.sendMessage(messages.message("comando.diario.era",
+                "{era}", era != null ? era.getNome() : data.getEraAtual()));
+        sender.sendMessage(messages.message("comando.diario.rota",
+                "{rota}", data.getRotaAtual() == null ? "nenhuma" : data.getRotaAtual()));
+        sender.sendMessage(messages.message("comando.diario.descobertas",
+                "{total}", String.valueOf(data.getDescobertas().size())));
+        sender.sendMessage(messages.message("comando.diario.missoes",
+                "{ativas}", String.valueOf(data.getQuestsAtivas().size()),
+                "{concluidas}", String.valueOf(data.getQuestsConcluidas().size())));
+
+        boolean temAtiva = false;
+        for (var quest : questManager.listar()) {
+            if (!data.questAtiva(quest.getId())) {
+                continue;
+            }
+            temAtiva = true;
+            sender.sendMessage(messages.message("comando.diario.missao-ativa", "{nome}", quest.getNome()));
+            String objetivo = questManager.objetivoAtual(data, quest.getId());
+            if (objetivo != null) {
+                sender.sendMessage(messages.message("comando.diario.objetivo", "{objetivo}", objetivo));
+            }
+        }
+        if (!temAtiva) {
+            sender.sendMessage(messages.plain("comando.diario.sem-missao"));
+        }
+
+        int exibidas = 0;
+        for (var quest : questManager.listar()) {
+            if (exibidas >= 3) {
+                break;
+            }
+            if (data.questAtiva(quest.getId()) || data.questConcluida(quest.getId())) {
+                continue;
+            }
+            if (quest.temRequisito() && !data.questConcluida(quest.getRequisito())) {
+                continue;
+            }
+            if (quest.temRota() && (data.getRotaAtual() == null
+                    || !quest.getRota().equalsIgnoreCase(data.getRotaAtual()))) {
+                continue;
+            }
+            sender.sendMessage(messages.message("comando.diario.disponivel", "{nome}", quest.getNome()));
+            exibidas++;
+        }
+    }
+
+    private void handleTutorial(CommandSender sender, String[] args) {
+        if (!checkAdmin(sender)) {
+            return;
+        }
+        if (args.length < 3 || !args[1].equalsIgnoreCase("reiniciar")) {
+            sender.sendMessage(messages.prefixed("comando.tutorial.uso"));
+            return;
+        }
+        if (!playerManager.resetTutorial(args[2])) {
+            sender.sendMessage(messages.message("comando.tutorial.nao-encontrado", "{nick}", args[2]));
+            return;
+        }
+        sender.sendMessage(messages.message("comando.tutorial.reiniciado", "{nick}", args[2]));
+    }
+
     private void handleEra(CommandSender sender, String[] args) {
         if (args.length == 1 || args[1].equalsIgnoreCase("listar")) {
             sendEraLista(sender);
@@ -330,6 +413,14 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
                 return;
             }
             irParaEra(sender, args[2]);
+            return;
+        }
+        if (args[1].equalsIgnoreCase("viajar")) {
+            if (args.length < 3) {
+                sender.sendMessage(messages.prefixed("comando.era.viajar.uso"));
+                return;
+            }
+            viajarParaEra(sender, args[2]);
             return;
         }
         sender.sendMessage(messages.prefixed("comando.era.uso"));
@@ -364,6 +455,8 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
                 "{mundo}", eraManager.getMundoExibicao(era)));
         sender.sendMessage(messages.message("comando.era.info.estado",
                 "{estado}", eraManager.getEstadoMundo(era)));
+        sender.sendMessage(messages.message("comando.era.info.requisito",
+                "{requisito}", era.temRequisitoMissao() ? era.getRequisitoMissao() : "nenhum"));
         sender.sendMessage(messages.message("comando.era.info.descricao",
                 "{descricao}", era.getDescricao()));
     }
@@ -396,7 +489,12 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
                     "{mundo}", era.getMundo(), "{nome}", era.getNome()));
             return;
         }
-        boolean teleportou = player.teleport(mundo.getSpawnLocation());
+        Location destino = eraManager.getSpawnSeguro(mundo);
+        if (destino == null) {
+            sender.sendMessage(messages.prefixed("comando.era.ir.falhou"));
+            return;
+        }
+        boolean teleportou = player.teleport(destino);
         if (!teleportou) {
             plugin.getLogger().severe("Falha ao teleportar " + player.getName()
                     + " para o mundo " + mundo.getName() + ".");
@@ -404,6 +502,43 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             return;
         }
         PlayerData data = playerManager.get(player);
+        data.setEraAtual(era.getId());
+        playerManager.save(data);
+        sender.sendMessage(messages.message("comando.era.ir.ok",
+                "{nome}", era.getNome(), "{mundo}", mundo.getName()));
+    }
+
+    private void viajarParaEra(CommandSender sender, String id) {
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(messages.prefixed("comando.era.ir.console"));
+            return;
+        }
+        Era era = eraManager.getPorId(id);
+        if (era == null) {
+            sender.sendMessage(messages.message("comando.era.nao-encontrada", "{id}", id));
+            return;
+        }
+        PlayerData data = playerManager.get(player);
+        if (era.temRequisitoMissao() && !data.questConcluida(era.getRequisitoMissao())) {
+            sender.sendMessage(messages.message("comando.era.viajar.bloqueada",
+                    "{missao}", era.getRequisitoMissao()));
+            return;
+        }
+        if (!era.temMundo()) {
+            sender.sendMessage(messages.message("comando.era.ir.sem-mundo", "{nome}", era.getNome()));
+            return;
+        }
+        World mundo = plugin.getServer().getWorld(era.getMundo());
+        if (mundo == null) {
+            sender.sendMessage(messages.message("comando.era.ir.mundo-offline",
+                    "{mundo}", era.getMundo(), "{nome}", era.getNome()));
+            return;
+        }
+        Location destino = eraManager.getSpawnSeguro(mundo);
+        if (destino == null || !player.teleport(destino)) {
+            sender.sendMessage(messages.prefixed("comando.era.ir.falhou"));
+            return;
+        }
         data.setEraAtual(era.getId());
         playerManager.save(data);
         sender.sendMessage(messages.message("comando.era.ir.ok",
@@ -429,8 +564,11 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             if (args[0].equalsIgnoreCase("armazenamento") || args[0].equalsIgnoreCase("storage")) {
                 return completarDe(args[1], "info", "salvar", "recarregar", "definir");
             }
+            if (args[0].equalsIgnoreCase("tutorial") && sender.hasPermission(PERMISSION)) {
+                return completarDe(args[1], "reiniciar");
+            }
             if (args[0].equalsIgnoreCase("era")) {
-                return completarDe(args[1], "listar", "info", "ir");
+                return completarDe(args[1], "listar", "info", "viajar", "ir");
             }
             if (args[0].equalsIgnoreCase("lore")) {
                 return completarDe(args[1], "listar", "ver", "conceder");

@@ -120,7 +120,9 @@ public final class ModuloCommandHandler {
             sender.sendMessage(messages.message("comando.dungeon.inexistente", "{id}", id));
             return;
         }
-        dungeonManager.concluir(player, id);
+        if (!dungeonManager.concluir(player, id)) {
+            sender.sendMessage(messages.message("comando.dungeon.ja-concluida", "{id}", id));
+        }
     }
 
     /** /threeeras compat — relatorio de ambiente. */

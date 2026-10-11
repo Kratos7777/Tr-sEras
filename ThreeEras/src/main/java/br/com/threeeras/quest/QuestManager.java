@@ -37,7 +37,6 @@ public final class QuestManager {
     private final Messages messages;
     private final LoreManager loreManager;
     private final ItemManager itemManager;
-    private final PlayerManager playerManager;
     private final File file;
     private final Map<String, QuestDefinition> quests = new LinkedHashMap<>();
 
@@ -46,7 +45,6 @@ public final class QuestManager {
         this.messages = plugin.getMessages();
         this.loreManager = plugin.getLoreManager();
         this.itemManager = plugin.getItemManager();
-        this.playerManager = plugin.getPlayerManager();
         this.file = new File(plugin.getDataFolder(), FILE_NAME);
     }
 
@@ -161,6 +159,19 @@ public final class QuestManager {
         return List.copyOf(quests.values());
     }
 
+    /** Objetivo atual legivel para o diario; null quando a missao nao esta ativa. */
+    public String objetivoAtual(PlayerData data, String questId) {
+        QuestDefinition quest = porId(questId);
+        if (quest == null || !data.questAtiva(quest.getId())) {
+            return null;
+        }
+        int passo = data.getPasso(quest.getId());
+        if (passo < 0 || passo >= quest.getObjetivos().size()) {
+            return "Aguardando verificacao de progresso";
+        }
+        return descreverObjetivo(quest.getObjetivos().get(passo));
+    }
+
     public int total() {
         return quests.size();
     }
@@ -209,7 +220,7 @@ public final class QuestManager {
         if (quest == null) {
             return ResultadoInicio.NAO_ENCONTRADA;
         }
-        PlayerData data = playerManager.get(player);
+        PlayerData data = plugin.getPlayerManager().get(player);
         if (data.questConcluida(quest.getId())) {
             return ResultadoInicio.JA_CONCLUIDA;
         }
@@ -226,7 +237,7 @@ public final class QuestManager {
             }
         }
         data.iniciarQuest(quest.getId());
-        playerManager.save(data);
+        plugin.getPlayerManager().save(data);
         return ResultadoInicio.OK;
     }
 
@@ -235,12 +246,12 @@ public final class QuestManager {
         if (quest == null) {
             return false;
         }
-        PlayerData data = playerManager.get(player);
+        PlayerData data = plugin.getPlayerManager().get(player);
         if (!data.questAtiva(quest.getId())) {
             return false;
         }
         data.abandonarQuest(quest.getId());
-        playerManager.save(data);
+        plugin.getPlayerManager().save(data);
         return true;
     }
 
@@ -249,7 +260,7 @@ public final class QuestManager {
      * itens de entrega, conclui e paga recompensas conforme necessario.
      */
     public void verificar(Player player) {
-        PlayerData data = playerManager.get(player);
+        PlayerData data = plugin.getPlayerManager().get(player);
         if (data.getQuestsAtivas().isEmpty()) {
             // Fast-path: nada em andamento, nada a avaliar.
             return;
@@ -290,7 +301,7 @@ public final class QuestManager {
             }
         }
         if (mudou) {
-            playerManager.save(data);
+            plugin.getPlayerManager().save(data);
         }
     }
 
