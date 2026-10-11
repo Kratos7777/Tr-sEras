@@ -343,3 +343,133 @@ entradas:
     status: proposta
     titulo: "O final da Rota do Sinal"
     texto: "Quem segue o sinal descobre que a palavra ANORMAL não é uma assinatura. É um pedido de socorro — ou um sintoma. O registro sem origem data de depois do fim das três eras, e descreve, em sete repetições, algo que ainda não aconteceu neste servidor. A comissão arquivou. Você decide se o arquivo é o bastante."
+
+  # ---------- EXPANSAO 3: ERA MEDIEVAL ----------
+  rei-da-coroa:
+    era: medieval
+    camada: 1
+    tipo: registro
+    status: proposta
+    titulo: "O rei que declarou guerra"
+    texto: "Declarou guerra às criaturas no terceiro inverno, depois que uma aldeia inteira parou de responder. Usava uma coroa de ferro forjado com sete pontas — uma por pecado, dizia a corte. Registros posteriores sugerem que as sete pontas foram adicionadas depois, quando a contagem já era conveniência política."
+
+  cerca-das-sete:
+    era: medieval
+    camada: 2
+    tipo: ruina
+    status: proposta
+    contradiz: guerra-cronologia
+    titulo: "A cerca das sete"
+    texto: "Uma construção semicircular de pedra com sete nichos. Seis estão preenchidos com símbolos de criaturas. O sétimo nicho está vazio — e foi deixado vazio de propósito, percebe-se pela argamassa mais nova. A crônica não menciona a construção."
+
+  tratado-falho:
+    era: medieval
+    camada: 2
+    tipo: registro
+    status: proposta
+    titulo: "O tratado que não houve"
+    texto: "Uma tentativa de negociar com a criatura do espelho: ofertas de territorio em troca de recuo. A delegação voltou sem a criatura ter se movido. Os sobreviventes da delegacao descreveram ter conversado com 'alguem que entendia' — e nunca conseguiram repetir o que foi dito."
+
+  memorias-de-soldado:
+    era: medieval
+    camada: 1
+    tipo: testemunho
+    status: proposta
+    titulo: "Memórias de um soldado raso"
+    texto: "Não sei contar criaturas. Sei que enterrei dezesseis companheiros no campo das cinzas e que nenhum corpo tinha ferimento de espada. O estrategista dizia para recuarmos quando ela acelerava. Eu recuei. Fui chamado de covarde. Estou vivo."
+
+  # ---------- EXPANSAO 3: ERA APOCALIPTICA ----------
+  cidade-submersa:
+    era: apocaliptica
+    camada: 2
+    tipo: ruina
+    status: proposta
+    titulo: "A cidade submersa"
+    texto: "Uma cidade medieval afundada em água parada. Os prédios estão intactos sob a superfície, preservados não por sorte, mas porque nada se move lá dentro. Peixes evitam o lugar. Os mapas das facções registram 'área imprópria' sem explicação."
+
+  estrada-dos-marcos:
+    era: apocaliptica
+    camada: 2
+    tipo: ruina
+    status: proposta
+    titulo: "A estrada dos marcos"
+    texto: "A antiga estrada real, agora uma linha de pedra que atravessa três territórios de facções. Os marcos de contagem sobreviveram todos. A cada geração, alguém pinta um número novo por cima do antigo. Ninguém sabe mais qual era o original."
+
+  lingua-morta:
+    era: apocaliptica
+    camada: 3
+    tipo: registro
+    status: proposta
+    titulo: "O fragmento de língua morta"
+    texto: "Um fragmento de texto em uma língua que nenhuma facção reconhece. Os escribas copiaram por séculos sem entender. Análise futurista posterior concluiu: não é uma língua desconhecida — é uma língua conhecida, escrita ao contrário. Ninguém teve coragem de reescrevê-la."
+
+  fome-e-os-restos:
+    era: apocaliptica
+    camada: 1
+    tipo: testemunho
+    status: proposta
+    titulo: "A fome e os restos"
+    texto: "Relato de sobrevivente: nas zonas de fome, os homúnculos não atacavam os cadáveres. Apenas ficavam perto. Como se esperassem que os corpos fizessem alguma coisa. Enterrámos os nossos rápido, por isso."
+
+  # ---------- EXPANSAO 3: ERA FUTURISTA ----------
+  laboratorio-9:
+    era: futurista
+    camada: 4
+    tipo: registro
+    status: proposta
+    titulo: "Laboratório abandonado 9"
+    texto: "Registro de encerramento: equipe evacuada às pressas, experimento interrompido, porta selada por dentro. A recomendação final do documento é 'não reabrir até que se entenda o protocolo do silêncio'. O protocolo do silêncio está anexado. Ninguém conseguiu lê-lo até o fim."
+
+  protocolo-do-silencio:
+    era: futurista
+    camada: 4
+    tipo: registro
+    status: proposta
+    titulo: "O protocolo do silêncio"
+    texto: "Documento operacional: descreve como manter uma área em quietude induzida usando equipamentos do Reino das Raízes. A seção final, dedicada a 'quando a quietude deve ser interrompida', foi removida. A remoção é limpa. Não houve acidente."
+
+  entrevista-amostra-1-7:
+    era: futurista
+    camada: 4
+    tipo: registro
+    status: proposta
+    titulo: "Entrevista com a amostra 1-7"
+    texto: "Transcrição de tentativa de comunicação: a amostra não respondeu a perguntas. Respondeu a sequências — repetindo, na ordem exata, três frases ditas por pesquisadores em sessões diferentes. As frases, combinadas, formam uma instrução. A comissão não autorizou a combinação."
+
+  a-maquina-que-nao-funciona:
+    era: futurista
+    camada: 2
+    tipo: inconsistencia
+    status: proposta
+    contradiz: biblioteca-remontada
+    titulo: "A máquina que não funciona"
+    texto: "Equipamento de análise projetado para detectar manifestações anômalas. Falha em 40% das zonas de exclusão. O manual afirma 100% de cobertura. Os 40% onde falha têm algo em comum: nos mapas medievais, eram áreas sem descrição."
+
+  # ---------- EXPANSAO 3: ROTAS EXCLUSIVAS (camada 2) ----------
+  raizes-relicario:
+    era: medieval
+    camada: 2
+    tipo: ruina
+    rota: raizes
+    status: proposta
+    contradiz: cerca-das-sete
+    titulo: "O relicário do sétimo nicho"
+    texto: "Quem segue os marcos encontra o que foi colocado no nicho vazio da cerca: não um símbolo de criatura, mas um espelho pequeno e uma frase gravada: 'para quando encontrarmos o que não soubemos nomear'. O reino sabia. Sabia desde o início. Escreveu a sete porque a fé comportava o sete."
+
+  cinzas-estrada:
+    era: apocaliptica
+    camada: 2
+    tipo: registro
+    rota: cinzas
+    status: proposta
+    titulo: "A estrada de quem volta"
+    texto: "Quem segue as cinzas percebe o padrão da estrada dos marcos: os números pintados por cima não aumentam nem diminuem — alternam. Sete, três, cinco, sete. Como se cada geração visse uma contagem diferente do mesmo mundo. A estrada não foi repintada. Foi reinterpretada."
+
+  sinal-protocolo:
+    era: futurista
+    camada: 2
+    tipo: registro
+    rota: sinal
+    status: proposta
+    titulo: "O protocolo que ninguém leu"
+    texto: "Quem segue o sinal recupera a seção removida do protocolo do silêncio em um backup que a comissão esqueceu de apagar. A seção diz: 'a quietude não é contenção. É o mundo pedindo permissão para continuar. Se interrompida, ele continua — mas já não nos inclui.'"

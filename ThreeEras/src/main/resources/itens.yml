@@ -114,3 +114,59 @@ itens:
     lore:
       - "&7Amplifica sinais anômalos. Ou os inventa."
       - "&8O manual nao menciona qual das duas coisas ele faz."
+
+  coroa-de-sete-pontas:
+    era: medieval
+    material: GOLDEN_HELMET
+    nome: "&6Coroa de sete pontas"
+    quantidade: 1
+    lore:
+      - "&7Ferro dourado, sete pontas. A sétima foi adicionada depois."
+      - "&8A coroa nasceu com uma."
+
+  marca-de-soldado:
+    era: medieval
+    material: IRON_NUGGET
+    nome: "&7Marca de soldado raso"
+    quantidade: 1
+    lore:
+      - "&7Sem posto, sem divisa. Apenas um nome e um número."
+      - "&8O nome está gasto. O número, não."
+
+  mapa-rachado:
+    era: apocaliptica
+    material: MAP
+    nome: "&7Mapa rachado"
+    quantidade: 1
+    lore:
+      - "&7Mapa de uma facção. A área segura encolheu desde a última edição."
+      - "&8Alguém rachou a parte que não queria ver."
+
+  fragmento-de-lingua-morta:
+    era: apocaliptica
+    material: WRITTEN_BOOK
+    nome: "&8Fragmento de língua morta"
+    quantidade: 1
+    lore:
+      - "&7Copiado por séculos sem ser entendido."
+    paginas:
+      - "O texto está ao contrário. Ninguém teve coragem de reescrevê-lo."
+      - "Lido ao contrário, a primeira frase é: 'não conte sete'."
+
+  chave-do-laboratorio-9:
+    era: futurista
+    material: NETHER_BRICK
+    nome: "&8Chave do laboratório 9"
+    quantidade: 1
+    lore:
+      - "&7Abre a porta selada por dentro. Ou deveria."
+      - "&8A recomendação do registro é 'não reabrir'."
+
+  gravacao-do-silencio:
+    era: futurista
+    material: MUSIC_DISC_CAT
+    nome: "&bGravação do silêncio"
+    quantidade: 1
+    lore:
+      - "&7Onze minutos de nada gravado. O nada tem ritmo."
+      - "&8O pulso bate a cada quarenta segundos. Como um coração."

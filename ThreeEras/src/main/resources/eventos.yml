@@ -75,3 +75,36 @@ eventos:
     intervalo-max-minutos: 140
     item: diario-do-estrategista
     mensagem-inicio: "&8[ThreeEras] &7Um caderno antigo foi deixado para tras. Alguem vem procurando por ele."
+
+  procissao-das-cinzas:
+    nome: "Procissao das cinzas"
+    descricao: "O culto das cinzas passa em silencio por uma zona de quietude."
+    habilitado: true
+    tipo: AVISO
+    intervalo-min-minutos: 45
+    intervalo-max-minutos: 90
+    duracao-segundos: 20
+    efeito: fraqueza
+    efeito-amplificador: 1
+    mensagem-inicio: "&8[ThreeEras] &6Uma procissao passa. Ninguem fala. O silêncio parece aprovar."
+
+  saque-noturno:
+    nome: "Saque noturno"
+    descricao: "Coletores de ruinas atacam uma área de escavacao."
+    habilitado: true
+    tipo: INVASAO
+    intervalo-min-minutos: 40
+    intervalo-max-minutos: 80
+    quantidade: 4
+    entidade: VINDICATOR
+    mensagem-inicio: "&8[ThreeEras] &7Movimento armado numa area de escavacao. Os coletores acham que o passado paga imposto."
+
+  transmissao-perdida:
+    nome: "Transmissao perdida"
+    descricao: "Uma transmissao do laboratorio 9 chega sem destinatario."
+    habilitado: true
+    tipo: ITEM
+    intervalo-min-minutos: 80
+    intervalo-max-minutos: 150
+    item: gravacao-do-silencio
+    mensagem-inicio: "&8[ThreeEras] &bUma transmissao antiga foi interceptada. O disco esta no chao. Nao o toque sem ouvir."

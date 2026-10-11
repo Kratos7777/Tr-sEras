@@ -6,12 +6,12 @@
 |---|---|---|
 | 3 eras + mundos | `EraManager` + `/threeeras era` | Pronto |
 | Dados dos jogadores | `PlayerManager` + `StorageManager` (gravação assíncrona) | Pronto |
-| Entradas de lore (camadas 1–5, status, contradições) | `LoreManager` + `lore.yml` | Pronto (39 entradas) |
-| NPCs com versões contraditórias | `NpcManager` + `npcs.yml` | Pronto (7 NPCs) |
-| Artefatos das três eras | `ItemManager` + `itens.yml` | Pronto (11 itens) |
-| Missões encadeadas | `QuestManager` + `quests.yml` | Pronto (6 missões) |
+| Entradas de lore (camadas 1–5, status, contradições) | `LoreManager` + `lore.yml` | Pronto (54 entradas) |
+| NPCs com versões contraditórias | `NpcManager` + `npcs.yml` | Pronto (11 NPCs) |
+| Artefatos das três eras | `ItemManager` + `itens.yml` | Pronto (17 itens) |
+| Missões encadeadas | `QuestManager` + `quests.yml` | Pronto (9 missões) |
 | Os sete chefes | `BossManager` + `bosses.yml` | Pronto (7 chefes) |
-| Eventos agendados | `EventManager` + `eventos.yml` | Pronto (6 eventos) |
+| Eventos agendados | `EventManager` + `eventos.yml` | Pronto (9 eventos) |
 | Rotas narrativas (branching) | `RotaManager` + `rotas.yml` | Pronto (3 rotas, com entradas exclusivas) |
 
 ## As 9 dimensões de cada chefe

@@ -94,3 +94,47 @@ npcs:
       projeto-erebus-origem: "&bO primeiro relato. Disse que as anomalias persistem. Foi o melhor relatorio que ja escrevemos — e o menos lido."
       herdeiros-do-herege: "&bEles copiam nossos ruidos de remontagem. Se estao certos, somos todos hereges. Se errados, somos todos copistas."
       sinal-verdade: "&bO branco no campo origem... Voce viu? Ninguem preenche. E ninguem dorme depois de ver."
+      entrevista-amostra-1-7: "&bA amostra repetiu frases de sessoes diferentes. Ninguem autorizou juntar as frases. Alguem vai juntar."
+
+  rei-da-coroa:
+    nome: "O Rei da Coroa de Sete Pontas"
+    era: medieval
+    tipo: VILLAGER
+    dialogo:
+      - "&7Declarei guerra porque uma aldeia deixou de responder. Nao por gloria. Porque o silencio avancava."
+      - "&7Sete pontas na coroa. A fé do povo comporta sete. Contar oito seria confessa que nao controlamos a historia."
+    por-descoberta:
+      rei-da-coroa: "&bLeu meu registro. Sim, as pontas foram adicionadas depois. A coroa nasceu com uma."
+      cerca-das-sete: "&bA cerca. O nicho vazio. Pedi que deixassem vazio — para o dia em que entendessemos o que nao soubemos nomear."
+
+  soldado-raso:
+    nome: "O soldado que recuou"
+    era: medieval
+    tipo: VILLAGER
+    dialogo:
+      - "&7Dezesseis companheiros no campo das cinzas. Nenhum com ferimento de espada."
+      - "&7Chamaram de covarde. Covarde e quem volta para contar o que vio."
+    por-descoberta:
+      memorias-de-soldado: "&bEscreveram minhas memorias. Nao mudaram uma palavra. Agradeco por isso."
+      campo-cinzas: "&bO campo. Ainda pulsa. Se um dia voltarem la, nao fiquem parados quando o pulso acelerar."
+
+  chefe-dos-coletores:
+    nome: "O chefe dos coletores"
+    era: apocaliptica
+    tipo: VILLAGER
+    dialogo:
+      - "&7Brasao vale metal. Livro vale peso. Historia nao paga imposto."
+      - "&7Mas o que nao sei ler, eu guardo. So por precaucao. Nao por respeito."
+    por-descoberta:
+      coletores-de-ruinas: "&bNosso registro. Guardamos o que nao entendemos. Um dia alguem vem buscar."
+
+  cientista-herege:
+    nome: "A cientista herege"
+    era: futurista
+    tipo: VILLAGER
+    dialogo:
+      - "&7O Erebus publica o que da financiamento. Eu publico o que da medo."
+      - "&7A seção removida do protocolo existe em backup. Claro que existe. Alguem sempre esquece de apagar."
+    por-descoberta:
+      laboratorio-9: "&bO laboratorio 9. A porta selada por dentro. E ninguem dentro. Isso deveria incomodar mais gente."
+      protocolo-do-silencio: "&bO protocolo. A quietude nao é contencao. E o mundo pedindo permissao. E nos interrompemos."

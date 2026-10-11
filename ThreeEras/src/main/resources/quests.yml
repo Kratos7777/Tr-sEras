@@ -71,10 +71,44 @@ quests:
   arquivo-em-branco:
     nome: "O arquivo em branco"
     era: futurista
-    descricao: "A diretora Nyx so mostra o arquivo da Zona 13 a quem devolveu a marca do hereje."
+    descricao: "A diretora Nyx so mostra o arquivo da Zona 13 a quem devolveu a marca do herege."
     requisito: palavra-no-arquivo
     objetivos:
       - "descoberta:fenomeno-orfao"
       - "descoberta:sinal-verdade"
     recompensas:
       - "marca-do-herege"
+
+  coroa-e-consequencia:
+    nome: "A coroa e a consequencia"
+    era: medieval
+    descricao: "O rei so devolve a coroa a quem carrega a marca de soldado."
+    requisito: ""
+    objetivos:
+      - "descoberta:rei-da-coroa"
+      - "entregar:marca-de-soldado"
+    recompensas:
+      - "coroa-de-sete-pontas"
+
+  estrada-que-mentia:
+    nome: "A estrada que mentia"
+    era: apocaliptica
+    descricao: "O chefe dos coletores troca o mapa rachado pela relíquia que nao entende."
+    requisito: mascara-e-verdade
+    objetivos:
+      - "descoberta:estrada-dos-marcos"
+      - "entregar:mapa-rachado"
+    recompensas:
+      - "fragmento-de-lingua-morta"
+
+  porta-selada-por-dentro:
+    nome: "A porta selada por dentro"
+    era: futurista
+    descricao: "A cientista herege entrega a chave do laboratorio 9 a quem trouxe o cristal."
+    requisito: arquivo-em-branco
+    objetivos:
+      - "descoberta:laboratorio-9"
+      - "entregar:cristal-de-leitura"
+    recompensas:
+      - "gravacao-do-silencio"
+
