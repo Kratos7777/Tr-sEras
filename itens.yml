@@ -1,0 +1,186 @@
+# ThreeEras - itens personalizados
+#
+# id:        identificador unico (marcado no item via PersistentDataContainer)
+# era:       era de origem do item (validada contra eras.yml na carga)
+# material:  Material do Bukkit (ex.: PAPER, WRITTEN_BOOK, IRON_NUGGET)
+# nome:      nome de exibicao (aceita codigos & de cor)
+# quantidade: quantidade no stack
+# lore:      linhas de descricao do item
+# paginas:   (somente para livros) conteudo das paginas
+
+itens:
+
+  fragmento-quarto-marco:
+    era: medieval
+    material: STONE
+    nome: "&7Fragmento do Quarto Marco"
+    quantidade: 1
+    lore:
+      - "&8Um pedaco de pedra dos marcos de contagem."
+      - "&7A gravacao foi riscada. Alguem escreveu outro numero por cima."
+
+  estandarte-faixa-vermelha:
+    era: apocaliptica
+    material: SHIELD
+    nome: "&cEstandarte com faixa vermelha"
+    quantidade: 1
+    lore:
+      - "&7Nenhum brasao do reino justifica esta faixa."
+      - "&8Ela se movia quando o vento nao movia."
+
+  insignia-rachada:
+    era: apocaliptica
+    material: IRON_NUGGET
+    nome: "&7Insignia Rachada"
+    quantidade: 1
+    lore:
+      - "&7Brasao do Reino das Raizes, partido ao meio."
+      - "&8Ninguem sabe mais o que as raizes significam."
+
+  amostra-7-4:
+    era: futurista
+    material: GLASS_BOTTLE
+    nome: "&bAmostra 7-4"
+    quantidade: 1
+    lore:
+      - "&7Frasco lacrado. Rotulo: 'comportamento persiste'."
+      - "&8Recomendacao: nao prosseguir com testes de separacao."
+
+  registro-sem-origem:
+    era: futurista
+    material: WRITTEN_BOOK
+    nome: "&5Registro sem origem"
+    quantidade: 1
+    lore:
+      - "&7Um documento que nenhum periodo reconhece."
+    paginas:
+      - "Sem autor. Sem data. Sem numero de catalogo."
+      - "A palavra aparece repetida sete vezes: ANORMAL."
+      - "A comissao nao aprovou conclusao alguma. O documento continua no arquivo."
+
+  espada-da-fronteira:
+    era: medieval
+    material: IRON_SWORD
+    nome: "&7Espada da fronteira"
+    quantidade: 1
+    lore:
+      - "&7Lamina de campanha do Reino das Raizes."
+      - "&8O punho tem uma marca de contagem: tres talhes."
+
+  diario-do-estrategista:
+    era: medieval
+    material: WRITTEN_BOOK
+    nome: "&7Diario da estrategista da contencao"
+    quantidade: 1
+    lore:
+      - "&7Recuperado seculos depois. A ultima linha foi escrita com pressa."
+    paginas:
+      - "Conter e mais barato que enfrentar. Contudo, ninguem contem para sempre."
+      - "Vigilias nao sao vitoria. Sao tempo comprado com vigilia de outros."
+      - "Nao sei se estamos vencendo ou adiando."
+
+  marca-do-herege:
+    era: medieval
+    material: PAPER
+    nome: "&8Marca do herege"
+    quantidade: 1
+    lore:
+      - "&7Um simbolo riscado em papel: um circulo com sete marcas."
+      - "&8A setima marca esta apagada de proposito."
+
+  mascara-do-culto:
+    era: apocaliptica
+    material: CARVED_PUMPKIN
+    nome: "&6Mascara do culto das cinzas"
+    quantidade: 1
+    lore:
+      - "&7Feita de metal recuperado e cinza endurecida."
+      - "&8Quem veste jura ouvir o pulso das zonas de quietude."
+
+  chave-de-contencao:
+    era: futurista
+    material: TRIPWIRE_HOOK
+    nome: "&bChave de contencao"
+    quantidade: 1
+    lore:
+      - "&7Projetada para estruturas do Reino das Raizes."
+      - "&8Ninguem sabia como usar. Ate alguem precisar."
+
+  cristal-de-leitura:
+    era: futurista
+    material: AMETHYST_SHARD
+    nome: "&dCristal de leitura"
+    quantidade: 1
+    lore:
+      - "&7Amplifica sinais anômalos. Ou os inventa."
+      - "&8O manual nao menciona qual das duas coisas ele faz."
+
+  coroa-de-sete-pontas:
+    era: medieval
+    material: GOLDEN_HELMET
+    nome: "&6Coroa de sete pontas"
+    quantidade: 1
+    lore:
+      - "&7Ferro dourado, sete pontas. A sétima foi adicionada depois."
+      - "&8A coroa nasceu com uma."
+
+  marca-de-soldado:
+    era: medieval
+    material: IRON_NUGGET
+    nome: "&7Marca de soldado raso"
+    quantidade: 1
+    lore:
+      - "&7Sem posto, sem divisa. Apenas um nome e um número."
+      - "&8O nome está gasto. O número, não."
+
+  mapa-rachado:
+    era: apocaliptica
+    material: MAP
+    nome: "&7Mapa rachado"
+    quantidade: 1
+    lore:
+      - "&7Mapa de uma facção. A área segura encolheu desde a última edição."
+      - "&8Alguém rachou a parte que não queria ver."
+
+  fragmento-de-lingua-morta:
+    era: apocaliptica
+    material: WRITTEN_BOOK
+    nome: "&8Fragmento de língua morta"
+    quantidade: 1
+    lore:
+      - "&7Copiado por séculos sem ser entendido."
+    paginas:
+      - "O texto está ao contrário. Ninguém teve coragem de reescrevê-lo."
+      - "Lido ao contrário, a primeira frase é: 'não conte sete'."
+
+  chave-do-laboratorio-9:
+    era: futurista
+    material: NETHER_BRICK
+    nome: "&8Chave do laboratório 9"
+    quantidade: 1
+    lore:
+      - "&7Abre a porta selada por dentro. Ou deveria."
+      - "&8A recomendação do registro é 'não reabrir'."
+
+  gravacao-do-silencio:
+    era: futurista
+    material: MUSIC_DISC_CAT
+    nome: "&bGravação do silêncio"
+    quantidade: 1
+    lore:
+      - "&7Onze minutos de nada gravado. O nada tem ritmo."
+      - "&8O pulso bate a cada quarenta segundos. Como um coração."
+
+  livro-guia:
+    era: medieval
+    material: WRITTEN_BOOK
+    nome: "&6Guia das Tres Eras"
+    quantidade: 1
+    lore:
+      - "&7Entregue a todo viajante que chega ao servidor."
+    paginas:
+      - "&lBEM-VINDO AO THREEERAS&r\n\nUm mundo, tres eras: a Medieval, a Apocaliptica e a Futurista. Elas nao sao tres mundos — sao tres periodos da mesma historia.\n\nUm reino chamado Raizes sustentou a civilizacao. Depois veio a guerra. Depois, as ruinas. Depois, gente tentando entender o que sobrou."
+      - "&lO QUE FAZER PRIMEIRO&r\n\n1. Leia registros: &n/threeeras lore listar&r\n2. Leia um: &n/threeeras lore ver fundacao-raizes&r\n3. Fale com os NPCs por perto (clique direito)\n4. Cumpra a missao inicial\n\nCada registro que voce le fica marcado como [lido]."
+      - "&lSEU CAMINHO&r\n\nSuas descobertas definem sua &lrota&r — o rumo que a historia toma para voce.\n\nNinguem escolhe a rota no comeco: ela emerge do que voce descobre. Rotas diferentes levam a finais diferentes.\n\nVeja a sua com &n/threeeras rota info&r."
+      - "&lCOMANDOS UTEIS&r\n\n&n/threeeras ajuda&r — todos os comandos\n&n/threeeras dungeon listar&r — expedicoes\n&n/threeeras quest listar&r — missoes\n&n/threeeras item listar&r — itens\n&n/threeeras kit&r — kit (30 min)\n&n/spawn&r — voltar ao inicio"
+      - "&lAS TRES ERAS&r\n\n&1Medieval&r — reinos, guerra e registros oficiais que podem estar errados.\n\n&8Apocaliptica&r — ruinas, faccoes e zonas onde o mundo esqueceu de continuar.\n\n&9Futurista&r — laboratorios, catalogos e perguntas que a ciencia nao responde.\n\nVa com calma. A verdade nao foge — mas se esconde."

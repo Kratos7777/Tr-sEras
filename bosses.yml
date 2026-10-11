@@ -1,0 +1,91 @@
+# ThreeEras - chefes (bosses)
+#
+# Cada chefe tem uma regra anomala (comportamento implementado no plugin):
+#   soberba   - pilares sustentam o dominio (invulneravel + lentidao/fraqueza)
+#   avareza   - absorve itens dropados e se cura
+#   ira       - cada dano recebido aumenta a forca (escalada)
+#   preguica  - a regiao perde movimento (lentidao + exaustao; passivos param)
+#   inveja    - cria manifestacoes falsas (copias brilhantes; a real nao brilha)
+#   gula      - consome blocos do terreno ao redor
+#   luxuria   - percepcao divergente + fascinacao que puxa os jogadores
+#
+# dominio.raio = raio de efeito, em blocos
+
+bosses:
+
+  soberba:
+    nome: "&6O que nao se curva"
+    era: medieval
+    entidade: RAVAGER
+    vida: 200.0
+    dominio:
+      raio: 20.0
+      lentidao: 2
+      fraqueza: 1
+    pilares: 3
+
+  avareza:
+    nome: "&6O Cofre Vivo"
+    era: medieval
+    entidade: IRON_GOLEM
+    vida: 180.0
+    dominio:
+      raio: 20.0
+      lentidao: 0
+      fraqueza: 0
+    pilares: 0
+
+  ira:
+    nome: "&cO Coracao da Ruina"
+    era: medieval
+    entidade: RAVAGER
+    vida: 220.0
+    dominio:
+      raio: 20.0
+      lentidao: 0
+      fraqueza: 0
+    pilares: 0
+
+  preguica:
+    nome: "&8A Coisa que Permanece"
+    era: apocaliptica
+    entidade: IRON_GOLEM
+    vida: 200.0
+    dominio:
+      raio: 18.0
+      lentidao: 0
+      fraqueza: 0
+    pilares: 0
+
+  inveja:
+    nome: "&dO Reflexo Incompleto"
+    era: apocaliptica
+    entidade: VINDICATOR
+    vida: 160.0
+    dominio:
+      raio: 20.0
+      lentidao: 0
+      fraqueza: 0
+    pilares: 0
+
+  gula:
+    nome: "&2A Boca sem Fundo"
+    era: apocaliptica
+    entidade: RAVAGER
+    vida: 240.0
+    dominio:
+      raio: 20.0
+      lentidao: 0
+      fraqueza: 0
+    pilares: 0
+
+  luxuria:
+    nome: "&5A Presenca Desejada"
+    era: futurista
+    entidade: WITCH
+    vida: 160.0
+    dominio:
+      raio: 24.0
+      lentidao: 0
+      fraqueza: 0
+    pilares: 0

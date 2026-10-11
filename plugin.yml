@@ -1,0 +1,17 @@
+name: ThreeEras
+version: 1.0.0
+main: br.com.threeeras.ThreeErasPlugin
+description: Plugin principal do servidor Três Eras
+author: ThreeEras
+api-version: "26.2"
+
+commands:
+  threeeras:
+    description: Comando principal do ThreeEras
+    usage: /threeeras <info|ajuda|reload>
+    aliases: [te, treseras]
+
+permissions:
+  threeeras.admin:
+    description: Permite recarregar as configuracoes do ThreeEras
+    default: op

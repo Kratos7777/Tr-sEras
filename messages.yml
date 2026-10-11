@@ -1,0 +1,317 @@
+# ThreeEras - mensagens do plugin
+# Use & seguido de código de cor (ex.: &a verde, &c vermelho, &7 cinza).
+# Valores com & ficam entre aspas para o YAML não tratar & como âncora.
+
+# Prefixo adicionado automaticamente nas mensagens de aviso.
+prefix: "&8[&bThreeEras&8]&r"
+
+# Informações exibidas em /threeeras info.
+informacoes:
+  versao: "1.0.0"
+  autor: "ThreeEras"
+  descricao: "Plugin principal do servidor Tres Eras"
+
+comando:
+  sem-permissao: "&cVoce nao tem permissao para usar este subcomando."
+  desconhecido: "&cSubcomando inexistente. Use &f/threeeras ajuda&c."
+  ajuda:
+    cabecalho: "&bComandos disponiveis:"
+    info: "&f/threeeras info &7- informacoes do plugin"
+    ajuda: "&f/threeeras ajuda &7- esta lista de comandos"
+    reload: "&f/threeeras reload &7- recarrega as configuracoes &8(admin)"
+    armazenamento: "&f/threeeras armazenamento &7- diagnostico do armazenamento &8(admin para alterar)"
+    jogador: "&f/threeeras jogador [nick] &7- dados do jogador"
+    era: "&f/threeeras era <listar|info|viajar> &7- eras do servidor"
+    lore: "&f/threeeras lore <listar|ver|conceder> &7- registros e descobertas"
+    npc: "&f/threeeras npc <listar|criar|remover|ir> &7- NPCs de dialogo"
+    item: "&f/threeeras item <listar|info|dar|identificar> &7- itens do servidor"
+    quest: "&f/threeeras quest <listar|info|iniciar|abandonar> &7- missoes"
+    boss: "&f/threeeras boss <listar|info|criar|remover|ir> &7- chefes"
+    evento: "&f/threeeras evento <listar|forcars> &7- eventos agendados"
+    rota: "&f/threeeras rota <info|listar|definir|limpar> &7- rota narrativa"
+    estrutura: "&f/threeeras estrutura <listar|construir> &7- estruturas prontas"
+    setup: "&f/threeeras setup &7- prepara o servidor inteiro &8(admin)"
+    dungeon: "&f/threeeras dungeon <listar|info|entrar|concluir> &7- expedicoes"
+    modulos: "&f/threeeras compat|backup|kit &7- ambiente, backup e kit"
+    diario: "&f/threeeras diario &7- progresso, missoes e descobertas"
+    tutorial: "&f/threeeras tutorial reiniciar <jogador> &7- reapresenta o tutorial &8(admin)"
+  tutorial:
+    uso: "&cUse: /threeeras tutorial reiniciar <jogador>"
+    nao-encontrado: "&cNenhum jogador conhecido chamado {nick}."
+    reiniciado: "&aTutorial de &f{nick} &amarcado para ser reapresentado no proximo acesso; kit e progresso preservados."
+  diario:
+    jogador: "&cO diario so pode ser consultado dentro do jogo."
+    titulo: "&8--- Diario de campo ---"
+    era: "&7Era atual: &f{era}"
+    rota: "&7Rota: &f{rota}"
+    descobertas: "&7Registros descobertos: &f{total}"
+    missoes: "&7Missoes: &f{ativas} em andamento &8| &f{concluidas} concluidas"
+    missao-ativa: "&bEm andamento: &f{nome}"
+    objetivo: "&7Proximo objetivo: &f{objetivo}"
+    disponivel: "&aPossivel proxima missao: &f{nome}"
+    sem-missao: "&7Nenhuma missao em andamento. Fale com os NPCs para investigar novos caminhos."
+    missao-inicial: "&eA primeira pista foi registrada no diario. Use &f/threeeras diario &epara consultar o objetivo."
+  info:
+    nome: "&bThreeEras &7- servidor Tres Eras"
+    autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
+    descricao: "&7{descricao}"
+  reload:
+    sucesso: "&aConfiguracoes recarregadas com sucesso."
+    falha: "&cFalha ao recarregar configuracoes. Veja o console do servidor."
+  armazenamento:
+    uso: "&cUse: /threeeras armazenamento <info|salvar|recarregar|definir>"
+    info:
+      titulo: "&8--- Diagnostico do armazenamento ---"
+      arquivo: "&7Arquivo: &f{caminho}"
+      existe: "&7Existe em disco: &f{existe} &8({tamanho} bytes)"
+      sujo: "&7Alteracoes nao salvas: &f{sujo}"
+      autosave: "&7Autosave: &f{autosave}"
+      chaves: "&7Chaves na raiz: &f{chaves}"
+    salvar:
+      ok: "&aGravacao de dados.yml iniciada (assincrona)."
+      vazio: "&7Nada a salvar: nenhuma alteracao pendente."
+    recarregar:
+      ok: "&aDados recarregados do disco."
+      aviso: "&eAtencao: alteracoes na memoria nao salvas foram descartadas."
+      bloqueado: "&cRecarregamento bloqueado: salve os dados e desconecte todos os jogadores antes de recarregar."
+      falha: "&cFalha ao ler dados.yml. O arquivo foi preservado; veja o console."
+    definir:
+      uso: "&cUse: /threeeras armazenamento definir <chave> <valor>"
+      ok: "&aDefinido debug.{chave} = {valor}. Use /threeeras armazenamento salvar."
+  jogador:
+    uso: "&cUse: /threeeras jogador [nick]"
+    outro-sem-permissao: "&cVoce so pode consultar seus proprios dados."
+    nao-encontrado: "&cNenhum dado encontrado para o jogador {nick}."
+    info:
+      titulo: "&8--- Jogador {nick} ---"
+      era: "&7Era atual: &f{era}"
+      primeiro: "&7Primeiro acesso: &f{data}"
+      visto: "&7Ultimo acesso: &f{data}"
+      tempo: "&7Tempo de jogo: &f{tempo}"
+  era:
+    uso: "&cUse: /threeeras era <listar|info|viajar|ir> [id]"
+    nao-encontrada: "&cEra nao encontrada: {id}"
+    listar:
+      titulo: "&8--- Eras ({total}) ---"
+      vazio: "&7Nenhuma era definida em eras.yml."
+      linha: "&f{ordem}. &b{nome} &8- &7mundo: &f{mundo} &8({estado})"
+    info:
+      titulo: "&8--- Era {nome} ---"
+      ordem: "&7Ordem de progressao: &f{ordem}"
+      mundo: "&7Mundo destino: &f{mundo}"
+      estado: "&7Estado do mundo: &f{estado}"
+      requisito: "&7Missao necessaria para viajar: &f{requisito}"
+      descricao: "&7{descricao}"
+    ir:
+      uso: "&cUse: /threeeras era ir <id>"
+      console: "&cApenas jogadores podem viajar entre eras."
+      sem-mundo: "&cA era {nome} ainda nao tem mundo configurado em eras.yml."
+      mundo-offline: "&cO mundo '{mundo}' da era {nome} nao esta carregado no servidor."
+      falhou: "&cFalha ao teleportar. Veja o console do servidor."
+      ok: "&aViagem concluida: &f{nome} &a(mundo &f{mundo}&a)."
+    viajar:
+      uso: "&cUse: /threeeras era viajar <id>"
+      bloqueada: "&cEsta era ainda exige a missao &f{missao}&c."
+  lore:
+    uso: "&cUse: /threeeras lore <listar|ver|conceder>"
+    nao-encontrada: "&cEntrada de lore nao encontrada: {id}"
+    rota-bloqueada: "&cEste registro ({id}) nao pertence a sua rota. O que voce descobriu nao trouxe esse conhecimento."
+    listar:
+      titulo: "&8--- Entradas de lore ({total}) ---"
+      vazio: "&7Nenhuma entrada encontrada com esse filtro."
+      linha: "&f{id} &8- &b{titulo} &8[{era}/camada {camada}/{status}] {marca}"
+    ver:
+      titulo: "&8--- {titulo} ---"
+      texto: "&7{texto}"
+      meta: "&8Era: &f{era} &8| Camada: &f{camada} &8| Tipo: &f{tipo} &8| Status: &f{status}"
+      nova: "&aNova descoberta registrada: &f{titulo}"
+      repetida: "&7Voce ja havia descoberto esta entrada."
+    conceder:
+      uso: "&cUse: /threeeras lore conceder <nick> <id>"
+      ok: "&aEntrada &f{id} &aconcedida a &f{nick}&a."
+  npc:
+    uso: "&cUse: /threeeras npc <listar|criar|remover|ir>"
+    listar:
+      titulo: "&8--- NPCs ({total}) ---"
+      vazio: "&7Nenhum NPC definido em npcs.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7({estado})"
+    criar:
+      uso: "&cUse: /threeeras npc criar <id>"
+      console: "&cUse o comando no jogo para definir a posicao do NPC."
+      inexistente: "&cNPC nao encontrado em npcs.yml: {id}"
+      ok: "&aNPC &f{nome} &acriado na sua posicao."
+    remover:
+      ok: "&aNPC &f{id} &aremovido do mundo."
+      ausente: "&7Nenhuma entidade encontrada para &f{id}&7."
+    ir:
+      inexistente: "&cNPC {id} nao esta no mundo nem tem local salvo."
+      ok: "&aTeleportado para &f{nome}&a."
+    rota-bloqueada: "&7{nome} nao fala com quem nao provou que segue este caminho."
+  item:
+    uso: "&cUse: /threeeras item <listar|info|dar|identificar>"
+    inexistente: "&cItem nao encontrado em itens.yml: {id}"
+    listar:
+      titulo: "&8--- Itens ({total}) ---"
+      vazio: "&7Nenhum item definido em itens.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}/{material}]"
+    info:
+      titulo: "&8--- {nome} ---"
+      linha: "&7Material: &f{material} &7| Quantidade: &f{quantidade} &7| Era: &f{era}"
+      lore: "&8- &7{linha}"
+    dar:
+      uso: "&cUse: /threeeras item dar <id> [quantidade]"
+      console: "&cApenas jogadores podem receber itens."
+      quantidade-invalida: "&cQuantidade invalida (1 a 64): {valor}"
+      ok: "&aRecebido: &f{nome} &ax{quantidade}."
+    identificar:
+      mao-vazia: "&7Segure um item na mao principal."
+      desconhecido: "&7Este item nao pertence ao ThreeEras."
+      linha: "&aItem identificado: &f{nome} &8({id})"
+  quest:
+    uso: "&cUse: /threeeras quest <listar|info|iniciar|abandonar>"
+    nao-encontrada: "&cMissao nao encontrada: {id}"
+    listar:
+      titulo: "&8--- Missoes ({total}) ---"
+      vazio: "&7Nenhuma missao definida em quests.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7({estado})"
+    info:
+      titulo: "&8--- {nome} ---"
+      descricao: "&7{descricao}"
+      objetivo: "{marca} &7{objetivo}"
+      requisito: "&cRequisito: &f{quest}"
+      recompensa: "&aRecompensa: &f{item} &ax{quantidade}"
+    iniciar:
+      uso: "&cUse: /threeeras quest iniciar <id>"
+      console: "&cApenas jogadores podem iniciar missoes."
+      ok: "&aMissao iniciada: &f{nome}"
+      ja-ativa: "&7Esta missao ja esta em andamento."
+      ja-concluida: "&7Esta missao ja foi concluida."
+      requisito: "&cRequisito nao cumprido: &f{quest}"
+      rota: "&cEsta missao exige a rota &f{rota}&c. Continue descobrindo registros."
+    abandonar:
+      ok: "&aMissao abandonada: &f{id}"
+      nao-iniciada: "&7Voce nao esta nesta missao: {id}"
+    progresso: "&aObjetivo concluido: &f{descricao}&a. Proximo: &f{proximo}"
+    conclusao: "&a&lMissao concluida: &f{nome}"
+    recompensa: "&aRecompensa recebida: &f{item} &ax{quantidade}"
+  boss:
+    uso: "&cUse: /threeeras boss <listar|info|criar|remover|ir>"
+    inexistente: "&cChefe nao encontrado: {id}"
+    listar:
+      titulo: "&8--- Chefes ({total}) ---"
+      vazio: "&7Nenhum chefe definido em bosses.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7({estado})"
+    info:
+      titulo: "&8--- {nome} ---"
+      linha: "&7Era: &f{era} &7| Vida: &f{vida} &7| Pilares: &f{pilares} &7| Restantes: &f{restantes}"
+    criar:
+      uso: "&cUse: /threeeras boss criar <id>"
+      console: "&cUse o comando no jogo para definir a posicao do chefe."
+      ja-ativo: "&7Este chefe ja esta no mundo."
+      falhou: "&cFalha ao criar o chefe. Veja o console."
+      ok: "&aChefe &f{nome} &acriado com &f{pilares} &apilares."
+    remover:
+      ok: "&aChefe &f{id} &aremovido do mundo."
+    ir:
+      dormente: "&cO chefe {id} nao esta no mundo."
+      ok: "&aTeleportado para o chefe &f{id}&a."
+    protegido: "&c{nome} esta protegido pelo dominio. Destrua os pilares restantes ({restantes})."
+    pilar-destruido: "&eUm pilar ruiu. Restam {restantes}."
+    dominio-cedeu: "&aO dominio cedeu! A criatura esta vulneravel."
+    derrotado: "&6&l{nome} &6foi derrotado."
+    absorcao: "&eA criatura absorve o que voce deixou pelo chao e se cura com isso."
+    escalada: "&cQuanto mais voce resiste, mais violento ele fica."
+    estase: "&7O movimento esta sendo esquecido ao seu redor..."
+    reflexo-criada: "&dUma manifestacao falsa aparece perto da criatura."
+    reflexo-falsa: "&dA manifestacao falsa se desfaz ao ser tocada."
+    consumo: "&2O solo desaparece sob voce. Mova-se!"
+    percepcao: "&dVocê a ve {direcao}, a cerca de {distancia} metros."
+    percepcao-atrai: "&dUma fascinacao te puxa na direcao dela."
+  evento:
+    uso: "&cUse: /threeeras evento <listar|forcars>"
+    inexistente: "&cEvento nao encontrado: {id}"
+    listar:
+      titulo: "&8--- Eventos ({total}) ---"
+      vazio: "&7Nenhum evento definido em eventos.yml."
+      linha: "&f{id} &8- &b{nome} &8[{tipo}] &7({estado})"
+    forcars:
+      uso: "&cUse: /threeeras evento forcars <id>"
+      sem-jogadores: "&7Nenhum jogador online: evento nao disparado."
+      ok: "&aEvento &f{id} &adisparado."
+  rota:
+    uso: "&cUse: /threeeras rota <info|listar|definir|limpar>"
+    nenhuma: "&7Voce ainda nao entrou em nenhuma rota. Continue descobrindo registros."
+    invalida: "&cRota nao encontrada: {id}"
+    atribuida: "&6&lNova rota: &f{nome} &7- {descricao}"
+    fechada: "&6&lRota concluida: &f{nome}&6. O que voce descobriu mudou o que este mundo significa."
+    info:
+      titulo: "&8--- Rota: {nome} ---"
+      descricao: "&7{descricao}"
+      era: "&7Era de ancoragem: &f{era}"
+      estado: "&7Estado: &f{estado}"
+    listar:
+      titulo: "&8--- Rotas ({total}) ---"
+      vazio: "&7Nenhuma rota definida em rotas.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7({requisitos} descobertas para entrar)"
+    definir:
+      uso: "&cUse: /threeeras rota definir <id>"
+      console: "&cUse o comando no jogo."
+      ok: "&aSua rota agora e &f{id}&a."
+    limpar:
+      ok: "&aRota limpa. A proxima avaliacao podera atribuir uma nova."
+      vazio: "&7Voce nao tinha rota atribuida."
+  estrutura:
+    uso: "&cUse: /threeeras estrutura <listar|construir>"
+    inexistente: "&cEstrutura nao encontrada: {id}"
+    listar:
+      titulo: "&8--- Estruturas prontas ({total}) ---"
+      vazio: "&7Nenhuma estrutura disponivel."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7- {descricao}"
+    construir:
+      uso: "&cUse: /threeeras estrutura construir <id>"
+      construida: "&aEstrutura &f{nome} &aconstruida em ({x}, {y}, {z})."
+  setup:
+    sem-mundo: "&cNenhum mundo carregado para construir."
+    ok: "&aServidor preparado! Veja o resumo abaixo."
+    ok-console: "&aServidor preparado pelo console. Entre no jogo e explore."
+    falhou: "&cFalha ao preparar o servidor. Veja o console."
+    resultado: "&aPronto: &f{estruturas} &aestruturas e &f{npcs} &aNPCs posicionados; kits e primeira missao entregues."
+    dica: "&eProximo passo: leia registros com &f/threeeras lore ver fundacao-raizes&e, fale com os NPCs e cumpra a missao inicial."
+    primeira-vez: "&6Bem-vindo ao ThreeEras! &7Seu &fGuia das Tres Eras &7esta na sua mao. Leia, explore e fale com os NPCs. Use &f/threeeras ajuda&7."
+  dungeon:
+    uso: "&cUse: /threeeras dungeon <listar|info|entrar|concluir>"
+    inexistente: "&cDungeon nao encontrada: {id}"
+    ja-concluida: "&eVoce ja concluiu a dungeon {id}; as recompensas nao foram repetidas."
+    listar:
+      titulo: "&8--- Dungeons ({total}) ---"
+      vazio: "&7Nenhuma dungeon definida em dungeons.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7rota: &f{rota} &8| &7{salas} salas"
+    info:
+      titulo: "&8--- {nome} ---"
+      linha: "&7Era: &f{era} &7| Rota: &f{rota} &7| Chefe: &f{chefe} &7| Salas: &f{salas}"
+    entrar:
+      uso: "&cUse: /threeeras dungeon entrar <id>"
+      console: "&cApenas jogadores podem entrar em dungeons."
+      ok: "&aVoce entrou em &f{nome}&a. Boa sorte."
+    concluir:
+      uso: "&cUse: /threeeras dungeon concluir <id>"
+    entrada-ok: "&aVoce entrou em &f{nome}&a. Boa sorte."
+    rota-bloqueada: "&cA dungeon {id} exige uma rota que voce ainda nao segue. Continue descobrindo registros."
+    lore-descoberta: "&dVoce descobriu um registro escondido na dungeon: &f{lore}"
+    concluida: "&6&lExpedicao concluida: &f{nome}&6! Recompensas entregues."
+  compat:
+    titulo: "&8--- Ambiente do servidor ---"
+    java: "&7Java: &f{java}"
+    servidor: "&7Servidor: &f{servidor}"
+    geyser: "&7Geyser: &f{estado}"
+    floodgate: "&7Floodgate: &f{estado}"
+    mundos: "&7Mundos: &f{mundos}"
+    entidades: "&7Entidades carregadas: &f{entidades}"
+    online: "&7Jogadores online: &f{online}"
+  backup:
+    ok: "&aBackup criado: &f{arquivo}"
+    falhou: "&cFalha ao criar backup (dados.yml nao existe ou sem permissao)."
+  kit:
+    console: "&cApenas jogadores recebem kit."
+    ok: "&aKit inicial entregue!"
+    cooldown: "&7Aguarde {minutos} minuto(s) para pedir o kit novamente."

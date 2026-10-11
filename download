@@ -1,0 +1,26 @@
+# Build Maven
+target/
+.tools/
+.m2/
+*.class
+
+# Artefatos empacotados
+*.jar
+
+# IDEs
+.idea/
+.vscode/
+.settings/
+.classpath
+.project
+*.iml
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# artefato de release (unico binario versionado de proposito)
+!dist/*.jar

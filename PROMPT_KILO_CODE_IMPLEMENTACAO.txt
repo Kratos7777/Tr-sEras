@@ -1,0 +1,44 @@
+﻿PROMPT PARA O KILO CODE — PROJETO THREEERAS
+
+Analise este projeto ThreeEras e integre ao GitHub as alterações necessárias com base nos documentos do projeto, especialmente:
+- docs/CAMPANHA_PRINCIPAL.md
+- docs/IMPLEMENTACAO_CAMPANHA.md
+- docs/PROTOTIPO_GEOGRAFICO_MEDIEVAL.md
+- docs/CANON_AND_PROPOSALS.md
+- docs/MUNDOS_E_DEPENDENCIAS.md
+
+OBJETIVO
+Transformar o planejamento aprovado em implementação técnica modular, persistente e expansível, preservando o que já funciona no plugin e distinguindo cânone confirmado, decisões aprovadas, propostas e questões em aberto.
+
+ANTES DE ALTERAR
+1. Examine a branch, estrutura do repositório e estado dos arquivos.
+2. Compare os documentos com o conteúdo existente; atualize arquivos equivalentes em vez de criar duplicatas.
+3. Confirme versões de Minecraft/Paper, Java, Maven e dependências no projeto.
+4. Inspecione os gerenciadores de eras, viagens, quests, rotas, NPCs, lore, armazenamento e jogadores.
+5. Apresente um plano curto por etapas, com compatibilidade, migração, arquivos afetados e verificações.
+
+REGRAS
+- Preserve IDs e progresso das rotas antigas raizes, cinzas e sinal. M1–M3 devem ter estado próprio; não converta progresso automaticamente.
+- O progresso é individual por jogador, salvo missão que defina cooperação explicitamente.
+- Use IDs estáveis para escolhas, missões, pistas, trajetórias, NPCs, relações e finais.
+- Reutilize YAML e sistemas existentes quando adequados. Não adicione banco ou dependências sem justificativa.
+- Preserve o cânone. Não invente a causa do Apocalipse, origem dos Sete, destino completo do Reino das Raízes ou explicações cosmológicas. Conteúdo novo segue como proposta até aprovação.
+- Não fixe coordenadas nem gere/importa mundo fictício. O protótipo geográfico é conceitual; confirme seed, mapa e ambiente antes de editar mundo real.
+- Não afirme importação Minefort, teste de servidor ou crossplay sem executar a validação.
+
+IMPLEMENTAÇÃO POR ETAPAS
+1. Versionar estado da campanha e planejar migração segura.
+2. Criar conteúdo modular e validar IDs/referências.
+3. Implementar rotas medievais e progressão com quests/NPCs existentes.
+4. Implementar A01–A18 com escolhas persistentes, objetivos opcionais e resultados parciais.
+5. Implementar F01–F04; filiações mutuamente exclusivas, recusa possível e estados persistentes.
+6. Integrar NPCs auxiliares e cinco níveis de relacionamento sem tornar vínculos secundários obrigatórios.
+7. Documentar a construção/teste da Vila Inicial e Capital por regiões; não substituir o mundo atual.
+8. Atualizar instalação, arquitetura, limitações e testes.
+
+Se o escopo completo não couber numa entrega segura, implemente uma primeira fatia vertical funcional (uma rota, uma missão, uma escolha persistente, diário e verificação de reconexão) e registre claramente o restante. Não simule sistemas por texto/comandos administrativos nem declare a campanha pronta se houver conteúdo não executável.
+
+VERIFICAÇÃO E GITHUB
+- Compile e execute as verificações disponíveis; registre exatamente o que foi testado e o que exige Paper/Minefort real.
+- Revise o diff, preserve alterações alheias e não inclua credenciais, temporários, mundos grandes ou dados privados.
+- Faça commits descritivos em branch de trabalho. Após validar os arquivos, envie as alterações ao GitHub e informe branch, commits, implementação e pendências.

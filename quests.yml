@@ -1,0 +1,158 @@
+# ThreeEras - missoes encadeadas
+#
+# id:          identificador unico
+# nome:        titulo exibido ao jogador
+# era:         era da missao (informativa)
+# descricao:   resumo
+# requisito:   id de outra missao que deve estar concluida (vazio = nenhum)
+# objetivos:   lista ordenada; formatos:
+#                descoberta:<lore-id>
+#                item:<item-id>
+#                entregar:<item-id>[:quantidade]   (consome o item)
+# recompensas: itens dados na conclusao; formatos:
+#                <item-id>  ou  <item-id>:<quantidade>
+
+quests:
+
+  conta-que-nao-fecha:
+    nome: "A conta que nao fecha"
+    era: medieval
+    descricao: "Os marcos da estrada dizem coisas diferentes da cronica."
+    requisito: ""
+    objetivos:
+      - "descoberta:marcos-contagem"
+      - "entregar:fragmento-quarto-marco"
+    recompensas: []
+
+  faixa-no-estandarte:
+    nome: "A faixa no estandarte"
+    era: apocaliptica
+    descricao: "A faixa que o vento nao movia."
+    requisito: conta-que-nao-fecha
+    objetivos:
+      - "descoberta:faccoes-sobreviventes"
+      - "entregar:estandarte-faixa-vermelha"
+    recompensas:
+      - "amostra-7-4"
+
+  palavra-no-arquivo:
+    nome: "A palavra no arquivo"
+    era: futurista
+    descricao: "Sete vezes a mesma palavra, em um documento sem origem."
+    requisito: faixa-no-estandarte
+    objetivos:
+      - "descoberta:catalogo-erebus-amostra-7-4"
+      - "entregar:amostra-7-4"
+    recompensas:
+      - "registro-sem-origem"
+
+  trilha-da-fronteira:
+    nome: "A trilha da fronteira"
+    era: medieval
+    descricao: "A capita da fronteira so confia em quem carrega a lamina dela."
+    requisito: ""
+    objetivos:
+      - "descoberta:guerra-cronologia"
+      - "entregar:espada-da-fronteira"
+    recompensas:
+      - "diario-do-estrategista"
+
+  mascara-e-verdade:
+    nome: "A mascara e a verdade"
+    era: apocaliptica
+    descricao: "O sacerdote das cinzas so fala com quem devolve o que o culto perdeu."
+    requisito: trilha-da-fronteira
+    objetivos:
+      - "descoberta:culto-dos-cinzas"
+      - "entregar:mascara-do-culto"
+    recompensas:
+      - "chave-de-contencao"
+
+  arquivo-em-branco:
+    nome: "O arquivo em branco"
+    era: futurista
+    descricao: "A diretora Nyx so mostra o arquivo da Zona 13 a quem devolveu a marca do herege."
+    requisito: palavra-no-arquivo
+    objetivos:
+      - "descoberta:fenomeno-orfao"
+      - "descoberta:sinal-verdade"
+    recompensas:
+      - "marca-do-herege"
+
+  coroa-e-consequencia:
+    nome: "A coroa e a consequencia"
+    era: medieval
+    descricao: "O rei so devolve a coroa a quem carrega a marca de soldado."
+    requisito: ""
+    objetivos:
+      - "descoberta:rei-da-coroa"
+      - "entregar:marca-de-soldado"
+    recompensas:
+      - "coroa-de-sete-pontas"
+
+  estrada-que-mentia:
+    nome: "A estrada que mentia"
+    era: apocaliptica
+    descricao: "O chefe dos coletores troca o mapa rachado pela relíquia que nao entende."
+    requisito: mascara-e-verdade
+    objetivos:
+      - "descoberta:estrada-dos-marcos"
+      - "entregar:mapa-rachado"
+    recompensas:
+      - "fragmento-de-lingua-morta"
+
+  porta-selada-por-dentro:
+    nome: "A porta selada por dentro"
+    era: futurista
+    descricao: "A cientista herege entrega a chave do laboratorio 9 a quem trouxe o cristal."
+    requisito: arquivo-em-branco
+    objetivos:
+      - "descoberta:laboratorio-9"
+      - "entregar:cristal-de-leitura"
+    recompensas:
+      - "gravacao-do-silencio"
+
+  # ---------- EXPEDICOES (rede causal: dungeon -> item -> entrega -> dungeon) ----------
+  expedicao-cripta:
+    nome: "Expedicao a Cripta do Rei"
+    era: medieval
+    descricao: "O Mestre de Expedicoes envia quem quiser a cripta. Quem volta, traz o que o rei escondeu."
+    requisito: ""
+    objetivos:
+      - "dungeon:cripta-do-rei"
+    recompensas:
+      - "insignia-rachada"
+
+  expedicao-cinzas:
+    nome: "Expedicao ao Labirinto das Cinzas"
+    era: apocaliptica
+    descricao: "A cartografa das cinzas precisa de alguem que desca ao labirinto e volte com a amostra."
+    requisito: expedicao-cripta
+    rota: cinzas
+    objetivos:
+      - "dungeon:labirinto-das-cinzas"
+    recompensas:
+      - "marca-de-soldado"
+
+  expedicao-sinal:
+    nome: "Expedicao ao Nucleo do Sinal"
+    era: futurista
+    descricao: "O arquivista do Erebus financia a descida. O que voltar, ele catalogara."
+    requisito: mascara-e-verdade
+    rota: sinal
+    objetivos:
+      - "dungeon:nucleo-do-sinal"
+    recompensas:
+      - "chave-de-contencao"
+
+  expedicao-catacumbas:
+    nome: "Expedicao as Catacumbas do Hereje"
+    era: medieval
+    descricao: "A guardia da cerca guarda a entrada. Quem desce, encontra o que o hereje deixou."
+    requisito: ""
+    rota: raizes
+    objetivos:
+      - "dungeon:catacumbas-do-herege"
+    recompensas:
+      - "coroa-de-sete-pontas"
+
