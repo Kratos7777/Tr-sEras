@@ -31,6 +31,8 @@ comando:
     rota: "&f/threeeras rota <info|listar|definir|limpar> &7- rota narrativa"
     estrutura: "&f/threeeras estrutura <listar|construir> &7- estruturas prontas"
     setup: "&f/threeeras setup &7- prepara o servidor inteiro &8(admin)"
+    dungeon: "&f/threeeras dungeon <listar|info|entrar|concluir> &7- expedicoes"
+    modulos: "&f/threeeras compat|backup|kit &7- ambiente, backup e kit"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -120,6 +122,7 @@ comando:
     ir:
       inexistente: "&cNPC {id} nao esta no mundo nem tem local salvo."
       ok: "&aTeleportado para &f{nome}&a."
+    rota-bloqueada: "&7{nome} nao fala com quem nao provou que segue este caminho."
   item:
     uso: "&cUse: /threeeras item <listar|info|dar|identificar>"
     inexistente: "&cItem nao encontrado em itens.yml: {id}"
@@ -160,6 +163,7 @@ comando:
       ja-ativa: "&7Esta missao ja esta em andamento."
       ja-concluida: "&7Esta missao ja foi concluida."
       requisito: "&cRequisito nao cumprido: &f{quest}"
+      rota: "&cEsta missao exige a rota &f{rota}&c. Continue descobrindo registros."
     abandonar:
       ok: "&aMissao abandonada: &f{id}"
       nao-iniciada: "&7Voce nao esta nesta missao: {id}"
@@ -250,3 +254,39 @@ comando:
     resultado: "&aPronto: &f{estruturas} &aestruturas e &f{npcs} &aNPCs posicionados; kits e primeira missao entregues."
     dica: "&eProximo passo: leia registros com &f/threeeras lore ver fundacao-raizes&e, fale com os NPCs e cumpra a missao inicial."
     primeira-vez: "&6Bem-vindo ao ThreeEras! Kit inicial entregue. Use /threeeras ajuda e /threeeras lore listar para comecar."
+  dungeon:
+    uso: "&cUse: /threeeras dungeon <listar|info|entrar|concluir>"
+    inexistente: "&cDungeon nao encontrada: {id}"
+    listar:
+      titulo: "&8--- Dungeons ({total}) ---"
+      vazio: "&7Nenhuma dungeon definida em dungeons.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7rota: &f{rota} &8| &7{salas} salas"
+    info:
+      titulo: "&8--- {nome} ---"
+      linha: "&7Era: &f{era} &7| Rota: &f{rota} &7| Chefe: &f{chefe} &7| Salas: &f{salas}"
+    entrar:
+      uso: "&cUse: /threeeras dungeon entrar <id>"
+      console: "&cApenas jogadores podem entrar em dungeons."
+      ok: "&aVoce entrou em &f{nome}&a. Boa sorte."
+    concluir:
+      uso: "&cUse: /threeeras dungeon concluir <id>"
+    entrada-ok: "&aVoce entrou em &f{nome}&a. Boa sorte."
+    rota-bloqueada: "&cA dungeon {id} exige uma rota que voce ainda nao segue. Continue descobrindo registros."
+    lore-descoberta: "&dVoce descobriu um registro escondido na dungeon: &f{lore}"
+    concluida: "&6&lExpedicao concluida: &f{nome}&6! Recompensas entregues."
+  compat:
+    titulo: "&8--- Ambiente do servidor ---"
+    java: "&7Java: &f{java}"
+    servidor: "&7Servidor: &f{servidor}"
+    geyser: "&7Geyser: &f{estado}"
+    floodgate: "&7Floodgate: &f{estado}"
+    mundos: "&7Mundos: &f{mundos}"
+    entidades: "&7Entidades carregadas: &f{entidades}"
+    online: "&7Jogadores online: &f{online}"
+  backup:
+    ok: "&aBackup criado: &f{arquivo}"
+    falhou: "&cFalha ao criar backup (dados.yml nao existe ou sem permissao)."
+  kit:
+    console: "&cApenas jogadores recebem kit."
+    ok: "&aKit inicial entregue!"
+    cooldown: "&7Aguarde {minutos} minuto(s) para pedir o kit novamente."

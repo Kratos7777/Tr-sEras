@@ -137,6 +137,11 @@ public final class QuestCommandHandler {
                 sender.sendMessage(messages.message("comando.quest.iniciar.requisito",
                         "{quest}", requisito != null ? requisito.getNome() : quest.getRequisito()));
             }
+            case ROTA -> {
+                var rota = plugin.getRotaManager().porId(quest.getRota());
+                sender.sendMessage(messages.message("comando.quest.iniciar.rota",
+                        "{rota}", rota != null ? rota.getNome() : quest.getRota()));
+            }
             case NAO_ENCONTRADA -> sender.sendMessage(messages.message("comando.quest.nao-encontrada",
                     "{id}", args[2]));
         }

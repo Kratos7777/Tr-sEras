@@ -96,6 +96,9 @@ public final class SetupService {
             case ARENA_SOBERBA -> 40;
             case RUINA_APOCALIPTICA -> 80;
             case LABORATORIO_FUTURISTA -> 120;
+            case VILA_MEDIEVAL -> 160;
+            case POSTO_APOCALIPTICO -> 200;
+            case TORRE_FUTURISTA -> 240;
         };
         return base.clone().add(deslocamento, 0, 0);
     }

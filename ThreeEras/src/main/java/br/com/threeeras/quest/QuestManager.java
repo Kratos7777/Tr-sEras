@@ -92,6 +92,7 @@ public final class QuestManager {
                         config.getString(base + ".era", ""),
                         config.getString(base + ".descricao", ""),
                         config.getString(base + ".requisito", ""),
+                        config.getString(base + ".rota", ""),
                         objetivos,
                         recompensas));
             }
@@ -128,6 +129,7 @@ public final class QuestManager {
             case "descoberta" -> new Objetivo(TipoObjetivo.DESCOBERTA, alvo, quantidade);
             case "item" -> new Objetivo(TipoObjetivo.ITEM, alvo, quantidade);
             case "entregar" -> new Objetivo(TipoObjetivo.ENTREGAR, alvo, quantidade);
+            case "dungeon" -> new Objetivo(TipoObjetivo.DUNGEON, alvo, 1);
             default -> null;
         };
     }
@@ -174,7 +176,17 @@ public final class QuestManager {
             case ITEM -> "Obter: " + nomeItem(objetivo.getAlvo());
             case ENTREGAR -> "Entregar: " + nomeItem(objetivo.getAlvo())
                     + (objetivo.getQuantidade() > 1 ? " (x" + objetivo.getQuantidade() + ")" : "");
+            case DUNGEON -> "Concluir a expedicao: " + nomeDungeon(objetivo.getAlvo());
         };
+    }
+
+    private String nomeDungeon(String dungeonId) {
+        var manager = plugin.getDungeonManager();
+        if (manager == null) {
+            return dungeonId;
+        }
+        var dungeon = manager.porId(dungeonId);
+        return dungeon != null ? dungeon.getNome() : dungeonId;
     }
 
     private String nomeItem(String itemId) {
@@ -188,7 +200,8 @@ public final class QuestManager {
         NAO_ENCONTRADA,
         JA_ATIVA,
         JA_CONCLUIDA,
-        REQUISITO
+        REQUISITO,
+        ROTA
     }
 
     public ResultadoInicio iniciar(Player player, String id) {
@@ -205,6 +218,12 @@ public final class QuestManager {
         }
         if (quest.temRequisito() && !data.questConcluida(quest.getRequisito())) {
             return ResultadoInicio.REQUISITO;
+        }
+        if (quest.temRota()) {
+            String rota = data.getRotaAtual();
+            if (rota == null || !rota.equalsIgnoreCase(quest.getRota())) {
+                return ResultadoInicio.ROTA;
+            }
         }
         data.iniciarQuest(quest.getId());
         playerManager.save(data);
@@ -298,6 +317,7 @@ public final class QuestManager {
         return switch (objetivo.getTipo()) {
             case DESCOBERTA -> data.temDescoberta(objetivo.getAlvo());
             case ITEM, ENTREGAR -> contarItens(player, objetivo.getAlvo()) >= objetivo.getQuantidade();
+            case DUNGEON -> data.dungeonConcluida(objetivo.getAlvo());
         };
     }
 

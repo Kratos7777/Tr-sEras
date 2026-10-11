@@ -18,12 +18,15 @@ public final class NpcDefinition {
     private final String nome;
     private final String era;
     private final String tipo;
+    /** Rota do NPC; "" = fala com qualquer um. */
+    private final String rota;
     private final List<String> dialogo;
     private final Map<String, String> porDescoberta;
     private Location local;
 
     public NpcDefinition(String id, String nome, String era, String tipo,
-                         List<String> dialogo, Map<String, String> porDescoberta, Location local) {
+                         List<String> dialogo, Map<String, String> porDescoberta, Location local,
+                         String rota) {
         this.id = id;
         this.nome = nome;
         this.era = era;
@@ -31,6 +34,7 @@ public final class NpcDefinition {
         this.dialogo = dialogo;
         this.porDescoberta = porDescoberta;
         this.local = local;
+        this.rota = rota == null ? "" : rota;
     }
 
     public String getId() {
@@ -49,6 +53,18 @@ public final class NpcDefinition {
     /** Nome do EntityType do Bukkit (ex.: VILLAGER). */
     public String getTipo() {
         return tipo;
+    }
+
+    /**
+     * Rota do NPC; "" = fala com qualquer jogador. NPCs de rota so
+     * conversam com quem esta naquela rota (recusam os demais).
+     */
+    public String getRota() {
+        return rota;
+    }
+
+    public boolean temRota() {
+        return !rota.isBlank();
     }
 
     /** Linhas de dialogo, na ordem. */

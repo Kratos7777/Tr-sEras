@@ -88,7 +88,8 @@ public final class PlayerManager implements Listener {
                     storage.getStringList(base + ".quests-concluidas"),
                     rota.isBlank() ? null : rota,
                     storage.getBoolean(base + ".rota-concluida", false),
-                    storage.getBoolean(base + ".kit-recebido", false));
+                    storage.getBoolean(base + ".kit-recebido", false),
+                    storage.getStringList(base + ".dungeons-concluidas"));
         }
         PlayerData novo = PlayerData.novo(uuid, nome, System.currentTimeMillis(), getEraInicial());
         save(novo);
@@ -158,6 +159,7 @@ public final class PlayerManager implements Listener {
         }
         storage.set(base + ".rota-concluida", data.isRotaConcluida());
         storage.set(base + ".kit-recebido", data.isKitRecebido());
+        storage.set(base + ".dungeons-concluidas", new ArrayList<>(data.getDungeonsConcluidas()));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

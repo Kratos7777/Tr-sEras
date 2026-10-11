@@ -138,3 +138,111 @@ npcs:
     por-descoberta:
       laboratorio-9: "&bO laboratorio 9. A porta selada por dentro. E ninguem dentro. Isso deveria incomodar mais gente."
       protocolo-do-silencio: "&bO protocolo. A quietude nao é contencao. E o mundo pedindo permissao. E nos interrompemos."
+
+  mestre-de-expedicoes:
+    nome: "O Mestre de Expedicoes"
+    era: medieval
+    tipo: VILLAGER
+    dialogo:
+      - "&7Eu mando gente para baixo da terra. Trabalho honesto, dizem."
+      - "&7Cada dungeon guarda um pedaco da historia. Quem volta, volta diferente."
+    por-descoberta:
+      guerra-cronologia: "&bA cripta do rei. La embaixo esta a versao que a corte nunca escreveu."
+
+  guardia-da-cerca:
+    nome: "A Guardia da Cerca"
+    era: medieval
+    tipo: VILLAGER
+    dialogo:
+      - "&7Sete nichos. Seis criaturas. O setimo ficou vazio."
+      - "&7O rei mandou deixar vazio. Ninguem soube o porquê. Todos obedeceram."
+    por-descoberta:
+      cerca-das-sete: "&bVoce viu a cerca. Entao sabe: havia algo para colocar no nicho. E ninguem teve coragem."
+
+  escudeiro-do-rei:
+    nome: "O escudeiro do rei"
+    era: medieval
+    tipo: VILLAGER
+    dialogo:
+      - "&7A coroa tinha sete pontas quando ele morreu. Uma quando subiu ao poder."
+      - "&7Nao pergunte. Eu carreguei as duas."
+
+  cartografa-das-cinzas:
+    nome: "A cartografa das cinzas"
+    era: apocaliptica
+    tipo: VILLAGER
+    dialogo:
+      - "&7Desenho o que resta. A cada ano, desenho menos."
+      - "&7O mundo nao foi conquistado. Foi sendo abandonado."
+    por-descoberta:
+      mapa-encolhido: "&bMeus mapas encolhendo. Cada geracao ve menos terreno seguro. E ninguem ve o inimigo."
+
+  anacoreta-do-vale:
+    nome: "O anacoreta do vale"
+    era: apocaliptica
+    tipo: VILLAGER
+    dialogo:
+      - "&7La no fundo, a cidade afundou e nada se move dentro da agua."
+      - "&7Os peixes nao entram. Eu tambem nao."
+    por-descoberta:
+      cidade-submersa: "&bA cidade submersa. Presa nao por sorte. Parada porque algo la parou."
+
+  arquivista-do-erebus:
+    nome: "O arquivista do Erebus"
+    era: futurista
+    tipo: VILLAGER
+    dialogo:
+      - "&7Catalogo tudo. Nao explico nada. Sao coisas diferentes."
+      - "&7A amostra 1-1 esta em contencao ha setenta e nove anos. Nove laudos. A mesma frase."
+    por-descoberta:
+      amostra-1-1: "&bSetenta e nove anos. O comportamento persiste. A causa permanece sem explicacao."
+
+  engenheira-da-contencao:
+    nome: "A engenheira da contencao"
+    era: futurista
+    tipo: VILLAGER
+    dialogo:
+      - "&7A Autoridade sela. Eu projetava os selos. Achava que estavamos ganhando tempo."
+      - "&7Agora acho que estavamos ganhando silencio."
+
+  negociante-do-sindicato:
+    nome: "O negociante do sindicato"
+    era: futurista
+    tipo: VILLAGER
+    dialogo:
+      - "&7Um frasco de amostra vale mais que um predio. E mais seguro."
+      - "&7Nao e ganancia. E diversificacao de patrimonio."
+
+  voz-dos-marcos:
+    nome: "A voz dos marcos"
+    era: medieval
+    tipo: VILLAGER
+    rota: raizes
+    dialogo:
+      - "&bVoce seguiu os marcos. Poucos chegam aqui."
+      - "&bA sétima zona de perturbacao existia. O reino a omitiu da cronica — nao por maldade, por incapacidade de catalogar."
+    por-descoberta:
+      raizes-relicario: "&bO espelho no nicho. O reino sabia desde o inicio. Escreveu sete porque a fe comportava o sete."
+
+  voz-das-cinzas:
+    nome: "A voz das cinzas"
+    era: apocaliptica
+    tipo: VILLAGER
+    rota: cinzas
+    dialogo:
+      - "&bVoce seguiu as cinzas. O mundo nao ruiu: desacelerou."
+      - "&bAs zonas de quietude sao o relogio do mundo esquecendo. E nos somos os ponteiros."
+    por-descoberta:
+      cinzas-estrada: "&bA estrada nao foi repintada. Foi reinterpretada. Cada geracao ve uma contagem diferente."
+
+  voz-do-sinal:
+    nome: "A voz do sinal"
+    era: futurista
+    tipo: VILLAGER
+    rota: sinal
+    dialogo:
+      - "&bVoce seguiu o sinal. O campo em branco do arquivo nao e ignorancia."
+      - "&bE a primeira vez que a ciencia deste mundo registrou honestamente o que nao consegue classificar."
+    por-descoberta:
+      sinal-protocolo: "&bA quietude nao e contencao. E o mundo pedindo permissao para continuar. Se interrompida, ele continua — mas ja nao nos inclui."
+

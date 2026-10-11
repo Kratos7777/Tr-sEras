@@ -112,3 +112,47 @@ quests:
     recompensas:
       - "gravacao-do-silencio"
 
+  # ---------- EXPEDICOES (rede causal: dungeon -> item -> entrega -> dungeon) ----------
+  expedicao-cripta:
+    nome: "Expedicao a Cripta do Rei"
+    era: medieval
+    descricao: "O Mestre de Expedicoes envia quem quiser a cripta. Quem volta, traz o que o rei escondeu."
+    requisito: ""
+    objetivos:
+      - "dungeon:cripta-do-rei"
+    recompensas:
+      - "insignia-rachada"
+
+  expedicao-cinzas:
+    nome: "Expedicao ao Labirinto das Cinzas"
+    era: apocaliptica
+    descricao: "A cartografa das cinzas precisa de alguem que desca ao labirinto e volte com a amostra."
+    requisito: expedicao-cripta
+    rota: cinzas
+    objetivos:
+      - "dungeon:labirinto-das-cinzas"
+    recompensas:
+      - "marca-de-soldado"
+
+  expedicao-sinal:
+    nome: "Expedicao ao Nucleo do Sinal"
+    era: futurista
+    descricao: "O arquivista do Erebus financia a descida. O que voltar, ele catalogara."
+    requisito: mascara-e-verdade
+    rota: sinal
+    objetivos:
+      - "dungeon:nucleo-do-sinal"
+    recompensas:
+      - "chave-de-contencao"
+
+  expedicao-catacumbas:
+    nome: "Expedicao as Catacumbas do Hereje"
+    era: medieval
+    descricao: "A guardia da cerca guarda a entrada. Quem desce, encontra o que o hereje deixou."
+    requisito: ""
+    rota: raizes
+    objetivos:
+      - "dungeon:catacumbas-do-herege"
+    recompensas:
+      - "coroa-de-sete-pontas"
+

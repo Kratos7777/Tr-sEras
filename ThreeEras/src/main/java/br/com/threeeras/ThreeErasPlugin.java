@@ -9,6 +9,10 @@ import br.com.threeeras.era.EraManager;
 import br.com.threeeras.estrutura.GerenciadorEstruturas;
 import br.com.threeeras.estrutura.SetupService;
 import br.com.threeeras.evento.EventoManager;
+import br.com.threeeras.dungeon.DungeonManager;
+import br.com.threeeras.modulo.ArmazenamentoModule;
+import br.com.threeeras.modulo.CompatibilidadeModule;
+import br.com.threeeras.modulo.JogabilidadeModule;
 import br.com.threeeras.item.ItemManager;
 import br.com.threeeras.lore.LoreManager;
 import br.com.threeeras.npc.NpcInteractListener;
@@ -36,6 +40,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private RotaManager rotaManager;
     private GerenciadorEstruturas gerenciadorEstruturas;
     private SetupService setupService;
+    private DungeonManager dungeonManager;
+    private CompatibilidadeModule compatibilidade;
+    private ArmazenamentoModule armazenamentoModule;
+    private JogabilidadeModule jogabilidade;
 
     @Override
     public void onEnable() {
@@ -62,6 +70,9 @@ public final class ThreeErasPlugin extends JavaPlugin {
         questManager.load();
         new QuestProgressListener(this, questManager).register();
 
+        dungeonManager = new DungeonManager(this);
+        dungeonManager.load();
+
         bossManager = new BossManager(this);
         bossManager.load();
         new BossListener(this, bossManager).register();
@@ -77,12 +88,18 @@ public final class ThreeErasPlugin extends JavaPlugin {
         gerenciadorEstruturas = new GerenciadorEstruturas(this);
         setupService = new SetupService(this);
 
+        compatibilidade = new CompatibilidadeModule(this);
+        compatibilidade.detectar();
+        armazenamentoModule = new ArmazenamentoModule(this);
+
         storage = new StorageManager(this);
         storage.load();
         storage.startAutosave(getConfig().getInt("armazenamento.autosave-segundos", 300));
 
         playerManager = new PlayerManager(this, storage, setupService);
         playerManager.register();
+
+        jogabilidade = new JogabilidadeModule(this, setupService);
 
         PluginCommand command = getCommand("threeeras");
         if (command == null) {
@@ -151,6 +168,22 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
     public SetupService getSetupService() {
         return setupService;
+    }
+
+    public DungeonManager getDungeonManager() {
+        return dungeonManager;
+    }
+
+    public CompatibilidadeModule getCompatibilidade() {
+        return compatibilidade;
+    }
+
+    public ArmazenamentoModule getArmazenamentoModule() {
+        return armazenamentoModule;
+    }
+
+    public JogabilidadeModule getJogabilidade() {
+        return jogabilidade;
     }
 
     private void validarEraInicial() {

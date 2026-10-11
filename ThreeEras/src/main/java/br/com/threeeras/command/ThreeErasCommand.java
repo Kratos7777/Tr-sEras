@@ -45,7 +45,8 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private static final List<String> SUBCOMMANDS =
             List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador", "era",
                     "lore", "npc", "npcs", "item", "itens", "quest", "quests", "boss", "bosses",
-                    "evento", "eventos", "rota", "estrutura", "setup");
+                    "evento", "eventos", "rota", "estrutura", "setup", "dungeon", "dungeons",
+                    "compat", "backup", "kit");
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
@@ -67,6 +68,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private final EventoCommandHandler eventoHandler;
     private final RotaCommandHandler rotaHandler;
     private final EstruturaCommandHandler estruturaHandler;
+    private final ModuloCommandHandler moduloHandler;
 
     public ThreeErasCommand(ThreeErasPlugin plugin, Messages messages) {
         this.plugin = plugin;
@@ -89,6 +91,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         this.eventoHandler = new EventoCommandHandler(plugin);
         this.rotaHandler = new RotaCommandHandler(plugin);
         this.estruturaHandler = new EstruturaCommandHandler(plugin);
+        this.moduloHandler = new ModuloCommandHandler(plugin);
     }
 
     @Override
@@ -114,6 +117,10 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             case "rota" -> rotaHandler.handle(sender, args);
             case "estrutura" -> estruturaHandler.handle(sender, args);
             case "setup" -> estruturaHandler.handleSetup(sender);
+            case "dungeon", "dungeons" -> moduloHandler.handle(sender, args);
+            case "compat" -> moduloHandler.handleCompat(sender);
+            case "backup" -> moduloHandler.handleBackup(sender);
+            case "kit" -> moduloHandler.handleKit(sender);
             default -> sender.sendMessage(messages.prefixed("comando.desconhecido"));
         }
         return true;
@@ -144,6 +151,8 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(messages.plain("comando.ajuda.rota"));
         sender.sendMessage(messages.plain("comando.ajuda.estrutura"));
         sender.sendMessage(messages.plain("comando.ajuda.setup"));
+        sender.sendMessage(messages.plain("comando.ajuda.dungeon"));
+        sender.sendMessage(messages.plain("comando.ajuda.modulos"));
         if (sender.hasPermission(PERMISSION)) {
             sender.sendMessage(messages.plain("comando.ajuda.reload"));
         }
@@ -446,6 +455,9 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             }
             if (args[0].equalsIgnoreCase("estrutura")) {
                 return completarDe(args[1], "listar", "construir");
+            }
+            if (args[0].equalsIgnoreCase("dungeon") || args[0].equalsIgnoreCase("dungeons")) {
+                return completarDe(args[1], "listar", "info", "entrar", "concluir");
             }
         }
         return List.of();

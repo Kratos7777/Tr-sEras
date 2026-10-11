@@ -10,5 +10,8 @@ public enum TipoObjetivo {
     ITEM,
 
     /** Jogador entrega (consome) uma quantidade do item. */
-    ENTREGAR
+    ENTREGAR,
+
+    /** Jogador concluiu a dungeon indicada. */
+    DUNGEON
 }

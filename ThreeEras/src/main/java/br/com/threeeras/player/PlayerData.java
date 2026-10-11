@@ -24,6 +24,7 @@ public final class PlayerData {
     private String rotaAtual;
     private boolean rotaConcluida;
     private boolean kitRecebido;
+    private final Set<String> dungeonsConcluidas;
     private String nome;
     private long primeiroJoin;
     private long ultimoVisto;
@@ -33,7 +34,8 @@ public final class PlayerData {
     public PlayerData(UUID uuid, String nome, long primeiroJoin, long ultimoVisto,
                       String eraAtual, long tempoJogadoSegundos, Collection<String> descobertas,
                       Map<String, Integer> passosQuests, Collection<String> questsConcluidas,
-                      String rotaAtual, boolean rotaConcluida, boolean kitRecebido) {
+                      String rotaAtual, boolean rotaConcluida, boolean kitRecebido,
+                      Collection<String> dungeonsConcluidas) {
         this.uuid = uuid;
         this.nome = nome;
         this.primeiroJoin = primeiroJoin;
@@ -46,12 +48,13 @@ public final class PlayerData {
         this.rotaAtual = rotaAtual;
         this.rotaConcluida = rotaConcluida;
         this.kitRecebido = kitRecebido;
+        this.dungeonsConcluidas = new LinkedHashSet<>(dungeonsConcluidas);
     }
 
     /** Cria registro de primeiro acesso. */
     public static PlayerData novo(UUID uuid, String nome, long agora, String eraInicial) {
         return new PlayerData(uuid, nome, agora, agora, eraInicial, 0L,
-                List.of(), Map.of(), List.of(), null, false, false);
+                List.of(), Map.of(), List.of(), null, false, false, List.of());
     }
 
     public UUID getUuid() {
@@ -197,5 +200,20 @@ public final class PlayerData {
 
     public void marcarKitRecebido() {
         this.kitRecebido = true;
+    }
+
+    // ---------- dungeons ----------
+
+    /** Ids das dungeons concluidas. */
+    public Set<String> getDungeonsConcluidas() {
+        return Collections.unmodifiableSet(dungeonsConcluidas);
+    }
+
+    public boolean dungeonConcluida(String id) {
+        return dungeonsConcluidas.contains(id);
+    }
+
+    public void marcarDungeonConcluida(String id) {
+        dungeonsConcluidas.add(id);
     }
 }

@@ -76,10 +76,18 @@ public final class NpcManager {
                     }
                 }
 
+                String rota = config.getString(base + ".rota", "");
+                if (!rota.isBlank() && plugin.getRotaManager() != null
+                        && plugin.getRotaManager().isCarregado()
+                        && !plugin.getRotaManager().existe(rota)) {
+                    plugin.getLogger().warning("NPC '" + id + "': rota '" + rota
+                            + "' nao existe em rotas.yml.");
+                }
+
                 Location local = lerLocal(config, base + ".local");
 
                 carregadas.put(id.toLowerCase(Locale.ROOT),
-                        new NpcDefinition(id, nome, era, tipo, dialogo, porDescoberta, local));
+                        new NpcDefinition(id, nome, era, tipo, dialogo, porDescoberta, local, rota));
             }
         }
 

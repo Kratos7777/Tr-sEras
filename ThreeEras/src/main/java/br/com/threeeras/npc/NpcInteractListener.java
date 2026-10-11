@@ -57,6 +57,17 @@ public final class NpcInteractListener implements Listener {
         event.setCancelled(true);
         Player player = event.getPlayer();
 
+        // NPC de rota: so conversa com quem esta na rota certa.
+        if (npc.temRota()) {
+            PlayerData dados = playerManager.get(player);
+            String rota = dados.getRotaAtual();
+            if (rota == null || !rota.equalsIgnoreCase(npc.getRota())) {
+                player.sendMessage(plugin.getMessages().message("comando.npc.rota-bloqueada",
+                        "{nome}", npc.getNome()));
+                return;
+            }
+        }
+
         long agora = System.currentTimeMillis();
         Long ultima = ultimaInteracao.get(player.getUniqueId());
         if (ultima != null && agora - ultima < COOLDOWN_MS) {
