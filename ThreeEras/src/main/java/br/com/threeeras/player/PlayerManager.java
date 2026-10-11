@@ -72,6 +72,7 @@ public final class PlayerManager implements Listener {
             for (String questId : storage.getKeys(base + ".quests", false)) {
                 passos.put(questId, storage.getInt(base + ".quests." + questId + ".passo", 0));
             }
+            String rota = storage.getString(base + ".rota", "");
             return new PlayerData(
                     uuid,
                     storage.getString(base + ".nome", nome),
@@ -81,7 +82,9 @@ public final class PlayerManager implements Listener {
                     storage.getLong(base + ".tempo-jogado", 0L),
                     storage.getStringList(base + ".descobertas"),
                     passos,
-                    storage.getStringList(base + ".quests-concluidas"));
+                    storage.getStringList(base + ".quests-concluidas"),
+                    rota.isBlank() ? null : rota,
+                    storage.getBoolean(base + ".rota-concluida", false));
         }
         PlayerData novo = PlayerData.novo(uuid, nome, System.currentTimeMillis(), getEraInicial());
         save(novo);
@@ -146,6 +149,10 @@ public final class PlayerManager implements Listener {
             storage.set(base + ".quests." + passo.getKey() + ".passo", passo.getValue());
         }
         storage.set(base + ".quests-concluidas", new ArrayList<>(data.getQuestsConcluidas()));
+        if (data.getRotaAtual() != null) {
+            storage.set(base + ".rota", data.getRotaAtual());
+        }
+        storage.set(base + ".rota-concluida", data.isRotaConcluida());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

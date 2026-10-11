@@ -3,15 +3,16 @@ package br.com.threeeras.command;
 import br.com.threeeras.ThreeErasPlugin;
 import br.com.threeeras.boss.BossManager;
 import br.com.threeeras.config.Messages;
-import br.com.threeeras.evento.EventoManager;
 import br.com.threeeras.era.Era;
 import br.com.threeeras.era.EraManager;
+import br.com.threeeras.evento.EventoManager;
 import br.com.threeeras.item.ItemManager;
 import br.com.threeeras.lore.LoreManager;
 import br.com.threeeras.npc.NpcManager;
 import br.com.threeeras.player.PlayerData;
 import br.com.threeeras.player.PlayerManager;
 import br.com.threeeras.quest.QuestManager;
+import br.com.threeeras.rota.RotaManager;
 import br.com.threeeras.storage.StorageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -44,7 +45,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private static final List<String> SUBCOMMANDS =
             List.of("info", "ajuda", "reload", "armazenamento", "storage", "jogador", "era",
                     "lore", "npc", "npcs", "item", "itens", "quest", "quests", "boss", "bosses",
-                    "evento", "eventos");
+                    "evento", "eventos", "rota");
 
     private final ThreeErasPlugin plugin;
     private final Messages messages;
@@ -57,12 +58,14 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
     private final QuestManager questManager;
     private final BossManager bossManager;
     private final EventoManager eventoManager;
+    private final RotaManager rotaManager;
     private final LoreCommandHandler loreHandler;
     private final NpcCommandHandler npcHandler;
     private final ItemCommandHandler itemHandler;
     private final QuestCommandHandler questHandler;
     private final BossCommandHandler bossHandler;
     private final EventoCommandHandler eventoHandler;
+    private final RotaCommandHandler rotaHandler;
 
     public ThreeErasCommand(ThreeErasPlugin plugin, Messages messages) {
         this.plugin = plugin;
@@ -76,12 +79,14 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         this.questManager = plugin.getQuestManager();
         this.bossManager = plugin.getBossManager();
         this.eventoManager = plugin.getEventoManager();
+        this.rotaManager = plugin.getRotaManager();
         this.loreHandler = new LoreCommandHandler(plugin);
         this.npcHandler = new NpcCommandHandler(plugin);
         this.itemHandler = new ItemCommandHandler(plugin);
         this.questHandler = new QuestCommandHandler(plugin);
         this.bossHandler = new BossCommandHandler(plugin);
         this.eventoHandler = new EventoCommandHandler(plugin);
+        this.rotaHandler = new RotaCommandHandler(plugin);
     }
 
     @Override
@@ -104,6 +109,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             case "quest", "quests" -> questHandler.handle(sender, args);
             case "boss", "bosses" -> bossHandler.handle(sender, args);
             case "evento", "eventos" -> eventoHandler.handle(sender, args);
+            case "rota" -> rotaHandler.handle(sender, args);
             default -> sender.sendMessage(messages.prefixed("comando.desconhecido"));
         }
         return true;
@@ -131,6 +137,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage(messages.plain("comando.ajuda.quest"));
         sender.sendMessage(messages.plain("comando.ajuda.boss"));
         sender.sendMessage(messages.plain("comando.ajuda.evento"));
+        sender.sendMessage(messages.plain("comando.ajuda.rota"));
         if (sender.hasPermission(PERMISSION)) {
             sender.sendMessage(messages.plain("comando.ajuda.reload"));
         }
@@ -151,6 +158,7 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             questManager.load();
             bossManager.load();
             eventoManager.load();
+            rotaManager.load();
             sender.sendMessage(messages.prefixed("comando.reload.sucesso"));
         } catch (RuntimeException e) {
             plugin.getLogger().severe("Falha ao recarregar configuracoes: " + e.getMessage());
@@ -426,6 +434,9 @@ public final class ThreeErasCommand implements CommandExecutor, TabCompleter {
             }
             if (args[0].equalsIgnoreCase("evento") || args[0].equalsIgnoreCase("eventos")) {
                 return completarDe(args[1], "listar", "forcars");
+            }
+            if (args[0].equalsIgnoreCase("rota")) {
+                return completarDe(args[1], "info", "listar", "definir", "limpar");
             }
         }
         return List.of();

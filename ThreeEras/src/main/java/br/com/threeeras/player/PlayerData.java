@@ -21,6 +21,8 @@ public final class PlayerData {
     private final Set<String> descobertas;
     private final Map<String, Integer> passosQuests;
     private final Set<String> questsConcluidas;
+    private String rotaAtual;
+    private boolean rotaConcluida;
     private String nome;
     private long primeiroJoin;
     private long ultimoVisto;
@@ -29,7 +31,8 @@ public final class PlayerData {
 
     public PlayerData(UUID uuid, String nome, long primeiroJoin, long ultimoVisto,
                       String eraAtual, long tempoJogadoSegundos, Collection<String> descobertas,
-                      Map<String, Integer> passosQuests, Collection<String> questsConcluidas) {
+                      Map<String, Integer> passosQuests, Collection<String> questsConcluidas,
+                      String rotaAtual, boolean rotaConcluida) {
         this.uuid = uuid;
         this.nome = nome;
         this.primeiroJoin = primeiroJoin;
@@ -39,12 +42,14 @@ public final class PlayerData {
         this.descobertas = new LinkedHashSet<>(descobertas);
         this.passosQuests = new LinkedHashMap<>(passosQuests);
         this.questsConcluidas = new LinkedHashSet<>(questsConcluidas);
+        this.rotaAtual = rotaAtual;
+        this.rotaConcluida = rotaConcluida;
     }
 
     /** Cria registro de primeiro acesso. */
     public static PlayerData novo(UUID uuid, String nome, long agora, String eraInicial) {
         return new PlayerData(uuid, nome, agora, agora, eraInicial, 0L,
-                List.of(), Map.of(), List.of());
+                List.of(), Map.of(), List.of(), null, false);
     }
 
     public UUID getUuid() {
@@ -156,5 +161,29 @@ public final class PlayerData {
 
     public void abandonarQuest(String id) {
         passosQuests.remove(id);
+    }
+
+    // ---------- rota narrativa ----------
+
+    /** Id da rota atual do jogador; null se nenhuma foi atribuida. */
+    public String getRotaAtual() {
+        return rotaAtual;
+    }
+
+    public boolean isRotaConcluida() {
+        return rotaConcluida;
+    }
+
+    public void definirRota(String id) {
+        this.rotaAtual = id;
+    }
+
+    public void concluirRota() {
+        this.rotaConcluida = true;
+    }
+
+    public void limparRota() {
+        this.rotaAtual = null;
+        this.rotaConcluida = false;
     }
 }

@@ -14,6 +14,7 @@ import br.com.threeeras.npc.NpcManager;
 import br.com.threeeras.player.PlayerManager;
 import br.com.threeeras.quest.QuestManager;
 import br.com.threeeras.quest.QuestProgressListener;
+import br.com.threeeras.rota.RotaManager;
 import br.com.threeeras.storage.StorageManager;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,6 +31,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private QuestManager questManager;
     private BossManager bossManager;
     private EventoManager eventoManager;
+    private RotaManager rotaManager;
 
     @Override
     public void onEnable() {
@@ -63,6 +65,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
         eventoManager = new EventoManager(this);
         eventoManager.load();
         eventoManager.start();
+
+        rotaManager = new RotaManager(this);
+        rotaManager.load();
+        rotaManager.register();
 
         storage = new StorageManager(this);
         storage.load();
@@ -125,6 +131,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
     public EventoManager getEventoManager() {
         return eventoManager;
+    }
+
+    public RotaManager getRotaManager() {
+        return rotaManager;
     }
 
     private void validarEraInicial() {

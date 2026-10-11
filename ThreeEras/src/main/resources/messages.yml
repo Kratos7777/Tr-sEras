@@ -28,6 +28,7 @@ comando:
     quest: "&f/threeeras quest <listar|info|iniciar|abandonar> &7- missoes"
     boss: "&f/threeeras boss <listar|info|criar|remover|ir> &7- chefes"
     evento: "&f/threeeras evento <listar|forcars> &7- eventos agendados"
+    rota: "&f/threeeras rota <info|listar|definir|limpar> &7- rota narrativa"
   info:
     nome: "&bThreeEras &7- servidor Tres Eras"
     autor: "&7Versao &f{versao} &7| Autor: &f{autor}"
@@ -206,3 +207,25 @@ comando:
       uso: "&cUse: /threeeras evento forcars <id>"
       sem-jogadores: "&7Nenhum jogador online: evento nao disparado."
       ok: "&aEvento &f{id} &adisparado."
+  rota:
+    uso: "&cUse: /threeeras rota <info|listar|definir|limpar>"
+    nenhuma: "&7Voce ainda nao entrou em nenhuma rota. Continue descobrindo registros."
+    invalida: "&cRota nao encontrada: {id}"
+    atribuida: "&6&lNova rota: &f{nome} &7- {descricao}"
+    fechada: "&6&lRota concluida: &f{nome}&6. O que voce descobriu mudou o que este mundo significa."
+    info:
+      titulo: "&8--- Rota: {nome} ---"
+      descricao: "&7{descricao}"
+      era: "&7Era de ancoragem: &f{era}"
+      estado: "&7Estado: &f{estado}"
+    listar:
+      titulo: "&8--- Rotas ({total}) ---"
+      vazio: "&7Nenhuma rota definida em rotas.yml."
+      linha: "&f{id} &8- &b{nome} &8[{era}] &7({requisitos} descobertas para entrar)"
+    definir:
+      uso: "&cUse: /threeeras rota definir <id>"
+      console: "&cUse o comando no jogo."
+      ok: "&aSua rota agora e &f{id}&a."
+    limpar:
+      ok: "&aRota limpa. A proxima avaliacao podera atribuir uma nova."
+      vazio: "&7Voce nao tinha rota atribuida."

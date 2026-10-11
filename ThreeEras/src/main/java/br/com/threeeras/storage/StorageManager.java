@@ -93,6 +93,10 @@ public final class StorageManager {
         return dados.getLong(path, def);
     }
 
+    public boolean getBoolean(String path, boolean def) {
+        return dados.getBoolean(path, def);
+    }
+
     public List<String> getStringList(String path) {
         return dados.getStringList(path);
     }
