@@ -1,0 +1,19 @@
+﻿THREEERAS — MAPA EXPANDIDO (PROTÓTIPO)
+
+Esta versão acrescenta regiões além da Vila–Capital usando uma cópia do save e a seed escolhida (-1369628266). As coordenadas servem ao protótipo e não fixam o cânone narrativo.
+
+REGIÕES
+- Vila Inicial (aprox. 62, -28): praça, salão, casas, armazém e paliçada.
+- Capital Medieval (aprox. 62, -720): distrito protegido com praça, salão de mercado, quartel, casas, torre central, muralhas ajustadas ao relevo e quatro portões.
+- Arquivos Enterrados (aprox. 150, -700): ruína de entrada e pequena sala subterrânea para investigação inicial; sem revelações de cânone.
+- Território do Reino das Raízes (aprox. -220, -735): abrigo de patrulha e observatório camuflado, ligados à Capital por trilha opcional.
+- Floresta dos Monstros (aprox. -440, -955): mata densa, clareira e ruína tomada pela vegetação.
+- Fronteira das Fortalezas (aprox. 500, -980): bastião e duas torres de observação ligados à Capital por estrada militar.
+- Terras Distantes (aprox. 100, -1500): posto de retorno e fim da primeira rota segura; a região além dele continua reservada.
+
+A rota Vila–Capital mede cerca de 620 blocos. As rotas opcionais ligam a Capital à região das Raízes e à Floresta; uma estrada militar leva à Fronteira; outra rota aponta para o norte até as Terras Distantes. A área de 6.000 × 6.000 blocos segue como meta futura e não é pré-gerada.
+
+IMPORTAÇÃO
+Pare o servidor e guarde backup. Extraia o ZIP, envie a pasta ThreeErasWorld ao Minefort e selecione-a como mundo ativo. Inicie o servidor e aguarde a mensagem [ThreeEras] de conclusão. Se o servidor reiniciar durante a construção, a expansão é retomada no próximo carregamento. Não desloque o mundo nem altere a seed.
+
+Compatibilidade planejada: Minecraft Java/Paper 26.2. A geração não foi executada em cliente Minecraft ou Minefort nesta sessão; inspecione o terreno no primeiro carregamento antes de trocar o mundo de produção.

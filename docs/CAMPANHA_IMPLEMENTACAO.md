@@ -355,3 +355,27 @@ Fontes consultadas:
 - GeyserMC, [Supported Hosting Providers](https://geysermc.org/wiki/geyser/supported-hosting-providers/).
 
 Não houve acesso ao painel do usuário, transferência ou validação de importação. A compatibilidade do mapa e o espaço/limite de upload permanecem pendentes de teste no próprio servidor.
+
+
+---
+
+# MUNDO REAL RECEBIDO (12/10/2026)
+
+- Save: `ThreeErasWorld`, seed `-1369628266`, ~12 MB, 4 regioes
+  (`r.0.0`, `r.-1.-1`, `r.-1.0`, `r.0.-1`), layout de dimensoes em
+  `dimensions/minecraft/overworld/`.
+- Datapack incluido: `threeeras_prototipo` (constroi as regioes por
+  funcoes na primeira carga; aguardar mensagem de conclusao).
+- Repositorio: `mundo/ThreeErasWorld.zip` (4,5 MB) **sem** dados de
+  jogador; coordenadas das regioes e importacao no Minefort em
+  `mundo/LEIA-ME.md`.
+- `eras.yml`: era Medieval aponta para `ThreeErasWorld`.
+- Coordenadas das regioes (provisorias, do pacote): Vila Inicial 62,-28;
+  Capital Medieval 62,-720; Arquivos Enterrados 150,-700; Territorio das
+  Raizes -220,-735; Floresta dos Monstros -440,-955; Fronteira das
+  Fortalezas 500,-980; Terras Distantes 100,-1500. Etapa 2: fazenda
+  125,-400; patio de artesaos 165,-720; refugio florestal -530,-1060;
+  2a linha da Fronteira 780,-1170; rota de reconhecimento ate 160,-2250.
+- Aviso: nao foi carregado em Minecraft/Minefort por mim. Validar in-game
+  com backup antes de virar mundo de producao; nao alterar a seed nem
+  mover a pasta.

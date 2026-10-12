@@ -1,0 +1,7 @@
+PACOTE THREEERAS — MAPA EXPANDIDO, ETAPA 2
+
+Esta versão adiciona fazenda de rota, pátio de artesãos, dois postos do Reino das Raízes, refúgio na floresta, segunda linha de fortificações, anexo fechado dos Arquivos e cerca de 2.500 blocos de rotas/trilhas até a nova área de reconhecimento ao norte.
+
+Use o mesmo processo de importação: pare o servidor, faça backup, extraia o ZIP e envie a pasta ThreeErasWorld preservando toda sua estrutura. Ao iniciar, a etapa adicional começa após a expansão anterior. Aguarde a mensagem [ThreeEras] de conclusão. O marcador separado permite usar o pacote atualizado em um mundo onde a etapa anterior já tenha sido gerada.
+
+Coordenadas ainda provisórias para a seed -1369628266. Não executado dentro de Minecraft ou Minefort nesta sessão. Confira as estruturas no servidor com o backup guardado antes de trocar o mundo principal.
