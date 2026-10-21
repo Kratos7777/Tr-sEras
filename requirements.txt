@@ -1,0 +1,25 @@
+# --- Pipeline de worldgen (Python) ---
+# Alvo: Paper 26.2 / DataVersion 4903 / Java 25
+# Python: 3.11+ (obrigatório — usa tomllib, typing moderno)
+
+# --- Núcleo numérico (heightmap, biome map, erosão) ---
+numpy>=1.26,<3.0
+
+# --- Backend de escrita Anvil (blocos + biomas + block states) ---
+amulet-core>=2.0.11
+
+# --- Utilidades de mundo ---
+amulet-nbt>=2.0
+PyMCTranslate>=0.0.15
+
+# --- Ruído (referência de qualidade; o gerador é próprio) ---
+noise>=1.2.2
+
+# --- Visualização de diagnóstico ---
+pillow>=10.0
+matplotlib>=3.8
+
+# --- Qualidade de código e testes ---
+pytest>=8.0
+black>=24.0
+mypy>=1.8

@@ -1,0 +1,21 @@
+execute in minecraft:overworld positioned 106 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 107 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 108 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 109 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 110 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 111 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 112 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 113 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 114 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 115 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 116 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 117 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 118 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 119 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 120 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 121 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 122 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 123 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 124 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+execute in minecraft:overworld positioned 125 0 -400 over motion_blocking_no_leaves run setblock ~ ~ ~ minecraft:dirt_path
+schedule function threeeras:prototype/expansion2/roads/artisan_00 2t replace

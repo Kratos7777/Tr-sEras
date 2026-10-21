@@ -1,0 +1,21 @@
+fill -440 0 -955 -439 0 -955 minecraft:dirt_path
+fill -439 0 -954 -438 0 -954 minecraft:dirt_path
+fill -438 0 -953 -437 0 -953 minecraft:dirt_path
+fill -437 0 -952 -436 0 -952 minecraft:dirt_path
+fill -436 0 -951 -435 0 -951 minecraft:dirt_path
+fill -435 0 -950 -434 0 -950 minecraft:dirt_path
+fill -434 0 -949 -433 0 -949 minecraft:dirt_path
+fill -433 0 -948 -432 0 -948 minecraft:dirt_path
+fill -432 0 -947 -431 0 -947 minecraft:dirt_path
+fill -431 0 -946 -430 0 -946 minecraft:dirt_path
+fill -430 0 -945 -429 0 -945 minecraft:dirt_path
+fill -429 0 -944 -428 0 -944 minecraft:dirt_path
+fill -428 0 -943 -427 0 -943 minecraft:dirt_path
+fill -427 0 -942 -426 0 -942 minecraft:dirt_path
+fill -426 0 -941 -425 0 -941 minecraft:dirt_path
+fill -425 0 -940 -424 0 -940 minecraft:dirt_path
+fill -424 0 -939 -423 0 -939 minecraft:dirt_path
+fill -423 0 -938 -422 0 -938 minecraft:dirt_path
+fill -422 0 -937 -421 0 -937 minecraft:dirt_path
+fill -421 0 -936 -420 0 -936 minecraft:dirt_path
+schedule function threeeras:prototype/expansion/roads/frontier_00 2t replace

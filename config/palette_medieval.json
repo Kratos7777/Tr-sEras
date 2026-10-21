@@ -1,0 +1,57 @@
+{
+  "palettes": {
+    "vila_inicial": {
+      "base": ["minecraft:stone", "minecraft:cobblestone"],
+      "detail": ["minecraft:spruce_log", "minecraft:stripped_spruce_log"],
+      "accent": ["minecraft:spruce_planks", "minecraft:oak_planks"],
+      "roof": ["minecraft:spruce_stairs", "minecraft:stone_brick_stairs"],
+      "ground": ["minecraft:snow", "minecraft:podzol", "minecraft:coarse_dirt"]
+    },
+    "capital_medieval": {
+      "base": ["minecraft:stone_bricks", "minecraft:cracked_stone_bricks"],
+      "detail": ["minecraft:dark_oak_log", "minecraft:polished_andesite"],
+      "accent": ["minecraft:dark_oak_planks", "minecraft:bricks"],
+      "roof": ["minecraft:dark_oak_stairs", "minecraft:brick_stairs"],
+      "ground": ["minecraft:stone", "minecraft:cobblestone", "minecraft:coarse_dirt"]
+    },
+    "reino_das_raizes": {
+      "base": ["minecraft:mossy_cobblestone", "minecraft:mud"],
+      "detail": ["minecraft:mangrove_wood", "minecraft:rooted_dirt"],
+      "accent": ["minecraft:mangrove_planks", "minecraft:moss_block"],
+      "roof": ["minecraft:mangrove_stairs", "minecraft:mud_bricks"],
+      "ground": ["minecraft:moss_block", "minecraft:rooted_dirt", "minecraft:mud"]
+    },
+    "fronteira_das_fortalezas": {
+      "base": ["minecraft:deepslate", "minecraft:cobbled_deepslate"],
+      "detail": ["minecraft:polished_deepslate", "minecraft:chiseled_deepslate"],
+      "accent": ["minecraft:deepslate_bricks", "minecraft:basalt"],
+      "roof": ["minecraft:deepslate_brick_stairs", "minecraft:polished_deepslate_stairs"],
+      "ground": ["minecraft:snow", "minecraft:stone", "minecraft:powder_snow"]
+    },
+    "floresta_dos_monstros": {
+      "base": ["minecraft:mud", "minecraft:coarse_dirt"],
+      "detail": ["minecraft:stripped_dark_oak_log", "minecraft:obsidian"],
+      "accent": ["minecraft:target", "minecraft:nether_bricks"],
+      "roof": ["minecraft:dark_oak_stairs", "minecraft:nether_brick_stairs"],
+      "ground": ["minecraft:podzol", "minecraft:mud", "minecraft:rooted_dirt"]
+    },
+    "terras_distantes": {
+      "base": ["minecraft:stone", "minecraft:andesite"],
+      "detail": ["minecraft:oak_log", "minecraft:stone_bricks"],
+      "accent": ["minecraft:oak_planks", "minecraft:cobblestone"],
+      "roof": ["minecraft:oak_stairs", "minecraft:cobblestone_stairs"],
+      "ground": ["minecraft:grass_block", "minecraft:coarse_dirt"]
+    },
+    "arquivos_enterrados": {
+      "base": ["minecraft:deepslate_bricks", "minecraft:reinforced_deepslate"],
+      "detail": ["minecraft:chiseled_deepslate", "minecraft:polished_deepslate"],
+      "accent": ["minecraft:iron_bars", "minecraft:chain"],
+      "roof": ["minecraft:deepslate_brick_slab", "minecraft:smooth_stone"],
+      "ground": ["minecraft:smooth_basalt", "minecraft:deepslate"]
+    }
+  },
+  "rules": {
+    "surface_depth": 4,
+    "subsurface_carve_blend": true
+  }
+}

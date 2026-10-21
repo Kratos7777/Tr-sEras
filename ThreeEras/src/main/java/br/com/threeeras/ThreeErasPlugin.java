@@ -22,6 +22,7 @@ import br.com.threeeras.player.PlayerManager;
 import br.com.threeeras.quest.QuestManager;
 import br.com.threeeras.quest.QuestProgressListener;
 import br.com.threeeras.rota.RotaManager;
+import br.com.threeeras.sociallink.SocialLinkManager;
 import br.com.threeeras.storage.StorageManager;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,6 +47,7 @@ public final class ThreeErasPlugin extends JavaPlugin {
     private ArmazenamentoModule armazenamentoModule;
     private JogabilidadeModule jogabilidade;
     private DecisaoManager decisaoManager;
+    private SocialLinkManager socialLinkManager;
 
     @Override
     public void onEnable() {
@@ -105,6 +107,9 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
         decisaoManager = new DecisaoManager(this);
         decisaoManager.load();
+
+        socialLinkManager = new SocialLinkManager(this);
+        socialLinkManager.load();
 
         PluginCommand command = getCommand("threeeras");
         if (command == null) {
@@ -193,6 +198,10 @@ public final class ThreeErasPlugin extends JavaPlugin {
 
     public DecisaoManager getDecisaoManager() {
         return decisaoManager;
+    }
+
+    public SocialLinkManager getSocialLinkManager() {
+        return socialLinkManager;
     }
 
     private void validarEraInicial() {

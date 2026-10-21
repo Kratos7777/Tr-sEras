@@ -1,0 +1,300 @@
+﻿{"meta":{"project":"ThreeEras","era":"medieval","schema_version":"0.4.0","minecraft_version":"26.2","dataversion":4903,"server":"Paper 26.2 (Java 25)","world_height":384,"y_min":-64,"y_max":320,"sea_level":63,"heightmap_mode":"absolute_blocks","cell_size":256,"grid":{"cols":12,"rows":12},"extent_blocks":{"x":3072,"z":3072},"extent_origin":{"world_x":-1024,"world_z":-2560,"corner":"northwest"},"global_target_blocks":{"x":6000,"z":6000},"seed":-1369628266,"origin":{"region":"vila_inicial_nevada","world_x":62,"world_z":-28,"note":"Posicao REAL do prototipo, extraida do datapack threeeras_prototipo. NAO alterar."},"world_name":"ThreeErasWorld","dimension":"minecraft:overworld","world_layout":"modern_dimensions","region_path_template":"dimensions/minecraft/overworld/region/r.{rx}.{rz}.mca"},"safety":{"protected_regions":["vila_inicial_nevada"],"protected_anchors":["vila_inicial","estrada_fazenda","capital_medieval","patio_artesaos","raizes_patrulha","raizes_deposito","floresta_clareira","floresta_refugio","fronteira_linha1","fronteira_linha2","terras_posto","norte_reconhecimento","norte_marco"],"protected_subsurface":["arquivos_entrada"],"write_policy":"skip_existing_chunks","output_world_dir":"ThreeErasWorld","never_overwrite":true,"backup_before_write":true,"prototype_root":"work/mundo/ThreeErasWorld","prototype_bounding_box":{"min_x":-530,"max_x":780,"min_z":-2250,"max_z":-28,"note":"Envelope exato extraido dos .mcfunction do datapack threeeras_prototipo"}},"partitioning":{"mode":"planning_hint","note":"cells NAO e particao exclusiva. O material de superficie e escolhido POR PIXEL a partir do biomemap (S2). cells serve ao S4 para saber onde amostrar candidatos de estrutura.","cell_ownership":"none","surface_material_source":"biomemap_per_pixel"},
+  "global_layers": {
+    "base_noise": {
+      "type": "fbm",
+      "octaves": 6,
+      "lacunarity": 2.0,
+      "gain": 0.5,
+      "frequency": 0.0008,
+      "amplitude": 48,
+      "base_height": 70,
+      "warp": { "enabled": true, "frequency": 0.0012, "strength": 24 }
+    },
+    "biome_model": {
+      "type": "whittaker_2d",
+      "temperature_noise": { "frequency": 0.0004, "octaves": 4 },
+      "humidity_noise": { "frequency": 0.0005, "octaves": 4 },
+      "fallback_biome": "wilderness",
+      "biomes": [
+        { "id": "plains", "temp": [0.4, 1.0], "hum": [0.3, 0.7], "label": "Planicie" },
+        { "id": "deep_forest", "temp": [0.2, 0.8], "hum": [0.6, 1.0], "label": "Floresta Densa" },
+        { "id": "mountains", "temp": [0.0, 0.5], "hum": [0.0, 0.4], "label": "Montanha" },
+        { "id": "swamp_edges", "temp": [0.3, 0.7], "hum": [0.8, 1.0], "label": "Pantano" },
+        { "id": "karst", "temp": [0.0, 0.4], "hum": [0.3, 0.6], "label": "Karst" },
+        { "id": "vila_plains", "region": "vila_inicial_nevada", "temp": [0.5, 1.0], "hum": [0.2, 0.6], "label": "Campos da Vila" },
+        { "id": "vila_snow_plains", "region": "vila_inicial_nevada", "temp": [0.2, 0.5], "hum": [0.2, 0.6], "label": "Campos Nevados" },
+        { "id": "capital_riverlands", "region": "capital_medieval", "temp": [0.4, 0.9], "hum": [0.4, 0.8], "label": "Vale do Rio Capital" },
+        { "id": "capital_plateau", "region": "capital_medieval", "temp": [0.4, 0.9], "hum": [0.1, 0.4], "label": "Planalto Capital" },
+        { "id": "root_kingdom", "region": "reino_das_raizes", "temp": [0.3, 0.9], "hum": [0.5, 1.0], "label": "Reino das Raizes" },
+        { "id": "root_kingdom_deep", "region": "reino_das_raizes", "temp": [0.1, 0.5], "hum": [0.5, 1.0], "label": "Raizes Profundas" },
+        { "id": "fortress_alpine", "region": "fronteira_das_fortalezas", "temp": [0.0, 0.4], "hum": [0.0, 0.4], "label": "Alpino Amuralhado" },
+        { "id": "fortress_snowcap", "region": "fronteira_das_fortalezas", "temp": [0.0, 0.3], "hum": [0.0, 0.3], "label": "Cume Nevado" },
+        { "id": "monster_forest", "region": "floresta_dos_monstros", "temp": [0.2, 0.7], "hum": [0.6, 1.0], "label": "Floresta dos Monstros" },
+        { "id": "monster_swamp", "region": "floresta_dos_monstros", "temp": [0.3, 0.7], "hum": [0.8, 1.0], "label": "Pantano Monstruoso" },
+        { "id": "wilderness", "region": "terras_distantes", "temp": [0.0, 1.0], "hum": [0.0, 1.0], "label": "Terra Selvagem" }
+      ]
+    },
+    "erosion": {
+      "type": "hydraulic_simple",
+      "iterations": 3,
+      "talus_angle": 0.6,
+      "sediment_deposit": 0.35
+    }
+  },
+  "regions": [
+    {
+      "id": "vila_inicial_nevada",
+      "name": "Vila Inicial Nevada - Prototipo",
+      "ring": 0,
+      "read_only": true,
+      "influence": { "center": [62, -28], "radius": 200, "falloff": "smoothstep" },
+      "altitude_profile": { "base": 70, "amplitude": 10, "roughness": 0.3, "type": "rolling_plains" },
+      "biome_offsets": { "temperature": 0.0, "humidity": 0.1 },
+      "palette_ref": "vila_inicial",
+      "density": { "structures_per_cell": 18, "min_spacing": 40 },
+      "allowed_structures": ["house_small", "well", "farm_plot", "watchtower_wood"],
+      "cells": [[3, 9], [4, 9], [3, 10], [4, 10]],
+      "settlement_anchors": [
+        { "id": "vila_inicial", "center": [62, -28], "extent": { "min_x": 56, "max_x": 68, "min_z": -69, "max_z": -28 }, "stage": 1 },
+        { "id": "estrada_fazenda", "center": [125, -400], "extent": { "min_x": 66, "max_x": 125, "min_z": -400, "max_z": -400 }, "stage": 2 }
+      ],
+      "adjacency": [
+        { "to": "capital_medieval", "transition_style": "road_grade", "width": 384 },
+        { "to": "reino_das_raizes", "transition_style": "forest_thinning", "width": 512 }
+      ]
+    },
+    {
+      "id": "capital_medieval",
+      "name": "Capital Medieval",
+      "ring": 1,
+      "read_only": false,
+      "influence": { "center": [62, -720], "radius": 180, "falloff": "smoothstep" },
+      "altitude_profile": { "base": 78, "amplitude": 18, "roughness": 0.4, "type": "plateau_river" },
+      "biome_offsets": { "temperature": 0.05, "humidity": 0.0 },
+      "palette_ref": "capital_medieval",
+      "density": { "structures_per_cell": 52, "min_spacing": 24 },
+      "allowed_structures": ["cathedral", "keep", "city_block", "wall_segment", "harbor_dock"],
+      "cells": [[4, 6], [3, 7], [4, 7]],
+      "subsurface_domains": [
+        {
+          "id": "arquivos_entrada",
+          "name": "Arquivos Enterrados - Entrada",
+          "anchor": [150, -700],
+          "depth_range": [-40, -8],
+          "volume_ratio": 0.35,
+          "palette_ref": "arquivos_enterrados",
+          "protected": true,
+          "stage": 1,
+          "note": "Camara subterranea real do prototipo. Ancora a Capital em superficie, opera so em subsolo."
+        }
+      ],
+      "settlement_anchors": [
+        { "id": "capital_medieval", "center": [62, -720], "extent": { "min_x": 20, "max_x": 104, "min_z": -775, "max_z": -665 }, "stage": 1 },
+        { "id": "patio_artesaos", "center": [165, -720], "extent": { "min_x": 105, "max_x": 165, "min_z": -720, "max_z": -720 }, "stage": 2 }
+      ],
+      "adjacency": [
+        { "to": "vila_inicial_nevada", "transition_style": "road_grade", "width": 384 },
+        { "to": "floresta_dos_monstros", "transition_style": "forest_thinning", "width": 512 }
+      ]
+    },
+    {
+      "id": "reino_das_raizes",
+      "name": "Reino das Raizes",
+      "ring": 1,
+      "read_only": false,
+      "influence": { "center": [-320, -810], "radius": 300, "falloff": "smoothstep" },
+      "altitude_profile": { "base": 72, "amplitude": 26, "roughness": 0.6, "type": "forested_hills" },
+      "biome_offsets": { "temperature": 0.1, "humidity": 0.35 },
+      "palette_ref": "reino_das_raizes",
+      "density": { "structures_per_cell": 14, "min_spacing": 64 },
+      "allowed_structures": ["tree_colossal", "village_suspended", "root_bridge"],
+      "cells": [[2, 5], [1, 6], [2, 6], [3, 6], [1, 7], [2, 7], [3, 7]],
+      "settlement_anchors": [
+        { "id": "raizes_patrulha", "center": [-220, -735], "extent": { "min_x": -220, "max_x": -206, "min_z": -735, "max_z": -735 }, "stage": 1 },
+        { "id": "raizes_deposito", "center": [-420, -815], "extent": { "min_x": -421, "max_x": -419, "min_z": -870, "max_z": -760 }, "stage": 2 }
+      ],
+      "adjacency": [
+        { "to": "vila_inicial_nevada", "transition_style": "forest_thinning", "width": 512 },
+        { "to": "floresta_dos_monstros", "transition_style": "forest_thinning", "width": 640 }
+      ]
+    },
+    {
+      "id": "fronteira_das_fortalezas",
+      "name": "Fronteira das Fortalezas",
+      "ring": 1,
+      "read_only": false,
+      "influence": { "center": [640, -1075], "radius": 350, "falloff": "smoothstep" },
+      "altitude_profile": {
+        "base": 96, "amplitude": 64, "roughness": 0.85, "type": "mountain_range",
+        "warp": { "frequency": 0.0020, "strength": 18 }
+      },
+      "biome_offsets": { "temperature": -0.15, "humidity": -0.2 },
+      "palette_ref": "fronteira_das_fortalezas",
+      "density": { "structures_per_cell": 4, "min_spacing": 128 },
+      "allowed_structures": ["fortress_ridge", "watchtower_stone", "mountain_pass"],
+      "cells": [[5, 4], [6, 4], [7, 4], [5, 5], [6, 5], [7, 5], [5, 6], [6, 6], [7, 6], [6, 7]],
+      "settlement_anchors": [
+        { "id": "fronteira_linha1", "center": [500, -980], "extent": { "min_x": 104, "max_x": 500, "min_z": -980, "max_z": -736 }, "stage": 1 },
+        { "id": "fronteira_linha2", "center": [780, -1170], "extent": { "min_x": 500, "max_x": 780, "min_z": -1170, "max_z": -997 }, "stage": 2 }
+      ],
+      "adjacency": [
+        { "to": "vila_inicial_nevada", "transition_style": "cliff_masked", "width": 768 },
+        { "to": "capital_medieval", "transition_style": "ridge", "width": 512 }
+      ]
+    },
+    {
+      "id": "floresta_dos_monstros",
+      "name": "Floresta dos Monstros",
+      "ring": 2,
+      "read_only": false,
+      "influence": { "center": [-440, -955], "radius": 220, "falloff": "smoothstep" },
+      "altitude_profile": { "base": 68, "amplitude": 22, "roughness": 0.7, "type": "dense_forest" },
+      "biome_offsets": { "temperature": 0.0, "humidity": 0.5 },
+      "palette_ref": "floresta_dos_monstros",
+      "density": { "structures_per_cell": 1, "min_spacing": 160 },
+      "allowed_structures": ["ruin_small", "hollow_tree"],
+      "cells": [[2, 5], [1, 6], [2, 6]],
+      "settlement_anchors": [
+        { "id": "floresta_clareira", "center": [-440, -955], "extent": { "min_x": -486, "max_x": -393, "min_z": -1002, "max_z": -907 }, "stage": 1 },
+        { "id": "floresta_refugio", "center": [-522, -1051], "extent": { "min_x": -530, "max_x": -514, "min_z": -1060, "max_z": -1042 }, "stage": 2 }
+      ],
+      "adjacency": [
+        { "to": "reino_das_raizes", "transition_style": "forest_thinning", "width": 640 },
+        { "to": "capital_medieval", "transition_style": "forest_thinning", "width": 512 }
+      ]
+    },
+    {
+      "id": "terras_distantes",
+      "name": "Terras Distantes",
+      "ring": 3,
+      "read_only": false,
+      "influence": { "mode": "perimeter_buffer", "falloff": "smoothstep" },
+      "altitude_profile": { "base": 74, "amplitude": 40, "roughness": 0.65, "type": "wilderness" },
+      "biome_offsets": { "temperature": 0.0, "humidity": 0.0 },
+      "palette_ref": "terras_distantes",
+      "density": { "structures_per_cell": 1, "min_spacing": 256 },
+      "allowed_structures": ["ruin_partial", "landmark_monolith"],
+      "cells": [],
+      "settlement_anchors": [
+        { "id": "terras_posto", "center": [100, -1500], "extent": { "min_x": 97, "max_x": 102, "min_z": -1500, "max_z": -1499 }, "stage": 1 },
+        { "id": "norte_reconhecimento", "center": [160, -2250], "extent": { "min_x": 98, "max_x": 160, "min_z": -2250, "max_z": -1501 }, "stage": 2 },
+        { "id": "norte_marco", "center": [-180, -1948], "extent": { "min_x": -180, "max_x": -160, "min_z": -1950, "max_z": -1946 }, "stage": 2 }
+      ],
+      "adjacency": [
+        { "to": "*", "transition_style": "wilderness_blend", "width": 512 }
+      ]
+    }
+  ],
+  "reserved_expansion_cells": [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0], [9, 0], [10, 0], [11, 0], [0, 11], [1, 11], [2, 11], [3, 11], [4, 11], [5, 11], [6, 11], [7, 11], [8, 11], [9, 11], [10, 11], [11, 11]]
+,
+  "base_noise": {
+      "type": "fbm",
+      "octaves": 6,
+      "lacunarity": 2.0,
+      "gain": 0.5,
+      "frequency": 0.0008,
+      "amplitude": 48,
+      "base_height": 70,
+      "warp": { "enabled": true, "frequency": 0.0012, "strength": 24 }
+    },
+  "erosion": {
+      "type": "hydraulic_simple",
+      "iterations": 3,
+      "talus_angle": 0.6,
+      "sediment_deposit": 0.35
+    },
+  "biome_noise": {
+      "type": "whittaker_2d",
+      "temperature_noise": { "frequency": 0.0004, "octaves": 4 },
+      "humidity_noise": { "frequency": 0.0005, "octaves": 4 },
+      "fallback_biome": "wilderness",
+      "biomes": [
+        { "id": "plains", "temp": [0.4, 1.0], "hum": [0.3, 0.7], "label": "Planicie" },
+        { "id": "deep_forest", "temp": [0.2, 0.8], "hum": [0.6, 1.0], "label": "Floresta Densa" },
+        { "id": "mountains", "temp": [0.0, 0.5], "hum": [0.0, 0.4], "label": "Montanha" },
+        { "id": "swamp_edges", "temp": [0.3, 0.7], "hum": [0.8, 1.0], "label": "Pantano" },
+        { "id": "karst", "temp": [0.0, 0.4], "hum": [0.3, 0.6], "label": "Karst" },
+        { "id": "vila_plains", "region": "vila_inicial_nevada", "temp": [0.5, 1.0], "hum": [0.2, 0.6], "label": "Campos da Vila" },
+        { "id": "vila_snow_plains", "region": "vila_inicial_nevada", "temp": [0.2, 0.5], "hum": [0.2, 0.6], "label": "Campos Nevados" },
+        { "id": "capital_riverlands", "region": "capital_medieval", "temp": [0.4, 0.9], "hum": [0.4, 0.8], "label": "Vale do Rio Capital" },
+        { "id": "capital_plateau", "region": "capital_medieval", "temp": [0.4, 0.9], "hum": [0.1, 0.4], "label": "Planalto Capital" },
+        { "id": "root_kingdom", "region": "reino_das_raizes", "temp": [0.3, 0.9], "hum": [0.5, 1.0], "label": "Reino das Raizes" },
+        { "id": "root_kingdom_deep", "region": "reino_das_raizes", "temp": [0.1, 0.5], "hum": [0.5, 1.0], "label": "Raizes Profundas" },
+        { "id": "fortress_alpine", "region": "fronteira_das_fortalezas", "temp": [0.0, 0.4], "hum": [0.0, 0.4], "label": "Alpino Amuralhado" },
+        { "id": "fortress_snowcap", "region": "fronteira_das_fortalezas", "temp": [0.0, 0.3], "hum": [0.0, 0.3], "label": "Cume Nevado" },
+        { "id": "monster_forest", "region": "floresta_dos_monstros", "temp": [0.2, 0.7], "hum": [0.6, 1.0], "label": "Floresta dos Monstros" },
+        { "id": "monster_swamp", "region": "floresta_dos_monstros", "temp": [0.3, 0.7], "hum": [0.8, 1.0], "label": "Pantano Monstruoso" },
+        { "id": "wilderness", "region": "terras_distantes", "temp": [0.0, 1.0], "hum": [0.0, 1.0], "label": "Terra Selvagem" }
+      ]
+    },
+  "biomes": [
+        { "id": "plains", "temp": [0.4, 1.0], "hum": [0.3, 0.7], "label": "Planicie" },
+        { "id": "deep_forest", "temp": [0.2, 0.8], "hum": [0.6, 1.0], "label": "Floresta Densa" },
+        { "id": "mountains", "temp": [0.0, 0.5], "hum": [0.0, 0.4], "label": "Montanha" },
+        { "id": "swamp_edges", "temp": [0.3, 0.7], "hum": [0.8, 1.0], "label": "Pantano" },
+        { "id": "karst", "temp": [0.0, 0.4], "hum": [0.3, 0.6], "label": "Karst" },
+        { "id": "vila_plains", "region": "vila_inicial_nevada", "temp": [0.5, 1.0], "hum": [0.2, 0.6], "label": "Campos da Vila" },
+        { "id": "vila_snow_plains", "region": "vila_inicial_nevada", "temp": [0.2, 0.5], "hum": [0.2, 0.6], "label": "Campos Nevados" },
+        { "id": "capital_riverlands", "region": "capital_medieval", "temp": [0.4, 0.9], "hum": [0.4, 0.8], "label": "Vale do Rio Capital" },
+        { "id": "capital_plateau", "region": "capital_medieval", "temp": [0.4, 0.9], "hum": [0.1, 0.4], "label": "Planalto Capital" },
+        { "id": "root_kingdom", "region": "reino_das_raizes", "temp": [0.3, 0.9], "hum": [0.5, 1.0], "label": "Reino das Raizes" },
+        { "id": "root_kingdom_deep", "region": "reino_das_raizes", "temp": [0.1, 0.5], "hum": [0.5, 1.0], "label": "Raizes Profundas" },
+        { "id": "fortress_alpine", "region": "fronteira_das_fortalezas", "temp": [0.0, 0.4], "hum": [0.0, 0.4], "label": "Alpino Amuralhado" },
+        { "id": "fortress_snowcap", "region": "fronteira_das_fortalezas", "temp": [0.0, 0.3], "hum": [0.0, 0.3], "label": "Cume Nevado" },
+        { "id": "monster_forest", "region": "floresta_dos_monstros", "temp": [0.2, 0.7], "hum": [0.6, 1.0], "label": "Floresta dos Monstros" },
+        { "id": "monster_swamp", "region": "floresta_dos_monstros", "temp": [0.3, 0.7], "hum": [0.8, 1.0], "label": "Pantano Monstruoso" },
+        { "id": "wilderness", "region": "terras_distantes", "temp": [0.0, 1.0], "hum": [0.0, 1.0], "label": "Terra Selvagem" }
+      ],
+  "palettes": {
+    "vila_inicial": {
+      "base": ["minecraft:stone", "minecraft:cobblestone"],
+      "detail": ["minecraft:spruce_log", "minecraft:stripped_spruce_log"],
+      "accent": ["minecraft:spruce_planks", "minecraft:oak_planks"],
+      "roof": ["minecraft:spruce_stairs", "minecraft:stone_brick_stairs"],
+      "ground": ["minecraft:snow", "minecraft:podzol", "minecraft:coarse_dirt"]
+    },
+    "capital_medieval": {
+      "base": ["minecraft:stone_bricks", "minecraft:cracked_stone_bricks"],
+      "detail": ["minecraft:dark_oak_log", "minecraft:polished_andesite"],
+      "accent": ["minecraft:dark_oak_planks", "minecraft:bricks"],
+      "roof": ["minecraft:dark_oak_stairs", "minecraft:brick_stairs"],
+      "ground": ["minecraft:stone", "minecraft:cobblestone", "minecraft:coarse_dirt"]
+    },
+    "reino_das_raizes": {
+      "base": ["minecraft:mossy_cobblestone", "minecraft:mud"],
+      "detail": ["minecraft:mangrove_wood", "minecraft:rooted_dirt"],
+      "accent": ["minecraft:mangrove_planks", "minecraft:moss_block"],
+      "roof": ["minecraft:mangrove_stairs", "minecraft:mud_bricks"],
+      "ground": ["minecraft:moss_block", "minecraft:rooted_dirt", "minecraft:mud"]
+    },
+    "fronteira_das_fortalezas": {
+      "base": ["minecraft:deepslate", "minecraft:cobbled_deepslate"],
+      "detail": ["minecraft:polished_deepslate", "minecraft:chiseled_deepslate"],
+      "accent": ["minecraft:deepslate_bricks", "minecraft:basalt"],
+      "roof": ["minecraft:deepslate_brick_stairs", "minecraft:polished_deepslate_stairs"],
+      "ground": ["minecraft:snow", "minecraft:stone", "minecraft:powder_snow"]
+    },
+    "floresta_dos_monstros": {
+      "base": ["minecraft:mud", "minecraft:coarse_dirt"],
+      "detail": ["minecraft:stripped_dark_oak_log", "minecraft:obsidian"],
+      "accent": ["minecraft:target", "minecraft:nether_bricks"],
+      "roof": ["minecraft:dark_oak_stairs", "minecraft:nether_brick_stairs"],
+      "ground": ["minecraft:podzol", "minecraft:mud", "minecraft:rooted_dirt"]
+    },
+    "terras_distantes": {
+      "base": ["minecraft:stone", "minecraft:andesite"],
+      "detail": ["minecraft:oak_log", "minecraft:stone_bricks"],
+      "accent": ["minecraft:oak_planks", "minecraft:cobblestone"],
+      "roof": ["minecraft:oak_stairs", "minecraft:cobblestone_stairs"],
+      "ground": ["minecraft:grass_block", "minecraft:coarse_dirt"]
+    },
+    "arquivos_enterrados": {
+      "base": ["minecraft:deepslate_bricks", "minecraft:reinforced_deepslate"],
+      "detail": ["minecraft:chiseled_deepslate", "minecraft:polished_deepslate"],
+      "accent": ["minecraft:iron_bars", "minecraft:chain"],
+      "roof": ["minecraft:deepslate_brick_slab", "minecraft:smooth_stone"],
+      "ground": ["minecraft:smooth_basalt", "minecraft:deepslate"]
+    }
+  },
+  "rules": { "surface_depth": 4, "subsurface_carve_blend": true }
+}

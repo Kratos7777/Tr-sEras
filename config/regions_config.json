@@ -1,0 +1,17 @@
+{
+  "world": "ThreeErasWorld",
+  "extent_blocks": { "x": 3072, "z": 3072 },
+  "regions": [
+    { "id": "vila_inicial_nevada", "name": "Vila Inicial Nevada", "role": "spawn", "center": { "x": 62, "z": -28 } },
+    { "id": "capital_medieval", "name": "Capital Medieval", "role": "capital", "center": { "x": 62, "z": -720 } },
+    { "id": "aurelius", "name": "Aurelius - O Legado das Raizes", "role": "nucleus", "center": { "x": -220, "z": -735 } },
+    { "id": "astrid_rust", "name": "Astrid Rust - A Guerra dos Condenados", "role": "nucleus", "center": { "x": 500, "z": -980 } },
+    { "id": "thorne", "name": "Linhagem Thorne - Os Segredos Enterrados", "role": "nucleus", "center": { "x": -440, "z": -955 } }
+  ],
+  "routes": [
+    { "from": "vila_inicial_nevada", "to": "capital_medieval" },
+    { "from": "capital_medieval", "to": "aurelius" },
+    { "from": "capital_medieval", "to": "astrid_rust" },
+    { "from": "capital_medieval", "to": "thorne" }
+  ]
+}

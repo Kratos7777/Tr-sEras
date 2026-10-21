@@ -1,0 +1,21 @@
+fill -280 0 -795 -279 0 -795 minecraft:dirt_path
+fill -279 0 -794 -278 0 -794 minecraft:dirt_path
+fill -278 0 -793 -277 0 -793 minecraft:dirt_path
+fill -277 0 -792 -276 0 -792 minecraft:dirt_path
+fill -276 0 -791 -275 0 -791 minecraft:dirt_path
+fill -275 0 -790 -274 0 -790 minecraft:dirt_path
+fill -274 0 -789 -273 0 -789 minecraft:dirt_path
+fill -273 0 -788 -272 0 -788 minecraft:dirt_path
+fill -272 0 -787 -271 0 -787 minecraft:dirt_path
+fill -271 0 -786 -270 0 -786 minecraft:dirt_path
+fill -270 0 -785 -269 0 -785 minecraft:dirt_path
+fill -269 0 -784 -268 0 -784 minecraft:dirt_path
+fill -268 0 -783 -267 0 -783 minecraft:dirt_path
+fill -267 0 -782 -266 0 -782 minecraft:dirt_path
+fill -266 0 -781 -265 0 -781 minecraft:dirt_path
+fill -265 0 -780 -264 0 -780 minecraft:dirt_path
+fill -264 0 -779 -263 0 -779 minecraft:dirt_path
+fill -263 0 -778 -262 0 -778 minecraft:dirt_path
+fill -262 0 -777 -261 0 -777 minecraft:dirt_path
+fill -261 0 -776 -260 0 -776 minecraft:dirt_path
+schedule function threeeras:prototype/expansion/roads/forest_03 1t replace
