@@ -41,3 +41,11 @@ artifacts/
 
 # mundos gerados pela pipeline
 world_threeeras_medieval/
+
+# Backups locais de datapack
+work/backups_datapack/
+*_bkp_*/
+# Temporarios de build
+*.tmp
+*.bak
+
